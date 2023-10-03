@@ -7,7 +7,7 @@ import (
 	"github.com/karman-digital/hatch-models/intelliflomodels"
 )
 
-type Credentials struct {
+type credentials struct {
 	Client      *retryablehttp.Client
 	AccessToken string
 	ExpiresAt   time.Time
