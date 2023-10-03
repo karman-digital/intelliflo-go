@@ -11,7 +11,7 @@ import (
 	"github.com/karman-digital/hatch-models/intelliflomodels"
 )
 
-func (c *Credentials) GetAdvisersByUserId(userId int) (intelliflomodels.Advisers, error) {
+func (c *credentials) GetAdvisersByUserId(userId int) (intelliflomodels.Advisers, error) {
 	var advisers intelliflomodels.Advisers
 	req, err := retryablehttp.NewRequest("GET", "https://api.gb.intelliflo.net/v2/advisers", nil)
 	if err != nil {

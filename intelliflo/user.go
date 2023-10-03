@@ -11,7 +11,7 @@ import (
 	"github.com/karman-digital/hatch-models/intelliflomodels"
 )
 
-func (c *Credentials) GetUserById(id int) (intelliflomodels.User, error) {
+func (c *credentials) GetUserById(id int) (intelliflomodels.User, error) {
 	var user intelliflomodels.User
 	req, err := retryablehttp.NewRequest("GET", fmt.Sprintf("https://api.gb.intelliflo.net/v2/users/%d", id), nil)
 	if err != nil {
@@ -39,7 +39,7 @@ func (c *Credentials) GetUserById(id int) (intelliflomodels.User, error) {
 	return user, nil
 }
 
-func (c *Credentials) GetUsersByEmail(email string) (intelliflomodels.Users, error) {
+func (c *credentials) GetUsersByEmail(email string) (intelliflomodels.Users, error) {
 	var users intelliflomodels.Users
 	req, err := retryablehttp.NewRequest("GET", "https://api.gb.intelliflo.net/v2/users", nil)
 	if err != nil {

@@ -11,7 +11,7 @@ import (
 	"github.com/karman-digital/hatch-models/intelliflomodels"
 )
 
-func (c *Credentials) CreateNewClient(clientObj intelliflomodels.Client) (intelliflomodels.Client, error) {
+func (c *credentials) CreateNewClient(clientObj intelliflomodels.Client) (intelliflomodels.Client, error) {
 	responseClient := intelliflomodels.Client{}
 	clientBody, err := json.Marshal(clientObj)
 	if err != nil {

@@ -13,7 +13,7 @@ import (
 	"github.com/karman-digital/hatch-models/intelliflomodels"
 )
 
-func (c *Credentials) GenerateAccessToken(clientSecret string, clientId string, tennantId int) (intelliflomodels.TokenResponse, error) {
+func (c *credentials) GenerateAccessToken(clientSecret string, clientId string, tennantId int) (intelliflomodels.TokenResponse, error) {
 	var tokenBody = intelliflomodels.TokenResponse{}
 	encoded := base64.StdEncoding.EncodeToString([]byte(fmt.Sprintf("%s:%s", clientId, clientSecret)))
 	data := url.Values{

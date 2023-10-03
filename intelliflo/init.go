@@ -3,7 +3,7 @@ package intelliflo
 import "github.com/hashicorp/go-retryablehttp"
 
 func InitIntellifloAPI() IntellfloAPI {
-	return &Credentials{
+	return &credentials{
 		Client: retryablehttp.NewClient(),
 	}
 }
