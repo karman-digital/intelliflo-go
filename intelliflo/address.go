@@ -10,9 +10,9 @@ import (
 	"github.com/karman-digital/hatch-models/intelliflomodels"
 )
 
-func (c *credentials) GetAddresses(clientId string) (intelliflomodels.Addresses, error) {
+func (c *credentials) GetAddresses(clientId int) (intelliflomodels.Addresses, error) {
 	var addresses intelliflomodels.Addresses
-	reqUrl := fmt.Sprintf("https://api.gb.intelliflo.net/v2/%s/addresses", clientId)
+	reqUrl := fmt.Sprintf("https://api.gb.intelliflo.net/v2/%d/addresses", clientId)
 	req, err := retryablehttp.NewRequest("GET", reqUrl, nil)
 	if err != nil {
 		return addresses, fmt.Errorf("error creating request: %v", err)

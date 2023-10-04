@@ -24,5 +24,5 @@ type IntellfloAPI interface {
 	GetUserById(id int) (intelliflomodels.User, error)
 	GetUsersByEmail(email string) (intelliflomodels.Users, error)
 	GetAdvisersByUserId(userId int) (intelliflomodels.Advisers, error)
-	GetAddresses(clientId string) (intelliflomodels.Addresses, error)
+	GetAddresses(clientId int) (intelliflomodels.Addresses, error)
 }
