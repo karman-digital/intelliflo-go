@@ -27,4 +27,5 @@ type IntellfloAPI interface {
 	GetAddresses(clientId int) (intelliflomodels.Addresses, error)
 	PostAddress(clientId int, address intelliflomodels.Residence) (intelliflomodels.Residence, error)
 	PutAddress(clientId int, addressId int, address intelliflomodels.Residence) (intelliflomodels.Residence, error)
+	GenerateAccessToken(clientSecret string, clientId string, tenantId int) (intelliflomodels.TokenResponse, error)
 }

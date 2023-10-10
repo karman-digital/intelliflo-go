@@ -13,12 +13,12 @@ import (
 	"github.com/karman-digital/hatch-models/intelliflomodels"
 )
 
-func (c *credentials) GenerateAccessToken(clientSecret string, clientId string, tennantId int) (intelliflomodels.TokenResponse, error) {
+func (c *credentials) GenerateAccessToken(clientSecret string, clientId string, tenantId int) (intelliflomodels.TokenResponse, error) {
 	var tokenBody = intelliflomodels.TokenResponse{}
 	encoded := base64.StdEncoding.EncodeToString([]byte(fmt.Sprintf("%s:%s", clientId, clientSecret)))
 	data := url.Values{
 		"grant_type": []string{"tenant_client_credentials"},
-		"tenant_id":  []string{fmt.Sprint(tennantId)},
+		"tenant_id":  []string{fmt.Sprint(tenantId)},
 		"scope":      []string{"client_data client_identification_data firm_data hub apps"},
 	}
 	req, err := retryablehttp.NewRequest("POST", "https://identity.intelliflo.com/core/connect/token", strings.NewReader(data.Encode()))
