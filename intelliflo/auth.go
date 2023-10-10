@@ -39,7 +39,6 @@ func (c *credentials) GenerateAccessToken(clientSecret string, clientId string, 
 	if resp.StatusCode != http.StatusOK {
 		return tokenBody, fmt.Errorf("error returned by endpoint: %s", tokenRawBody)
 	}
-	fmt.Println(string(tokenRawBody))
 	err = json.Unmarshal(tokenRawBody, &tokenBody)
 	if err != nil {
 		return tokenBody, fmt.Errorf("error parsing body: %s", err)
