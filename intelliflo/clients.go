@@ -82,7 +82,7 @@ func (c *credentials) GetClients(options ...intelliflomodels.GetOptions) (intell
 		return clients, fmt.Errorf("error reading body: %v", err)
 	}
 	if resp.StatusCode != http.StatusOK {
-		return clients, fmt.Errorf("error returned by endpoint: %s", respBody)
+		return clients, fmt.Errorf("error returned by endpoint, status code: %d, body: %s", resp.StatusCode, respBody)
 	}
 	err = json.Unmarshal(respBody, &clients)
 	if err != nil {
