@@ -43,3 +43,31 @@ func (c *credentials) CreateNewClient(clientObj intelliflomodels.Client) (intell
 	}
 	return responseClient, nil
 }
+
+func (c *credentials) GetClients() (intelliflomodels.Clients, error) {
+	var clients intelliflomodels.Clients
+	req, err := retryablehttp.NewRequest("GET", "https://api.gb.intelliflo.net/v2/clients", nil)
+	if err != nil {
+		return clients, fmt.Errorf("error creating request: %v", err)
+	}
+	req.Header.Set("Content-Type", "application/json")
+	req.Header["x-api-key"] = []string{c.APIKey}
+	req.Header["authorization"] = []string{"Bearer " + c.AccessToken}
+	resp, err := c.Client.Do(req)
+	if err != nil {
+		return clients, fmt.Errorf("error making post request: %v", err)
+	}
+	defer resp.Body.Close()
+	respBody, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return clients, fmt.Errorf("error reading body: %v", err)
+	}
+	if resp.StatusCode != http.StatusOK {
+		return clients, fmt.Errorf("error returned by endpoint: %s", respBody)
+	}
+	err = json.Unmarshal(respBody, &clients)
+	if err != nil {
+		return clients, fmt.Errorf("error parsing body: %v", err)
+	}
+	return clients, nil
+}
