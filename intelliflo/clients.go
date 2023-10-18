@@ -44,11 +44,30 @@ func (c *credentials) CreateNewClient(clientObj intelliflomodels.Client) (intell
 	return responseClient, nil
 }
 
-func (c *credentials) GetClients(pagination ...int) (intelliflomodels.Clients, error) {
+func (c *credentials) GetClients(options ...intelliflomodels.GetOptions) (intelliflomodels.Clients, error) {
 	var clients intelliflomodels.Clients
 	req, err := retryablehttp.NewRequest("GET", "https://api.gb.intelliflo.net/v2/clients", nil)
 	if err != nil {
 		return clients, fmt.Errorf("error creating request: %v", err)
+	}
+	if len(options) > 0 {
+		q := req.URL.Query()
+		if options[0].Skip != 0 {
+			q.Add("skip", fmt.Sprintf("%d", options[0].Skip))
+		}
+		if options[0].Top != 0 {
+			q.Add("top", fmt.Sprintf("%d", options[0].Top))
+		} else {
+			q.Add("top", "500")
+		}
+		if options[0].Filter != "" {
+			q.Add("filter", options[0].Filter)
+		}
+		req.URL.RawQuery = q.Encode()
+	} else {
+		q := req.URL.Query()
+		q.Add("top", "500")
+		req.URL.RawQuery = q.Encode()
 	}
 	req.Header.Set("Content-Type", "application/json")
 	req.Header["x-api-key"] = []string{c.APIKey}
