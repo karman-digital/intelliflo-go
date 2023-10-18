@@ -72,7 +72,6 @@ func (c *credentials) GetClients(options ...intelliflomodels.GetOptions) (intell
 	req.Header.Set("Content-Type", "application/json")
 	req.Header["x-api-key"] = []string{c.APIKey}
 	req.Header["authorization"] = []string{"Bearer " + c.AccessToken}
-	fmt.Printf("Request: %+v\n", req.Request)
 	resp, err := c.Client.Do(req)
 	if err != nil {
 		return clients, fmt.Errorf("error making post request: %v", err)
