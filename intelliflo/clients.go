@@ -44,7 +44,7 @@ func (c *credentials) CreateNewClient(clientObj intelliflomodels.Client) (intell
 	return responseClient, nil
 }
 
-func (c *credentials) GetClients() (intelliflomodels.Clients, error) {
+func (c *credentials) GetClients(pagination ...int) (intelliflomodels.Clients, error) {
 	var clients intelliflomodels.Clients
 	req, err := retryablehttp.NewRequest("GET", "https://api.gb.intelliflo.net/v2/clients", nil)
 	if err != nil {

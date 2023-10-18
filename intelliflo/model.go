@@ -31,4 +31,5 @@ type IntellfloAPI interface {
 	GetContactDetails(clientId int) (intelliflomodels.ContactDetails, error)
 	PostContactDetail(clientId int, contactDetail intelliflomodels.ContactDetail) (intelliflomodels.ContactDetail, error)
 	PutContactDetail(clientId int, contactDetailId int, contactDetail intelliflomodels.ContactDetail) (intelliflomodels.ContactDetail, error)
+	GetClients(pagination ...int) (intelliflomodels.Clients, error)
 }
