@@ -24,5 +24,7 @@ github.com/karman-digital/hatch-models v0.0.0-20231018112113-fba9cec3b0c8 h1:sCX
 github.com/karman-digital/hatch-models v0.0.0-20231018112113-fba9cec3b0c8/go.mod h1:PdR2+U9RyBKdUpkFD8XASrxA6YhzHdvvQa1RPKUrmPk=
 github.com/karman-digital/hatch-models v0.0.0-20231018112257-68f2d250cdc8 h1:tmIcPEtuLP7hxNDuJ7dZUNfUUQiKbD4JclkBz3Qp3Tc=
 github.com/karman-digital/hatch-models v0.0.0-20231018112257-68f2d250cdc8/go.mod h1:PdR2+U9RyBKdUpkFD8XASrxA6YhzHdvvQa1RPKUrmPk=
+github.com/karman-digital/hatch-models v0.0.0-20231019154311-b58fc9993a85 h1:yzwbaNbnY9nbzfbwvCZVm3dLQ/ICX0ezfr6Qf+m1X4U=
+github.com/karman-digital/hatch-models v0.0.0-20231019154311-b58fc9993a85/go.mod h1:PdR2+U9RyBKdUpkFD8XASrxA6YhzHdvvQa1RPKUrmPk=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/stretchr/testify v1.2.2/go.mod h1:a8OnRcib4nhh0OaRAV+Yts87kKdq0PP7pXfy6kDkUVs=
