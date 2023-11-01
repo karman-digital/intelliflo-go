@@ -18,14 +18,14 @@ func (c *credentials) CreateNewClient(clientObj intelliflomodels.Client) (intell
 		return responseClient, fmt.Errorf("error converting to body: %v", err)
 	}
 	clientReader := bytes.NewReader(clientBody)
-	clientReq, err := retryablehttp.NewRequest("POST", "https://api.gb.intelliflo.net/v2/clients", clientReader)
+	req, err := retryablehttp.NewRequest("POST", "https://api.gb.intelliflo.net/v2/clients", clientReader)
 	if err != nil {
 		return responseClient, fmt.Errorf("error creating request: %v", err)
 	}
-	clientReq.Header.Set("Content-Type", "application/json")
-	clientReq.Header["x-api-key"] = []string{c.APIKey}
-	clientReq.Header["authorization"] = []string{"Bearer " + c.AccessToken}
-	clientResp, err := c.Client.Do(clientReq)
+	req.Header.Set("Content-Type", "application/json")
+	req.Header["x-api-key"] = []string{c.APIKey.String()}
+	req.Header["authorization"] = []string{fmt.Sprintf("Bearer %s", c.AccessToken)}
+	clientResp, err := c.Client.Do(req)
 	if err != nil {
 		return responseClient, fmt.Errorf("error making post request: %v", err)
 	}
@@ -70,8 +70,8 @@ func (c *credentials) GetClients(options ...intelliflomodels.GetOptions) (intell
 		req.URL.RawQuery = q.Encode()
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header["x-api-key"] = []string{c.APIKey}
-	req.Header["authorization"] = []string{"Bearer " + c.AccessToken}
+	req.Header["x-api-key"] = []string{c.APIKey.String()}
+	req.Header["authorization"] = []string{fmt.Sprintf("Bearer %s", c.AccessToken)}
 	resp, err := c.Client.Do(req)
 	if err != nil {
 		return clients, fmt.Errorf("error making post request: %v", err)

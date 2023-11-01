@@ -18,8 +18,8 @@ func (c *credentials) GetUserById(id int) (intelliflomodels.User, error) {
 		return user, fmt.Errorf("error creating request: %v", err)
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header["x-api-key"] = []string{c.APIKey}
-	req.Header["authorization"] = []string{"Bearer " + c.AccessToken}
+	req.Header["x-api-key"] = []string{c.APIKey.String()}
+	req.Header["authorization"] = []string{fmt.Sprintf("Bearer %s", c.AccessToken)}
 	resp, err := c.Client.Do(req)
 	if err != nil {
 		return user, fmt.Errorf("error making post request: %v", err)
@@ -46,8 +46,8 @@ func (c *credentials) GetUsersByEmail(email string) (intelliflomodels.Users, err
 		return users, fmt.Errorf("error creating request: %v", err)
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header["x-api-key"] = []string{c.APIKey}
-	req.Header["authorization"] = []string{"Bearer " + c.AccessToken}
+	req.Header["x-api-key"] = []string{c.APIKey.String()}
+	req.Header["authorization"] = []string{fmt.Sprintf("Bearer %s", c.AccessToken)}
 	queryParams := url.Values{}
 	queryParams.Add("filter", fmt.Sprintf("email eq '%s'", email))
 	req.URL.RawQuery = queryParams.Encode()

@@ -18,8 +18,8 @@ func (c *credentials) GetAdvisersByUserId(userId int) (intelliflomodels.Advisers
 		return advisers, fmt.Errorf("error creating request: %v", err)
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header["x-api-key"] = []string{c.APIKey}
-	req.Header["authorization"] = []string{"Bearer " + c.AccessToken}
+	req.Header["x-api-key"] = []string{c.APIKey.String()}
+	req.Header["authorization"] = []string{fmt.Sprintf("Bearer %s", c.AccessToken)}
 	queryParams := url.Values{}
 	queryParams.Add("filter", fmt.Sprintf("userId eq %d", userId))
 	req.URL.RawQuery = queryParams.Encode()

@@ -33,8 +33,8 @@ func (c *credentials) GetHoldings(clientId int, planId int, options ...intellifl
 		req.URL.RawQuery = q.Encode()
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header["x-api-key"] = []string{c.APIKey}
-	req.Header["authorization"] = []string{"Bearer " + c.AccessToken}
+	req.Header["x-api-key"] = []string{c.APIKey.String()}
+	req.Header["authorization"] = []string{fmt.Sprintf("Bearer %s", c.AccessToken)}
 	resp, err := c.Client.Do(req)
 	if err != nil {
 		return holdings, fmt.Errorf("error making get request: %v", err)

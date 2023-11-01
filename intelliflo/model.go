@@ -7,20 +7,24 @@ import (
 	"github.com/karman-digital/hatch-models/intelliflomodels"
 )
 
+type AccessToken string
+type ExpiresAt time.Time
+type APIKey string
+
 type credentials struct {
 	Client      *retryablehttp.Client
-	AccessToken string
-	ExpiresAt   time.Time
-	APIKey      string
+	AccessToken AccessToken
+	ExpiresAt   ExpiresAt
+	APIKey      APIKey
 }
 
 type IntellfloAPI interface {
-	RetrieveAPIKey() string
-	RetrieveAccessToken() string
-	RetrieveExpiresAt() time.Time
-	SetAccessToken(accessToken string)
-	SetAPIKey(apiKey string)
-	SetExpiresAt(expiresAt time.Time)
+	RetrieveAPIKey() APIKey
+	RetrieveAccessToken() AccessToken
+	RetrieveExpiresAt() ExpiresAt
+	SetAccessToken(accessToken string) error
+	SetAPIKey(apiKey string) error
+	SetExpiresAt(expiresAt time.Time) error
 	GetUserById(id int) (intelliflomodels.User, error)
 	GetUsersByEmail(email string) (intelliflomodels.Users, error)
 	GetAdvisersByUserId(userId int) (intelliflomodels.Advisers, error)
@@ -35,4 +39,16 @@ type IntellfloAPI interface {
 	GetClients(options ...intelliflomodels.GetOptions) (intelliflomodels.Clients, error)
 	GetPlans(clientId int, options ...intelliflomodels.GetOptions) (intelliflomodels.Plans, error)
 	GetHoldings(clientId int, planId int, options ...intelliflomodels.GetOptions) (intelliflomodels.Holdings, error)
+}
+
+func (a AccessToken) String() string {
+	return string(a)
+}
+
+func (a APIKey) String() string {
+	return string(a)
+}
+
+func (e ExpiresAt) Time() time.Time {
+	return time.Time(e)
 }

@@ -33,8 +33,8 @@ func (c *credentials) GetPlans(clientId int, options ...intelliflomodels.GetOpti
 		req.URL.RawQuery = q.Encode()
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header["x-api-key"] = []string{c.APIKey}
-	req.Header["authorization"] = []string{"Bearer " + c.AccessToken}
+	req.Header["x-api-key"] = []string{c.APIKey.String()}
+	req.Header["authorization"] = []string{fmt.Sprintf("Bearer %s", c.AccessToken)}
 	resp, err := c.Client.Do(req)
 	if err != nil {
 		return plans, fmt.Errorf("error making get request: %v", err)
