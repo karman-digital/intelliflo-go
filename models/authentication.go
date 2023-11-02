@@ -1,4 +1,4 @@
-package intelliflo_models
+package intelliflomodels
 
 type TokenResponse struct {
 	AccessToken string `json:"access_token"`

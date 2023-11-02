@@ -18,9 +18,9 @@ func (c *credentials) GetContactDetails(clientId int) (intelliflomodels.ContactD
 		return contactDetails, fmt.Errorf("error creating request: %v", err)
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header["x-api-key"] = []string{c.APIKey.String()}
-	req.Header["authorization"] = []string{fmt.Sprintf("Bearer %s", c.AccessToken)}
-	resp, err := c.Client.Do(req)
+	req.Header["x-api-key"] = []string{c.apiKey.String()}
+	req.Header["authorization"] = []string{fmt.Sprintf("Bearer %s", c.accessToken)}
+	resp, err := c.client.Do(req)
 	if err != nil {
 		return contactDetails, fmt.Errorf("error making post request: %v", err)
 	}
@@ -51,9 +51,9 @@ func (c *credentials) PostContactDetail(clientId int, contactDetail intelliflomo
 		return newContactDetail, fmt.Errorf("error creating request: %v", err)
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header["x-api-key"] = []string{c.APIKey.String()}
-	req.Header["authorization"] = []string{fmt.Sprintf("Bearer %s", c.AccessToken)}
-	resp, err := c.Client.Do(req)
+	req.Header["x-api-key"] = []string{c.apiKey.String()}
+	req.Header["authorization"] = []string{fmt.Sprintf("Bearer %s", c.accessToken)}
+	resp, err := c.client.Do(req)
 	if err != nil {
 		return newContactDetail, fmt.Errorf("error making post request: %v", err)
 	}
@@ -84,9 +84,9 @@ func (c *credentials) PutContactDetail(clientId int, contactDetailId int, contac
 		return updatedContactDetail, fmt.Errorf("error creating request: %v", err)
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header["x-api-key"] = []string{c.APIKey.String()}
-	req.Header["authorization"] = []string{fmt.Sprintf("Bearer %s", c.AccessToken)}
-	resp, err := c.Client.Do(req)
+	req.Header["x-api-key"] = []string{c.apiKey.String()}
+	req.Header["authorization"] = []string{fmt.Sprintf("Bearer %s", c.accessToken)}
+	resp, err := c.client.Do(req)
 	if err != nil {
 		return updatedContactDetail, fmt.Errorf("error making post request: %v", err)
 	}

@@ -17,13 +17,13 @@ func (c *credentials) GetAdvisersByUserId(userId int) (intelliflomodels.Advisers
 	if err != nil {
 		return advisers, fmt.Errorf("error creating request: %v", err)
 	}
-	req.Header.Set("Content-Type", "application/json")
-	req.Header["x-api-key"] = []string{c.APIKey.String()}
-	req.Header["authorization"] = []string{fmt.Sprintf("Bearer %s", c.AccessToken)}
 	queryParams := url.Values{}
 	queryParams.Add("filter", fmt.Sprintf("userId eq %d", userId))
 	req.URL.RawQuery = queryParams.Encode()
-	resp, err := c.Client.Do(req)
+	req.Header.Set("Content-Type", "application/json")
+	req.Header["x-api-key"] = []string{c.apiKey.String()}
+	req.Header["authorization"] = []string{fmt.Sprintf("Bearer %s", c.accessToken)}
+	resp, err := c.client.Do(req)
 	if err != nil {
 		return advisers, fmt.Errorf("error making post request: %v", err)
 	}

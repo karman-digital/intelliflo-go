@@ -1,4 +1,4 @@
-package intelliflo_models
+package intelliflomodels
 
 type Adviser struct {
 	ID                 int32  `json:"id"`

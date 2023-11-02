@@ -23,20 +23,20 @@ func (c *credentials) CreateNewClient(clientObj intelliflomodels.Client) (intell
 		return responseClient, fmt.Errorf("error creating request: %v", err)
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header["x-api-key"] = []string{c.APIKey.String()}
-	req.Header["authorization"] = []string{fmt.Sprintf("Bearer %s", c.AccessToken)}
-	clientResp, err := c.Client.Do(req)
+	req.Header["x-api-key"] = []string{c.apiKey.String()}
+	req.Header["authorization"] = []string{fmt.Sprintf("Bearer %s", c.accessToken)}
+	resp, err := c.client.Do(req)
 	if err != nil {
 		return responseClient, fmt.Errorf("error making post request: %v", err)
 	}
-	respBody, err := io.ReadAll(clientResp.Body)
+	respBody, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return responseClient, fmt.Errorf("error reading body: %v", err)
 	}
-	if clientResp.StatusCode != http.StatusCreated {
+	if resp.StatusCode != http.StatusCreated {
 		return responseClient, fmt.Errorf("error when creating client: %s", string(respBody))
 	}
-	defer clientResp.Body.Close()
+	defer resp.Body.Close()
 	err = json.Unmarshal(respBody, &responseClient)
 	if err != nil {
 		return responseClient, fmt.Errorf("error unmarshalling response: %v", err)
@@ -70,9 +70,9 @@ func (c *credentials) GetClients(options ...intelliflomodels.GetOptions) (intell
 		req.URL.RawQuery = q.Encode()
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header["x-api-key"] = []string{c.APIKey.String()}
-	req.Header["authorization"] = []string{fmt.Sprintf("Bearer %s", c.AccessToken)}
-	resp, err := c.Client.Do(req)
+	req.Header["x-api-key"] = []string{c.apiKey.String()}
+	req.Header["authorization"] = []string{fmt.Sprintf("Bearer %s", c.accessToken)}
+	resp, err := c.client.Do(req)
 	if err != nil {
 		return clients, fmt.Errorf("error making post request: %v", err)
 	}

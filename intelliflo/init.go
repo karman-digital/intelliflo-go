@@ -6,6 +6,6 @@ func InitIntellifloAPI() IntellfloAPI {
 	client := retryablehttp.NewClient()
 	client.Logger = nil
 	return &credentials{
-		Client: client,
+		client: client,
 	}
 }

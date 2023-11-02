@@ -27,7 +27,7 @@ func (c *credentials) GenerateAccessToken(clientSecret string, clientId string, 
 	}
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	req.Header["authorization"] = []string{"Basic " + encoded}
-	resp, err := c.Client.Do(req)
+	resp, err := c.client.Do(req)
 	if err != nil {
 		return tokenBody, fmt.Errorf("error making post request: %s", err)
 	}
@@ -65,7 +65,7 @@ func (c *credentials) GenerateAccessTokenScopes(clientSecret string, clientId st
 	}
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 	req.Header["authorization"] = []string{"Basic " + encoded}
-	resp, err := c.Client.Do(req)
+	resp, err := c.client.Do(req)
 	if err != nil {
 		return tokenBody, fmt.Errorf("error making post request: %s", err)
 	}

@@ -18,9 +18,9 @@ func (c *credentials) GetAddresses(clientId int) (intelliflomodels.Addresses, er
 		return addresses, fmt.Errorf("error creating request: %v", err)
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header["x-api-key"] = []string{c.APIKey.String()}
-	req.Header["authorization"] = []string{fmt.Sprintf("Bearer %s", c.AccessToken)}
-	resp, err := c.Client.Do(req)
+	req.Header["x-api-key"] = []string{c.apiKey.String()}
+	req.Header["authorization"] = []string{fmt.Sprintf("Bearer %s", c.accessToken)}
+	resp, err := c.client.Do(req)
 	if err != nil {
 		return addresses, fmt.Errorf("error making post request: %v", err)
 	}
@@ -51,9 +51,9 @@ func (c *credentials) PostAddress(clientId int, address intelliflomodels.Residen
 		return newAddress, fmt.Errorf("error creating request: %v", err)
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header["x-api-key"] = []string{c.APIKey.String()}
-	req.Header["authorization"] = []string{fmt.Sprintf("Bearer %s", c.AccessToken)}
-	resp, err := c.Client.Do(req)
+	req.Header["x-api-key"] = []string{c.apiKey.String()}
+	req.Header["authorization"] = []string{fmt.Sprintf("Bearer %s", c.accessToken)}
+	resp, err := c.client.Do(req)
 	if err != nil {
 		return newAddress, fmt.Errorf("error making post request: %v", err)
 	}
@@ -84,9 +84,9 @@ func (c *credentials) PutAddress(clientId int, addressId int, address intelliflo
 		return updatedAddress, fmt.Errorf("error creating request: %v", err)
 	}
 	req.Header.Set("Content-Type", "application/json")
-	req.Header["x-api-key"] = []string{c.APIKey.String()}
-	req.Header["authorization"] = []string{fmt.Sprintf("Bearer %s", c.AccessToken)}
-	resp, err := c.Client.Do(req)
+	req.Header["x-api-key"] = []string{c.apiKey.String()}
+	req.Header["authorization"] = []string{fmt.Sprintf("Bearer %s", c.accessToken)}
+	resp, err := c.client.Do(req)
 	if err != nil {
 		return updatedAddress, fmt.Errorf("error making post request: %v", err)
 	}

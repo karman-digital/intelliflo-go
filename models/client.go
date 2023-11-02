@@ -1,4 +1,4 @@
-package intelliflo_models
+package intelliflomodels
 
 type Country struct {
 	Code string `json:"code,omitempty"`
