@@ -30,6 +30,10 @@ github.com/karman-digital/hatch-models v0.0.0-20231023083124-9df4ef331c5e h1:RUS
 github.com/karman-digital/hatch-models v0.0.0-20231023083124-9df4ef331c5e/go.mod h1:PdR2+U9RyBKdUpkFD8XASrxA6YhzHdvvQa1RPKUrmPk=
 github.com/karman-digital/hatch-models v0.0.0-20231023101027-ab4577c0128f h1:77G1LJ1nUvk2PHMdGMhxe42kWs4seFiTefSQHjMVW5w=
 github.com/karman-digital/hatch-models v0.0.0-20231023101027-ab4577c0128f/go.mod h1:PdR2+U9RyBKdUpkFD8XASrxA6YhzHdvvQa1RPKUrmPk=
+github.com/karman-digital/hatch-shared v0.0.0-20231102174820-771dba424f3e h1:X0VOP3V9D7vDA3V+FcHYGsYAgmCHeux3mOZQ9aM+WY8=
+github.com/karman-digital/hatch-shared v0.0.0-20231102174820-771dba424f3e/go.mod h1:wpVmtzzwoJ4+2w7RlSThVosCaU7pxBqD40Pu3iZiT0A=
+github.com/karman-digital/hatch-shared v0.0.0-20231102175934-e1e6d3dbfc8b h1:Z8O4cRZ07M4vzAPc3GBbZAELUvO1rjcpTeJTSuEqwxo=
+github.com/karman-digital/hatch-shared v0.0.0-20231102175934-e1e6d3dbfc8b/go.mod h1:wpVmtzzwoJ4+2w7RlSThVosCaU7pxBqD40Pu3iZiT0A=
 github.com/karman-digital/hatch-systemio v0.0.0-20231102155943-e277e14ab56b h1:l0wEyXtPn6ZJYJIBKVwrUMbr91gSUBZ0ZN6lBuijkFg=
 github.com/karman-digital/hatch-systemio v0.0.0-20231102155943-e277e14ab56b/go.mod h1:mdjDnZ8JKN0b6gn1B/N4EqTKhoXKEPVsVYoeW+2hOxw=
 github.com/karman-digital/hatch-systemio v0.0.0-20231102163244-4732ac000919 h1:Ae3CWmiEVh29L+cAPaKFJzgXEP2lFhkBH4JJhwMVOpw=

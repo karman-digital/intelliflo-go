@@ -3,10 +3,11 @@ package intelliflo
 import (
 	"fmt"
 
+	apptypes "github.com/karman-digital/hatch-shared/types"
 	systemiomodels "github.com/karman-digital/hatch-systemio/systemio/models"
 )
 
-func (c *credentials) RetrieveAccessToken() AccessToken {
+func (c *credentials) RetrieveAccessToken() apptypes.AccessToken {
 	return c.AccessToken
 }
 
@@ -14,11 +15,11 @@ func (c *credentials) RetrieveAPIKey() systemiomodels.APIKey {
 	return c.APIKey
 }
 
-func (c *credentials) RetrieveExpiresAt() ExpiresAt {
+func (c *credentials) RetrieveExpiresAt() apptypes.ExpiresAt {
 	return c.ExpiresAt
 }
 
-func (c *credentials) SetAccessToken(accessToken AccessToken) error {
+func (c *credentials) SetAccessToken(accessToken apptypes.AccessToken) error {
 	if accessToken == "" {
 		return fmt.Errorf("access token cannot be empty")
 	}
@@ -34,7 +35,7 @@ func (c *credentials) SetAPIKey(apiKey systemiomodels.APIKey) error {
 	return nil
 }
 
-func (c *credentials) SetExpiresAt(expiresAt ExpiresAt) error {
+func (c *credentials) SetExpiresAt(expiresAt apptypes.ExpiresAt) error {
 	if expiresAt.Time().IsZero() {
 		return fmt.Errorf("expires at cannot be empty")
 	}
