@@ -1,4 +1,4 @@
-package models
+package intelliflo_models
 
 type ContactDetails struct {
 	Href      string          `json:"href"`

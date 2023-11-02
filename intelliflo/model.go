@@ -5,26 +5,26 @@ import (
 
 	"github.com/hashicorp/go-retryablehttp"
 	"github.com/karman-digital/hatch-models/intelliflomodels"
+	systemiomodels "github.com/karman-digital/hatch-systemio/systemio/models"
 )
 
 type AccessToken string
 type ExpiresAt time.Time
-type APIKey string
 
 type credentials struct {
 	Client      *retryablehttp.Client
 	AccessToken AccessToken
 	ExpiresAt   ExpiresAt
-	APIKey      APIKey
+	APIKey      systemiomodels.APIKey
 }
 
 type IntellfloAPI interface {
-	RetrieveAPIKey() APIKey
+	RetrieveAPIKey() systemiomodels.APIKey
 	RetrieveAccessToken() AccessToken
 	RetrieveExpiresAt() ExpiresAt
-	SetAccessToken(accessToken string) error
-	SetAPIKey(apiKey string) error
-	SetExpiresAt(expiresAt time.Time) error
+	SetAccessToken(accessToken AccessToken) error
+	SetAPIKey(apiKey systemiomodels.APIKey) error
+	SetExpiresAt(expiresAt ExpiresAt) error
 	GetUserById(id int) (intelliflomodels.User, error)
 	GetUsersByEmail(email string) (intelliflomodels.Users, error)
 	GetAdvisersByUserId(userId int) (intelliflomodels.Advisers, error)
@@ -42,10 +42,6 @@ type IntellfloAPI interface {
 }
 
 func (a AccessToken) String() string {
-	return string(a)
-}
-
-func (a APIKey) String() string {
 	return string(a)
 }
 

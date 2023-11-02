@@ -1,4 +1,4 @@
-package models
+package intelliflo_models
 
 type AppInstallWebhookBody struct {
 	ID           string            `json:"id"`
