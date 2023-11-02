@@ -1,4 +1,4 @@
-package intelliflo_models
+package intelliflomodels
 
 import "time"
 

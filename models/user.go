@@ -1,4 +1,4 @@
-package intelliflo_models
+package intelliflomodels
 
 type User struct {
 	ID              int    `json:"id"`
