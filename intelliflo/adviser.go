@@ -8,7 +8,7 @@ import (
 	"net/url"
 
 	"github.com/hashicorp/go-retryablehttp"
-	"github.com/karman-digital/hatch-models/intelliflomodels"
+	intelliflomodels "github.com/karman-digital/intelliflo/models"
 )
 
 func (c *credentials) GetAdvisersByUserId(userId int) (intelliflomodels.Advisers, error) {

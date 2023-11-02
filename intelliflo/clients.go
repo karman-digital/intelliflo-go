@@ -8,7 +8,7 @@ import (
 	"net/http"
 
 	"github.com/hashicorp/go-retryablehttp"
-	"github.com/karman-digital/hatch-models/intelliflomodels"
+	intelliflomodels "github.com/karman-digital/intelliflo/models"
 )
 
 func (c *credentials) CreateNewClient(clientObj intelliflomodels.Client) (intelliflomodels.Client, error) {

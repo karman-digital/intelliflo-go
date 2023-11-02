@@ -2,8 +2,8 @@ package intelliflo
 
 import (
 	"github.com/hashicorp/go-retryablehttp"
-	"github.com/karman-digital/hatch-models/intelliflomodels"
 	apptypes "github.com/karman-digital/hatch-shared/types"
+	intelliflomodels "github.com/karman-digital/intelliflo/models"
 )
 
 type credentials struct {
