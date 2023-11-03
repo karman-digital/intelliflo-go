@@ -90,3 +90,31 @@ func (c *credentials) GetClients(options ...intelliflomodels.GetOptions) (intell
 	}
 	return clients, nil
 }
+
+func (c *credentials) GetClient(clientId int) (intelliflomodels.Client, error) {
+	var client intelliflomodels.Client
+	req, err := retryablehttp.NewRequest("GET", fmt.Sprintf("https://api.gb.intelliflo.net/v2/clients/%d", clientId), nil)
+	if err != nil {
+		return client, fmt.Errorf("error creating request: %v", err)
+	}
+	req.Header.Set("Content-Type", "application/json")
+	req.Header["x-api-key"] = []string{c.apiKey.String()}
+	req.Header["authorization"] = []string{fmt.Sprintf("Bearer %s", c.accessToken)}
+	resp, err := c.client.Do(req)
+	if err != nil {
+		return client, fmt.Errorf("error making post request: %v", err)
+	}
+	defer resp.Body.Close()
+	respBody, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return client, fmt.Errorf("error reading body: %v", err)
+	}
+	if resp.StatusCode != http.StatusOK {
+		return client, fmt.Errorf("error returned by endpoint, status code: %d, body: %s", resp.StatusCode, respBody)
+	}
+	err = json.Unmarshal(respBody, &client)
+	if err != nil {
+		return client, fmt.Errorf("error parsing body: %v", err)
+	}
+	return client, nil
+}

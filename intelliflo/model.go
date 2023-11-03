@@ -33,6 +33,7 @@ type IntellfloAPI interface {
 	GetContactDetails(clientId int) (intelliflomodels.ContactDetails, error)
 	PostContactDetail(clientId int, contactDetail intelliflomodels.ContactDetail) (intelliflomodels.ContactDetail, error)
 	PutContactDetail(clientId int, contactDetailId int, contactDetail intelliflomodels.ContactDetail) (intelliflomodels.ContactDetail, error)
+	GetClient(clientId int) (intelliflomodels.Client, error)
 	GetClients(options ...intelliflomodels.GetOptions) (intelliflomodels.Clients, error)
 	GetPlans(clientId int, options ...intelliflomodels.GetOptions) (intelliflomodels.Plans, error)
 	GetHoldings(clientId int, planId int, options ...intelliflomodels.GetOptions) (intelliflomodels.Holdings, error)
