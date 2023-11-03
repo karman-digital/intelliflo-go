@@ -94,41 +94,43 @@ type Trust struct {
 	VatRegistrationNumber       string       `json:"vatRegistrationNumber,omitempty"`
 }
 
+type ServiceStatus struct {
+	Name      string `json:"name,omitempty"`
+	StartedOn string `json:"startedOn,omitempty"`
+}
+
 type Client struct {
-	ID                     int          `json:"id,omitempty"`
-	Href                   string       `json:"href,omitempty"`
-	Name                   string       `json:"name,omitempty"`
-	CreatedAt              string       `json:"createdAt,omitempty"`
-	Campaign               *Campaign    `json:"campaign,omitempty"`
-	Category               string       `json:"category,omitempty"`
-	MigrationReference     string       `json:"migrationReference,omitempty"`
-	ExternalReference      string       `json:"externalReference,omitempty"`
-	SecondaryReference     string       `json:"secondaryReference,omitempty"`
-	OriginalAdviser        *IOSubObject `json:"originalAdviser,omitempty"`
-	CurrentAdviser         *IOSubObject `json:"currentAdviser,omitempty"`
-	Type                   string       `json:"type,omitempty"`
-	PartyType              string       `json:"partyType,omitempty"`
-	Person                 *Person      `json:"person,omitempty"`
-	Corporate              *Corporate   `json:"corporate,omitempty"`
-	Trust                  *Trust       `json:"trust,omitempty"`
-	AddressesHref          string       `json:"addresses_href,omitempty"`
-	ContactDetailsHref     string       `json:"contactdetails_href,omitempty"`
-	PlansHref              string       `json:"plans_href,omitempty"`
-	RelationshipsHref      string       `json:"relationships_href,omitempty"`
-	ServiceCasesHref       string       `json:"servicecases_href,omitempty"`
-	DependantsHref         string       `json:"dependants_href,omitempty"`
-	IsHeadOfFamilyGroup    bool         `json:"isHeadOfFamilyGroup,omitempty"`
-	ServicingAdministrator *IOSubObject `json:"servicingAdministrator,omitempty"`
-	Paraplanner            *IOSubObject `json:"paraplanner,omitempty"`
-	Tags                   []string     `json:"tags,omitempty"`
-	TaxReferenceNumber     string       `json:"taxReferenceNumber,omitempty"`
-	User                   *IOSubObject `json:"user,omitempty"`
-	ServiceStatus          *struct {
-		Name      string `json:"name,omitempty"`
-		StartedOn string `json:"startedOn,omitempty"`
-	} `json:"serviceStatus,omitempty"`
-	Group     *IOSubObject `json:"group,omitempty"`
-	Household *IOSubObject `json:"household,omitempty"`
+	ID                     int            `json:"id,omitempty"`
+	Href                   string         `json:"href,omitempty"`
+	Name                   string         `json:"name,omitempty"`
+	CreatedAt              string         `json:"createdAt,omitempty"`
+	Campaign               *Campaign      `json:"campaign,omitempty"`
+	Category               string         `json:"category,omitempty"`
+	MigrationReference     string         `json:"migrationReference,omitempty"`
+	ExternalReference      string         `json:"externalReference,omitempty"`
+	SecondaryReference     string         `json:"secondaryReference,omitempty"`
+	OriginalAdviser        *IOSubObject   `json:"originalAdviser,omitempty"`
+	CurrentAdviser         *IOSubObject   `json:"currentAdviser,omitempty"`
+	Type                   string         `json:"type,omitempty"`
+	PartyType              string         `json:"partyType,omitempty"`
+	Person                 *Person        `json:"person,omitempty"`
+	Corporate              *Corporate     `json:"corporate,omitempty"`
+	Trust                  *Trust         `json:"trust,omitempty"`
+	AddressesHref          string         `json:"addresses_href,omitempty"`
+	ContactDetailsHref     string         `json:"contactdetails_href,omitempty"`
+	PlansHref              string         `json:"plans_href,omitempty"`
+	RelationshipsHref      string         `json:"relationships_href,omitempty"`
+	ServiceCasesHref       string         `json:"servicecases_href,omitempty"`
+	DependantsHref         string         `json:"dependants_href,omitempty"`
+	IsHeadOfFamilyGroup    bool           `json:"isHeadOfFamilyGroup,omitempty"`
+	ServicingAdministrator *IOSubObject   `json:"servicingAdministrator,omitempty"`
+	Paraplanner            *IOSubObject   `json:"paraplanner,omitempty"`
+	Tags                   []string       `json:"tags,omitempty"`
+	TaxReferenceNumber     string         `json:"taxReferenceNumber,omitempty"`
+	User                   *IOSubObject   `json:"user,omitempty"`
+	ServiceStatus          *ServiceStatus `json:"serviceStatus,omitempty"`
+	Group                  *IOSubObject   `json:"group,omitempty"`
+	Household              *IOSubObject   `json:"household,omitempty"`
 }
 
 type Clients struct {
