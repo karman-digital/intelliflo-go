@@ -1,6 +1,8 @@
 package intelliflo
 
 import (
+	"time"
+
 	"github.com/hashicorp/go-retryablehttp"
 	apptypes "github.com/karman-digital/hatch-shared/types"
 	intelliflomodels "github.com/karman-digital/intelliflo/models"
@@ -17,9 +19,9 @@ type IntellfloAPI interface {
 	RetrieveAPIKey() apptypes.APIKey
 	RetrieveAccessToken() apptypes.AccessToken
 	RetrieveExpiresAt() apptypes.ExpiresAt
-	SetAccessToken(accessToken apptypes.AccessToken) error
-	SetAPIKey(apiKey apptypes.APIKey) error
-	SetExpiresAt(expiresAt apptypes.ExpiresAt) error
+	SetAccessToken(accessToken string) error
+	SetAPIKey(apiKey apptypes.APIKey)
+	SetExpiresAt(expiresAt time.Time) error
 	GetUserById(id int) (intelliflomodels.User, error)
 	GetUsersByEmail(email string) (intelliflomodels.Users, error)
 	GetAdvisersByUserId(userId int) (intelliflomodels.Advisers, error)
