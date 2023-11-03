@@ -15,9 +15,9 @@ type TerritorialProfile struct {
 	CountryOfBirth         string    `json:"countryOfBirth,omitempty"`
 	UkDomicile             bool      `json:"ukDomicile,omitempty"`
 	Expatriate             bool      `json:"expatriate,omitempty"`
-	CountryOfResidence     Country   `json:"countryOfResidence,omitempty"`
-	CountryOfDomicile      Country   `json:"countryOfDomicile,omitempty"`
-	CountryOfOrigin        Country   `json:"countryOfOrigin,omitempty"`
+	CountryOfResidence     *Country  `json:"countryOfResidence,omitempty"`
+	CountryOfDomicile      *Country  `json:"countryOfDomicile,omitempty"`
+	CountryOfOrigin        *Country  `json:"countryOfOrigin,omitempty"`
 	PlaceOfBirth           string    `json:"placeOfBirth,omitempty"`
 	CountriesOfCitizenship []Country `json:"countriesOfCitizenship,omitempty"`
 }
