@@ -1,5 +1,16 @@
 package intelliflomodels
 
+type WebhookPayload struct {
+	ID           string         `json:"id"`
+	Event        string         `json:"event"`
+	TimeStamp    string         `json:"timeStamp"`
+	InstalledFor map[string]any `json:"installedFor"`
+	Payload      map[string]any `json:"payload"`
+	Version      string         `json:"version"`
+	TenantId     int            `json:"tenantId"`
+	UserId       int            `json:"userId"`
+}
+
 type AppInstallWebhookBody struct {
 	ID           string            `json:"id"`
 	Event        string            `json:"event"`
@@ -12,8 +23,8 @@ type ClientChangedWebhookBody struct {
 	ID        string `json:"id"`
 	Event     string `json:"event"`
 	TimeStamp string `json:"timeStamp"`
-	TenantId  string `json:"tenantId"`
-	UserId    string `json:"userId"`
+	TenantId  int    `json:"tenantId"`
+	UserId    int    `json:"userId"`
 	Payload   Client `json:"payload"`
 }
 
