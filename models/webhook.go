@@ -23,8 +23,8 @@ type ClientChangedWebhookBody struct {
 	ID        string `json:"id"`
 	Event     string `json:"event"`
 	TimeStamp string `json:"timeStamp"`
-	TenantId  int    `json:"tenantId"`
-	UserId    int    `json:"userId"`
+	TenantId  string `json:"tenantId"`
+	UserId    string `json:"userId"`
 	Payload   Client `json:"payload"`
 }
 
