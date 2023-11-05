@@ -8,6 +8,14 @@ type AppInstallWebhookBody struct {
 	Payload      AppInstallPayload `json:"payload"`
 }
 
+type ClientChangedWebhookBody struct {
+	ID        string `json:"id"`
+	Event     string `json:"event"`
+	TimeStamp string `json:"timeStamp"`
+	Payload   Client `json:"payload"`
+	TenantId  int    `json:"tenantId"`
+}
+
 type InstalledFor struct {
 	Tenant              InstalledForID `json:"tenant"`
 	User                InstalledForID `json:"user"`
