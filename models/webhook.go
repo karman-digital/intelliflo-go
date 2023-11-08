@@ -37,6 +37,15 @@ type ContactDetailWebhookBody struct {
 	Payload   ContactDetail `json:"payload"`
 }
 
+type AddressWebhookBody struct {
+	ID        string  `json:"id"`
+	Event     string  `json:"event"`
+	TimeStamp string  `json:"timeStamp"`
+	TenantId  string  `json:"tenantId"`
+	UserId    string  `json:"userId"`
+	Payload   Address `json:"payload"`
+}
+
 type InstalledFor struct {
 	Tenant              InstalledForID `json:"tenant"`
 	User                InstalledForID `json:"user"`
