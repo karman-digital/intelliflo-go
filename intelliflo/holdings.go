@@ -47,6 +47,7 @@ func (c *credentials) GetHoldings(clientId int, planId int, options ...intellifl
 		return holdings, fmt.Errorf("error when getting plans. error code:%d, body: %s", resp.StatusCode, string(respBody))
 	}
 	defer resp.Body.Close()
+	fmt.Println(string(respBody))
 	err = json.Unmarshal(respBody, &holdings)
 	if err != nil {
 		return holdings, fmt.Errorf("error unmarshalling response: %v", err)
