@@ -38,12 +38,12 @@ type ContactDetailWebhookBody struct {
 }
 
 type AddressWebhookBody struct {
-	ID        string  `json:"id"`
-	Event     string  `json:"event"`
-	TimeStamp string  `json:"timeStamp"`
-	TenantId  string  `json:"tenantId"`
-	UserId    string  `json:"userId"`
-	Payload   Address `json:"payload"`
+	ID        string    `json:"id"`
+	Event     string    `json:"event"`
+	TimeStamp string    `json:"timeStamp"`
+	TenantId  string    `json:"tenantId"`
+	UserId    string    `json:"userId"`
+	Payload   Residence `json:"payload"`
 }
 
 type InstalledFor struct {
