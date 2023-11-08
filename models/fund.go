@@ -113,7 +113,7 @@ type Equity struct {
 }
 
 type Units struct {
-	Number          int       `json:"number"`
+	Number          float64   `json:"number"`
 	NumberUpdatedOn time.Time `json:"numberUpdatedOn"`
 	PriceUpdatedOn  time.Time `json:"priceUpdatedOn"`
 	Price           Price     `json:"price"`
