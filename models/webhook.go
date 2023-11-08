@@ -28,6 +28,15 @@ type ClientChangedWebhookBody struct {
 	Payload   Client `json:"payload"`
 }
 
+type ContactDetailWebhookBody struct {
+	ID        string        `json:"id"`
+	Event     string        `json:"event"`
+	TimeStamp string        `json:"timeStamp"`
+	TenantId  string        `json:"tenantId"`
+	UserId    string        `json:"userId"`
+	Payload   ContactDetail `json:"payload"`
+}
+
 type InstalledFor struct {
 	Tenant              InstalledForID `json:"tenant"`
 	User                InstalledForID `json:"user"`
