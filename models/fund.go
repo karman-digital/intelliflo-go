@@ -3,8 +3,8 @@ package intelliflomodels
 import "time"
 
 type Price struct {
-	Currency string `json:"currency"`
-	Amount   string `json:"amount"`
+	Currency string  `json:"currency"`
+	Amount   float64 `json:"amount"`
 }
 
 type Codes struct {
