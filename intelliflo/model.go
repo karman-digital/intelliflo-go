@@ -4,7 +4,7 @@ import (
 	"time"
 
 	"github.com/hashicorp/go-retryablehttp"
-	apptypes "github.com/karman-digital/hatch-shared/types"
+	apptypes "github.com/karman-digital/integrations/types"
 	intelliflomodels "github.com/karman-digital/intelliflo/models"
 )
 

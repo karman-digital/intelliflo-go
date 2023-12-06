@@ -7,5 +7,7 @@ github.com/hashicorp/go-retryablehttp v0.7.4 h1:ZQgVdpTdAL7WpMIwLzCfbalOcSUdkDZn
 github.com/hashicorp/go-retryablehttp v0.7.4/go.mod h1:Jy/gPYAdjqffZ/yFGCFV2doI5wjtH1ewM9u8iYVjtX8=
 github.com/karman-digital/hatch-shared v0.0.0-20231102175934-e1e6d3dbfc8b h1:Z8O4cRZ07M4vzAPc3GBbZAELUvO1rjcpTeJTSuEqwxo=
 github.com/karman-digital/hatch-shared v0.0.0-20231102175934-e1e6d3dbfc8b/go.mod h1:wpVmtzzwoJ4+2w7RlSThVosCaU7pxBqD40Pu3iZiT0A=
+github.com/karman-digital/integrations v0.0.0-20231205155952-2b750e4b6722 h1:gd93q4KIJolSc+fXtJkFVqaWsqMMnk1PGFJrZWpumz0=
+github.com/karman-digital/integrations v0.0.0-20231205155952-2b750e4b6722/go.mod h1:dM5i0mq8Nx8mwhZrH1qJmSaRSe4Dic0SV0vn6RIev+E=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/stretchr/testify v1.2.2/go.mod h1:a8OnRcib4nhh0OaRAV+Yts87kKdq0PP7pXfy6kDkUVs=

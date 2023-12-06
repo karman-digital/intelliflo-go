@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	apptypes "github.com/karman-digital/hatch-shared/types"
+	apptypes "github.com/karman-digital/integrations/types"
 )
 
 func (c *credentials) RetrieveAccessToken() apptypes.AccessToken {
