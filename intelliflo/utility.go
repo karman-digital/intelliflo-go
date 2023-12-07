@@ -19,6 +19,10 @@ func (c *credentials) RetrieveExpiresAt() apptypes.ExpiresAt {
 	return c.expiresAt
 }
 
+func (c *credentials) RetrieveTenantId() apptypes.TenantId {
+	return c.tenantId
+}
+
 func (c *credentials) SetAccessToken(accessToken string) error {
 	if accessToken == "" {
 		return fmt.Errorf("access token cannot be empty")
@@ -37,4 +41,8 @@ func (c *credentials) SetExpiresAt(expiresAt time.Time) error {
 	}
 	c.expiresAt = apptypes.ExpiresAt(expiresAt)
 	return nil
+}
+
+func (c *credentials) SetTenantId(tenantId apptypes.TenantId) {
+	c.tenantId = tenantId
 }

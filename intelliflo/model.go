@@ -13,15 +13,18 @@ type credentials struct {
 	accessToken apptypes.AccessToken
 	expiresAt   apptypes.ExpiresAt
 	apiKey      apptypes.APIKey
+	tenantId    apptypes.TenantId
 }
 
 type IntellfloAPI interface {
 	RetrieveAPIKey() apptypes.APIKey
 	RetrieveAccessToken() apptypes.AccessToken
 	RetrieveExpiresAt() apptypes.ExpiresAt
+	RetrieveTenantId() apptypes.TenantId
 	SetAccessToken(accessToken string) error
 	SetAPIKey(apiKey apptypes.APIKey)
 	SetExpiresAt(expiresAt time.Time) error
+	SetTenantId(tenantId apptypes.TenantId)
 	GetUserById(id int) (intelliflomodels.User, error)
 	GetUsersByEmail(email string) (intelliflomodels.Users, error)
 	GetAdvisersByUserId(userId int) (intelliflomodels.Advisers, error)
