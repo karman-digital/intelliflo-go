@@ -73,14 +73,15 @@ func (c *credentials) GetClients(options ...intelliflomodels.GetOptions) (intell
 	req.Header["x-api-key"] = []string{c.apiKey.String()}
 	req.Header["authorization"] = []string{fmt.Sprintf("Bearer %s", c.accessToken)}
 	resp, err := c.client.Do(req)
+	var respBody []byte
 	if err != nil {
-		return clients, fmt.Errorf("error making post request: %v", err)
+		respBody, err = io.ReadAll(resp.Body)
+		if err != nil {
+			return clients, fmt.Errorf("error reading body: %v", err)
+		}
+		return clients, fmt.Errorf("error returned by endpoint, status code: %d, body: %s, error: %s", resp.StatusCode, respBody, err.Error())
 	}
 	defer resp.Body.Close()
-	respBody, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return clients, fmt.Errorf("error reading body: %v", err)
-	}
 	if resp.StatusCode != http.StatusOK {
 		return clients, fmt.Errorf("error returned by endpoint, status code: %d, body: %s", resp.StatusCode, respBody)
 	}
