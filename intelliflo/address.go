@@ -13,7 +13,6 @@ import (
 func (c *credentials) GetAddresses(clientId int) (intelliflomodels.Addresses, error) {
 	var addresses intelliflomodels.Addresses
 	reqUrl := fmt.Sprintf("https://api.gb.intelliflo.net/v2/clients/%d/addresses", clientId)
-	fmt.Println(reqUrl)
 	req, err := retryablehttp.NewRequest("GET", reqUrl, nil)
 	if err != nil {
 		return addresses, fmt.Errorf("error creating request: %v", err)
