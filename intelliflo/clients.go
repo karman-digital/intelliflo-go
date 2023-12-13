@@ -75,7 +75,7 @@ func (c *credentials) GetClients(options ...intelliflomodels.GetOptions) (intell
 	resp, err := c.client.Do(req)
 	var respBody []byte
 	if err != nil {
-		return clients, fmt.Errorf("error making get call, status code: %d, error: %s", resp.StatusCode, err.Error())
+		return clients, fmt.Errorf("error making get call, error: %s", err.Error())
 	}
 	defer resp.Body.Close()
 	respBody, err = io.ReadAll(resp.Body)
