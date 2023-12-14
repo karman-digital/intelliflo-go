@@ -6,10 +6,10 @@ type Relationship struct {
 	RelationshipType               RelationshipType `json:"relationshipType"`
 	Subject                        RelationSubject  `json:"subject"`
 	Relation                       RelationSubject  `json:"relation"`
-	IsFinancialPartnership         bool             `json:"isFinancialPartnership,omitempty"`
-	IsFamilyGroup                  bool             `json:"isFamilyGroup,omitempty"`
-	IncludeInRelationsFamilyWealth bool             `json:"includeInRelationsFamilyWealth,omitempty"`
-	IsPointOfContact               bool             `json:"isPointOfContact,omitempty"`
+	IsFinancialPartnership         *bool            `json:"isFinancialPartnership,omitempty"`
+	IsFamilyGroup                  *bool            `json:"isFamilyGroup,omitempty"`
+	IncludeInRelationsFamilyWealth *bool            `json:"includeInRelationsFamilyWealth,omitempty"`
+	IsPointOfContact               *bool            `json:"isPointOfContact,omitempty"`
 	StartedOn                      string           `json:"startedOn,omitempty"`
 }
 
@@ -34,4 +34,14 @@ type Access struct {
 type GrantedBy struct {
 	ID   int    `json:"id,omitempty"`
 	Href string `json:"href,omitempty"`
+}
+
+type Relationships struct {
+	Href      string         `json:"href"`
+	FirstHref string         `json:"first_href"`
+	LastHref  string         `json:"last_href"`
+	NextHref  string         `json:"next_href"`
+	PrevHref  string         `json:"prev_href"`
+	Items     []Relationship `json:"items"`
+	Count     int            `json:"count"`
 }

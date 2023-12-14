@@ -43,3 +43,42 @@ func (c *credentials) PostRelationship(cliendId int, postBody intelliflomodels.R
 	}
 	return relationship, nil
 }
+
+func (c *credentials) GetRelationships(clientId int, options ...intelliflomodels.GetOptions) (intelliflomodels.Relationships, error) {
+	var relationships intelliflomodels.Relationships
+	req, err := retryablehttp.NewRequest("GET", fmt.Sprintf("https://api.gb.intelliflo.net/v2/clients/%d/relationships", clientId), nil)
+	if err != nil {
+		return relationships, fmt.Errorf("error creating request: %v", err)
+	}
+	if len(options) > 0 {
+		q := req.URL.Query()
+		if options[0].Skip != 0 {
+			q.Add("skip", fmt.Sprintf("%d", options[0].Skip))
+		}
+		if options[0].Top != 0 {
+			q.Add("top", fmt.Sprintf("%d", options[0].Top))
+		} else {
+			q.Add("top", "100")
+		}
+		req.URL.RawQuery = q.Encode()
+	}
+	req.Header["x-api-key"] = []string{c.apiKey.String()}
+	req.Header["authorization"] = []string{fmt.Sprintf("Bearer %s", c.accessToken)}
+	resp, err := c.client.Do(req)
+	if err != nil {
+		return relationships, fmt.Errorf("error making post request: %v", err)
+	}
+	respBody, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return relationships, fmt.Errorf("error reading body: %v", err)
+	}
+	if resp.StatusCode != http.StatusOK {
+		return relationships, fmt.Errorf("error when creating client: %s", string(respBody))
+	}
+	defer resp.Body.Close()
+	err = json.Unmarshal(respBody, &relationships)
+	if err != nil {
+		return relationships, fmt.Errorf("error unmarshalling response: %v", err)
+	}
+	return relationships, nil
+}
