@@ -42,4 +42,5 @@ type IntellfloAPI interface {
 	GetHoldings(clientId int, planId int, options ...intelliflomodels.GetOptions) (intelliflomodels.Holdings, error)
 	PutClient(clientId int, client intelliflomodels.Client) (intelliflomodels.Client, error)
 	PostRelationship(cliendId int, postBody intelliflomodels.Relationship) (intelliflomodels.Relationship, error)
+	GetRelationships(clientId int, options ...intelliflomodels.GetOptions) (intelliflomodels.Relationships, error)
 }
