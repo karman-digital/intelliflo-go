@@ -1,16 +1,16 @@
 package intelliflomodels
 
 type Relationship struct {
-	ID                             int               `json:"id,omitempty"`
-	Href                           string            `json:"href,omitempty"`
-	RelationshipType               *RelationshipType `json:"relationshipType"`
-	Subject                        *RelationSubject  `json:"subject"`
-	Relation                       *RelationSubject  `json:"relation"`
-	IsFinancialPartnership         *bool             `json:"isFinancialPartnership,omitempty"`
-	IsFamilyGroup                  *bool             `json:"isFamilyGroup,omitempty"`
-	IncludeInRelationsFamilyWealth *bool             `json:"includeInRelationsFamilyWealth,omitempty"`
-	IsPointOfContact               *bool             `json:"isPointOfContact,omitempty"`
-	StartedOn                      string            `json:"startedOn,omitempty"`
+	ID                             int              `json:"id,omitempty"`
+	Href                           string           `json:"href,omitempty"`
+	RelationshipType               RelationshipType `json:"relationshipType"`
+	Subject                        RelationSubject  `json:"subject"`
+	Relation                       RelationSubject  `json:"relation"`
+	IsFinancialPartnership         *bool            `json:"isFinancialPartnership,omitempty"`
+	IsFamilyGroup                  *bool            `json:"isFamilyGroup,omitempty"`
+	IncludeInRelationsFamilyWealth *bool            `json:"includeInRelationsFamilyWealth,omitempty"`
+	IsPointOfContact               *bool            `json:"isPointOfContact,omitempty"`
+	StartedOn                      string           `json:"startedOn,omitempty"`
 }
 
 type RelationshipType struct {
