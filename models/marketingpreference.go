@@ -11,7 +11,7 @@ type Preferences struct {
 	Href                                   string     `json:"href"`
 	Client                                 PrefClient `json:"client"`
 	ID                                     int64      `json:"id"`
-	AllowCompanyContactByTelephone         bool       `json:"allowCompanyContactByTelephone"`
+	AllowCompanyContactByTelephone         bool       `json:"allowCompanyContactByTelephone,omitempty"`
 	AllowCompanyContactByMail              bool       `json:"allowCompanyContactByMail"`
 	AllowCompanyContactByEmail             bool       `json:"allowCompanyContactByEmail"`
 	AllowCompanyContactBySms               bool       `json:"allowCompanyContactBySms"`
