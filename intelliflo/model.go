@@ -45,4 +45,5 @@ type IntellfloAPI interface {
 	GetRelationships(clientId int, options ...intelliflomodels.GetOptions) (intelliflomodels.Relationships, error)
 	GetClientMarketingPreference(clientId int) (intelliflomodels.Preferences, error)
 	PutClientMarketingPreference(clientId int, body intelliflomodels.Preferences) (intelliflomodels.Preferences, error)
+	PostClient(clientObj intelliflomodels.Client) (intelliflomodels.Client, error)
 }
