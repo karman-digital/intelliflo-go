@@ -11,7 +11,7 @@ import (
 	intelliflomodels "github.com/karman-digital/intelliflo/models"
 )
 
-func (c *credentials) CreateNewClient(clientObj intelliflomodels.Client) (intelliflomodels.Client, error) {
+func (c *credentials) PostClient(clientObj intelliflomodels.Client) (intelliflomodels.Client, error) {
 	responseClient := intelliflomodels.Client{}
 	clientBody, err := json.Marshal(clientObj)
 	if err != nil {
