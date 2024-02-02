@@ -44,4 +44,5 @@ type IntellfloAPI interface {
 	GetClientMarketingPreference(clientId int) (intelliflomodels.Preferences, error)
 	PutClientMarketingPreference(clientId int, body intelliflomodels.Preferences) (intelliflomodels.Preferences, error)
 	PostClient(clientObj intelliflomodels.Client) (intelliflomodels.Client, error)
+	GenerateAccessTokenScopes(clientSecret string, clientId string, scope []string) (intelliflomodels.TokenResponse, error)
 }
