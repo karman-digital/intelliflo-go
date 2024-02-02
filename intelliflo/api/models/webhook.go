@@ -11,12 +11,22 @@ type WebhookPayload struct {
 	UserId       int            `json:"userId"`
 }
 
+type AppWebhookPayload struct {
+	ID        string `json:"id"`
+	Event     string `json:"event"`
+	TimeStamp string `json:"timeStamp"`
+}
+
 type AppInstallWebhookBody struct {
-	ID           string            `json:"id"`
-	Event        string            `json:"event"`
-	TimeStamp    string            `json:"timeStamp"`
+	AppWebhookPayload
 	InstalledFor InstalledFor      `json:"installedFor"`
 	Payload      AppInstallPayload `json:"payload"`
+}
+
+type AppUninstallWebhookBody struct {
+	AppWebhookPayload
+	UninstalledFor InstalledFor      `json:"uninstalledFor"`
+	Payload        AppInstallPayload `json:"payload"`
 }
 
 type ClientChangedWebhookBody struct {
