@@ -10,7 +10,7 @@ import (
 	"strings"
 
 	"github.com/hashicorp/go-retryablehttp"
-	intelliflomodels "github.com/karman-digital/intelliflo/models"
+	intelliflomodels "github.com/karman-digital/intelliflo/intelliflo/api/models"
 )
 
 func (c *credentials) GenerateAccessTokenScopes(clientSecret string, clientId string, scope []string) (intelliflomodels.TokenResponse, error) {

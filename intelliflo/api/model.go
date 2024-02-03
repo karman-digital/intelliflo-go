@@ -5,7 +5,7 @@ import (
 
 	"github.com/hashicorp/go-retryablehttp"
 	apptypes "github.com/karman-digital/integrations/types"
-	intelliflomodels "github.com/karman-digital/intelliflo/models"
+	intelliflomodels "github.com/karman-digital/intelliflo/intelliflo/api/models"
 )
 
 type credentials struct {

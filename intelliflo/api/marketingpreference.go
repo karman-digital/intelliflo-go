@@ -7,7 +7,7 @@ import (
 	"net/http"
 
 	"github.com/hashicorp/go-retryablehttp"
-	intelliflomodels "github.com/karman-digital/intelliflo/models"
+	intelliflomodels "github.com/karman-digital/intelliflo/intelliflo/api/models"
 )
 
 func (c *credentials) GetClientMarketingPreference(clientId int) (intelliflomodels.Preferences, error) {
