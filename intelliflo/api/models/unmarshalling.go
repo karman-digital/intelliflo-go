@@ -35,7 +35,7 @@ func (wp *WebhookPayload) UnmarshalJSON(data []byte) error {
 	case float64:
 		wp.TenantId = int(v)
 	default:
-		return errors.New("tenantId is neither a string nor a number")
+		wp.TenantId = 0
 	}
 	return nil
 }
