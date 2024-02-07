@@ -7,7 +7,7 @@ type WebhookPayload struct {
 	InstalledFor map[string]any `json:"-"`
 	Payload      map[string]any `json:"payload"`
 	Version      string         `json:"version"`
-	TenantId     int            `json:"tenantId"`
+	TenantId     int            `json:"-"`
 	UserId       int            `json:"userId"`
 }
 
