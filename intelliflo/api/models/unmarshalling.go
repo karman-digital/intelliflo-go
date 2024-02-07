@@ -12,6 +12,7 @@ func (wp *WebhookPayload) UnmarshalJSON(data []byte) error {
 		InstalledFor   map[string]any `json:"installedFor,omitempty"`
 		UninstalledFor map[string]any `json:"uninstalledFor,omitempty"`
 		TenantId       any            `json:"tenantId"`
+		UserId         any            `json:"userId"`
 		*Alias
 	}{
 		Alias: (*Alias)(wp),
@@ -36,6 +37,18 @@ func (wp *WebhookPayload) UnmarshalJSON(data []byte) error {
 		wp.TenantId = int(v)
 	default:
 		wp.TenantId = 0
+	}
+	switch v := aux.UserId.(type) {
+	case string:
+		id, err := strconv.Atoi(v)
+		if err != nil {
+			return errors.New("userId string could not be converted to int")
+		}
+		wp.UserId = id
+	case float64:
+		wp.UserId = int(v)
+	default:
+		wp.UserId = 0
 	}
 	return nil
 }
