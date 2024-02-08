@@ -62,7 +62,7 @@ func (c *credentials) PostContactDetail(clientId int, contactDetail intelliflomo
 	if err != nil {
 		return newContactDetail, fmt.Errorf("error reading body: %v", err)
 	}
-	if resp.StatusCode != http.StatusOK {
+	if resp.StatusCode != http.StatusCreated {
 		return newContactDetail, fmt.Errorf("error returned by endpoint: %v, with body: %v", resp.StatusCode, string(respBody))
 	}
 	err = json.Unmarshal(respBody, &newContactDetail)
