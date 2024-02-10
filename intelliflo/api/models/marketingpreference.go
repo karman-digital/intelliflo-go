@@ -3,30 +3,30 @@ package intelliflomodels
 import "time"
 
 type PrefClient struct {
-	ID   int32  `json:"id"`
-	Href string `json:"href"`
+	ID   int32  `json:"id,omitempty"`
+	Href string `json:"href,omitempty"`
 }
 
 type Preferences struct {
-	Href                                   string     `json:"href"`
+	Href                                   string     `json:"href,omitempty"`
 	Client                                 PrefClient `json:"client"`
-	ID                                     int64      `json:"id"`
-	AllowCompanyContactByTelephone         bool       `json:"allowCompanyContactByTelephone,omitempty"`
-	AllowCompanyContactByMail              bool       `json:"allowCompanyContactByMail"`
-	AllowCompanyContactByEmail             bool       `json:"allowCompanyContactByEmail"`
-	AllowCompanyContactBySms               bool       `json:"allowCompanyContactBySms"`
-	AllowCompanyContactBySocialMedia       bool       `json:"allowCompanyContactBySocialMedia"`
-	AllowCompanyContactByAutomatedCalls    bool       `json:"allowCompanyContactByAutomatedCalls"`
-	AllowCompanyContactByPfp               bool       `json:"allowCompanyContactByPfp"`
-	AllowThirdPartyContactByTelephone      bool       `json:"allowThirdPartyContactByTelephone"`
-	AllowThirdPartyContactByMail           bool       `json:"allowThirdPartyContactByMail"`
-	AllowThirdPartyContactByEmail          bool       `json:"allowThirdPartyContactByEmail"`
-	AllowThirdPartyContactBySms            bool       `json:"allowThirdPartyContactBySms"`
-	AllowThirdPartyContactBySocialMedia    bool       `json:"allowThirdPartyContactBySocialMedia"`
-	AllowThirdPartyContactByAutomatedCalls bool       `json:"allowThirdPartyContactByAutomatedCalls"`
-	AllowThirdPartyContactByPfp            bool       `json:"allowThirdPartyContactByPfp"`
+	ID                                     int64      `json:"id,omitempty"`
+	AllowCompanyContactByTelephone         *bool      `json:"allowCompanyContactByTelephone,omitempty"`
+	AllowCompanyContactByMail              *bool      `json:"allowCompanyContactByMail,omitempty"`
+	AllowCompanyContactByEmail             *bool      `json:"allowCompanyContactByEmail,omitempty"`
+	AllowCompanyContactBySms               *bool      `json:"allowCompanyContactBySms,omitempty"`
+	AllowCompanyContactBySocialMedia       *bool      `json:"allowCompanyContactBySocialMedia,omitempty"`
+	AllowCompanyContactByAutomatedCalls    *bool      `json:"allowCompanyContactByAutomatedCalls,omitempty"`
+	AllowCompanyContactByPfp               *bool      `json:"allowCompanyContactByPfp,omitempty"`
+	AllowThirdPartyContactByTelephone      *bool      `json:"allowThirdPartyContactByTelephone,omitempty"`
+	AllowThirdPartyContactByMail           *bool      `json:"allowThirdPartyContactByMail,omitempty"`
+	AllowThirdPartyContactByEmail          *bool      `json:"allowThirdPartyContactByEmail,omitempty"`
+	AllowThirdPartyContactBySms            *bool      `json:"allowThirdPartyContactBySms,omitempty"`
+	AllowThirdPartyContactBySocialMedia    *bool      `json:"allowThirdPartyContactBySocialMedia,omitempty"`
+	AllowThirdPartyContactByAutomatedCalls *bool      `json:"allowThirdPartyContactByAutomatedCalls,omitempty"`
+	AllowThirdPartyContactByPfp            *bool      `json:"allowThirdPartyContactByPfp,omitempty"`
 	CanContactForMarketingPurposes         string     `json:"canContactForMarketingPurposes"`
-	ConsentedAt                            time.Time  `json:"consentedAt"`
-	DeliveryMethod                         string     `json:"deliveryMethod"`
-	AccessibleFormat                       string     `json:"accessibleFormat"`
+	ConsentedAt                            time.Time  `json:"consentedAt,omitempty"`
+	DeliveryMethod                         string     `json:"deliveryMethod,omitempty"`
+	AccessibleFormat                       string     `json:"accessibleFormat,omitempty"`
 }

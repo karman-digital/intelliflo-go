@@ -21,7 +21,7 @@ func (c *credentials) GetClientMarketingPreference(clientId int) (intelliflomode
 	req.Header["authorization"] = []string{fmt.Sprintf("Bearer %s", c.accessToken)}
 	resp, err := c.client.Do(req)
 	if err != nil {
-		return prefs, fmt.Errorf("error making post request: %v", err)
+		return prefs, fmt.Errorf("error making get request: %v", err)
 	}
 	defer resp.Body.Close()
 	respBody, err := io.ReadAll(resp.Body)
@@ -53,7 +53,7 @@ func (c *credentials) PutClientMarketingPreference(clientId int, body intelliflo
 	req.Header["authorization"] = []string{fmt.Sprintf("Bearer %s", c.accessToken)}
 	resp, err := c.client.Do(req)
 	if err != nil {
-		return prefs, fmt.Errorf("error making post request: %v", err)
+		return prefs, fmt.Errorf("error making put request: %v", err)
 	}
 	defer resp.Body.Close()
 	respBody, err := io.ReadAll(resp.Body)
