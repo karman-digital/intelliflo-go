@@ -11,20 +11,20 @@ type Preferences struct {
 	Href                                   string     `json:"href,omitempty"`
 	Client                                 PrefClient `json:"client"`
 	ID                                     int64      `json:"id,omitempty"`
-	AllowCompanyContactByTelephone         *bool      `json:"allowCompanyContactByTelephone,omitempty"`
-	AllowCompanyContactByMail              *bool      `json:"allowCompanyContactByMail,omitempty"`
-	AllowCompanyContactByEmail             *bool      `json:"allowCompanyContactByEmail,omitempty"`
-	AllowCompanyContactBySms               *bool      `json:"allowCompanyContactBySms,omitempty"`
-	AllowCompanyContactBySocialMedia       *bool      `json:"allowCompanyContactBySocialMedia,omitempty"`
-	AllowCompanyContactByAutomatedCalls    *bool      `json:"allowCompanyContactByAutomatedCalls,omitempty"`
-	AllowCompanyContactByPfp               *bool      `json:"allowCompanyContactByPfp,omitempty"`
-	AllowThirdPartyContactByTelephone      *bool      `json:"allowThirdPartyContactByTelephone,omitempty"`
-	AllowThirdPartyContactByMail           *bool      `json:"allowThirdPartyContactByMail,omitempty"`
-	AllowThirdPartyContactByEmail          *bool      `json:"allowThirdPartyContactByEmail,omitempty"`
-	AllowThirdPartyContactBySms            *bool      `json:"allowThirdPartyContactBySms,omitempty"`
-	AllowThirdPartyContactBySocialMedia    *bool      `json:"allowThirdPartyContactBySocialMedia,omitempty"`
-	AllowThirdPartyContactByAutomatedCalls *bool      `json:"allowThirdPartyContactByAutomatedCalls,omitempty"`
-	AllowThirdPartyContactByPfp            *bool      `json:"allowThirdPartyContactByPfp,omitempty"`
+	AllowCompanyContactByTelephone         bool       `json:"allowCompanyContactByTelephone"`
+	AllowCompanyContactByMail              bool       `json:"allowCompanyContactByMail"`
+	AllowCompanyContactByEmail             bool       `json:"allowCompanyContactByEmail"`
+	AllowCompanyContactBySms               bool       `json:"allowCompanyContactBySms"`
+	AllowCompanyContactBySocialMedia       bool       `json:"allowCompanyContactBySocialMedia"`
+	AllowCompanyContactByAutomatedCalls    bool       `json:"allowCompanyContactByAutomatedCalls"`
+	AllowCompanyContactByPfp               bool       `json:"allowCompanyContactByPfp"`
+	AllowThirdPartyContactByTelephone      bool       `json:"allowThirdPartyContactByTelephone"`
+	AllowThirdPartyContactByMail           bool       `json:"allowThirdPartyContactByMail"`
+	AllowThirdPartyContactByEmail          bool       `json:"allowThirdPartyContactByEmail"`
+	AllowThirdPartyContactBySms            bool       `json:"allowThirdPartyContactBySms"`
+	AllowThirdPartyContactBySocialMedia    bool       `json:"allowThirdPartyContactBySocialMedia"`
+	AllowThirdPartyContactByAutomatedCalls bool       `json:"allowThirdPartyContactByAutomatedCalls"`
+	AllowThirdPartyContactByPfp            bool       `json:"allowThirdPartyContactByPfp"`
 	CanContactForMarketingPurposes         string     `json:"canContactForMarketingPurposes"`
 	ConsentedAt                            time.Time  `json:"consentedAt,omitempty"`
 	DeliveryMethod                         string     `json:"deliveryMethod,omitempty"`
