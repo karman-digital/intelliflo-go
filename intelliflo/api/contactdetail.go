@@ -20,14 +20,14 @@ func (c *credentials) GetContactDetails(clientId int) (intelliflomodels.ContactD
 	req.Header.Set("Content-Type", "application/json")
 	req.Header["x-api-key"] = []string{c.apiKey.String()}
 	req.Header["authorization"] = []string{fmt.Sprintf("Bearer %s", c.accessToken)}
-	resp, err := c.client.Do(req)
-	if err != nil {
-		return contactDetails, fmt.Errorf("error making post request: %v", err)
-	}
-	defer resp.Body.Close()
+	resp, httpErr := c.client.Do(req)
 	respBody, err := io.ReadAll(resp.Body)
+	defer resp.Body.Close()
 	if err != nil {
 		return contactDetails, fmt.Errorf("error reading body: %v", err)
+	}
+	if httpErr != nil {
+		return contactDetails, fmt.Errorf("error making get request: %v, with body: %v", httpErr, string(respBody))
 	}
 	if resp.StatusCode != http.StatusOK {
 		return contactDetails, fmt.Errorf("error returned by endpoint: %v, with body: %v", resp.StatusCode, string(respBody))
