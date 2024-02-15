@@ -72,18 +72,17 @@ func (c *credentials) GetClients(options ...intelliflomodels.GetOptions) (intell
 	req.Header.Set("Content-Type", "application/json")
 	req.Header["x-api-key"] = []string{c.apiKey.String()}
 	req.Header["authorization"] = []string{fmt.Sprintf("Bearer %s", c.accessToken)}
-	resp, err := c.client.Do(req)
-	var respBody []byte
-	if err != nil {
-		return clients, fmt.Errorf("error making get call, error: %s", err.Error())
-	}
+	resp, httpErr := c.client.Do(req)
+	respBody, err := io.ReadAll(resp.Body)
 	defer resp.Body.Close()
-	respBody, err = io.ReadAll(resp.Body)
 	if err != nil {
 		return clients, fmt.Errorf("error reading body: %v", err)
 	}
+	if httpErr != nil {
+		return clients, fmt.Errorf("error making get request: %v, with body: %v", httpErr, string(respBody))
+	}
 	if resp.StatusCode != http.StatusOK {
-		return clients, fmt.Errorf("error returned by endpoint, status code: %d, body: %s", resp.StatusCode, respBody)
+		return clients, fmt.Errorf("error returned by endpoint: %v, with body: %v", resp.StatusCode, string(respBody))
 	}
 	err = json.Unmarshal(respBody, &clients)
 	if err != nil {
