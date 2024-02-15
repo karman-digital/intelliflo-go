@@ -46,7 +46,7 @@ func (c *credentials) PostClient(clientObj intelliflomodels.Client) (intelliflom
 
 func (c *credentials) GetClients(options ...intelliflomodels.GetOptions) (intelliflomodels.Clients, error) {
 	var clients intelliflomodels.Clients
-	req, err := retryablehttp.NewRequest("GET", "https://api.gb.intelliflo.net/v2/clients", nil)
+	req, err := http.NewRequest("GET", "https://api.gb.intelliflo.net/v2/clients", nil)
 	if err != nil {
 		return clients, fmt.Errorf("error creating request: %v", err)
 	}
@@ -72,7 +72,8 @@ func (c *credentials) GetClients(options ...intelliflomodels.GetOptions) (intell
 	req.Header.Set("Content-Type", "application/json")
 	req.Header["x-api-key"] = []string{c.apiKey.String()}
 	req.Header["authorization"] = []string{fmt.Sprintf("Bearer %s", c.accessToken)}
-	resp, err := c.client.Do(req)
+	resp, err := c.client.StandardClient().Do(req)
+	fmt.Println(resp)
 	var respBody []byte
 	if err != nil {
 		return clients, fmt.Errorf("error making get call, error: %s", err.Error())
