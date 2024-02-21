@@ -1,7 +1,5 @@
 package intelliflomodels
 
-import "time"
-
 type Address struct {
 	Line1      string           `json:"line1,omitempty"`
 	Line2      string           `json:"line2,omitempty"`
@@ -26,34 +24,34 @@ type NewBuild struct {
 }
 
 type Property struct {
-	Type                 string     `json:"type,omitempty"`
-	TypeDetail           string     `json:"typeDetail,omitempty"`
-	TenureType           string     `json:"tenureType,omitempty"`
-	LeaseholdEndsOn      *time.Time `json:"leaseholdEndsOn,omitempty"`
-	Status               string     `json:"status,omitempty"`
-	Construction         string     `json:"construction,omitempty"`
-	ConstructionNotes    string     `json:"constructionNotes,omitempty"`
-	RoofConstruction     string     `json:"roofConstruction,omitempty"`
-	NumberOfBedrooms     int        `json:"numberOfBedrooms,omitempty"`
-	YearBuilt            int        `json:"yearBuilt,omitempty"`
-	IsExLocalAuthority   *bool      `json:"isExLocalAuthority,omitempty"`
-	NumberOfOutbuildings *int       `json:"numberOfOutbuildings,omitempty"`
-	NewBuild             *NewBuild  `json:"newBuild,omitempty"`
+	Type                 string              `json:"type,omitempty"`
+	TypeDetail           string              `json:"typeDetail,omitempty"`
+	TenureType           string              `json:"tenureType,omitempty"`
+	LeaseholdEndsOn      *intellifloDateTime `json:"leaseholdEndsOn,omitempty"`
+	Status               string              `json:"status,omitempty"`
+	Construction         string              `json:"construction,omitempty"`
+	ConstructionNotes    string              `json:"constructionNotes,omitempty"`
+	RoofConstruction     string              `json:"roofConstruction,omitempty"`
+	NumberOfBedrooms     int                 `json:"numberOfBedrooms,omitempty"`
+	YearBuilt            int                 `json:"yearBuilt,omitempty"`
+	IsExLocalAuthority   *bool               `json:"isExLocalAuthority,omitempty"`
+	NumberOfOutbuildings *int                `json:"numberOfOutbuildings,omitempty"`
+	NewBuild             *NewBuild           `json:"newBuild,omitempty"`
 }
 
 type Residence struct {
-	ID                          int        `json:"id,omitempty"`
-	Href                        string     `json:"href,omitempty"`
-	ResidencyStatus             string     `json:"residencyStatus,omitempty"`
-	Type                        string     `json:"type,omitempty"`
-	ResidentFrom                *time.Time `json:"residentFrom,omitempty"`
-	ResidentTo                  *time.Time `json:"residentTo,omitempty"`
-	Status                      string     `json:"status,omitempty"`
-	IsDefault                   bool       `json:"isDefault,omitempty"`
-	Address                     *Address   `json:"address,omitempty"`
-	IsRegisteredOnElectoralRoll *bool      `json:"isRegisteredOnElectoralRoll,omitempty"`
-	IsPotentialMortgage         *bool      `json:"isPotentialMortgage,omitempty"`
-	Property                    *Property  `json:"property,omitempty"`
+	ID                          int                 `json:"id,omitempty"`
+	Href                        string              `json:"href,omitempty"`
+	ResidencyStatus             string              `json:"residencyStatus,omitempty"`
+	Type                        string              `json:"type,omitempty"`
+	ResidentFrom                *intellifloDateTime `json:"residentFrom,omitempty"`
+	ResidentTo                  *intellifloDateTime `json:"residentTo,omitempty"`
+	Status                      string              `json:"status,omitempty"`
+	IsDefault                   bool                `json:"isDefault,omitempty"`
+	Address                     *Address            `json:"address,omitempty"`
+	IsRegisteredOnElectoralRoll *bool               `json:"isRegisteredOnElectoralRoll,omitempty"`
+	IsPotentialMortgage         *bool               `json:"isPotentialMortgage,omitempty"`
+	Property                    *Property           `json:"property,omitempty"`
 }
 
 type Addresses struct {
