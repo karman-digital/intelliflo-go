@@ -114,6 +114,7 @@ func (c *credentials) GetClient(clientId int) (intelliflomodels.Client, error) {
 	if resp.StatusCode != http.StatusOK {
 		return client, fmt.Errorf("error returned by endpoint, status code: %d, body: %s", resp.StatusCode, respBody)
 	}
+	fmt.Println(string(respBody))
 	err = json.Unmarshal(respBody, &client)
 	if err != nil {
 		return client, fmt.Errorf("error parsing body: %v", err)
