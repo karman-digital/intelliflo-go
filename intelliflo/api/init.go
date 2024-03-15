@@ -6,7 +6,7 @@ import (
 	"github.com/hashicorp/go-retryablehttp"
 )
 
-func InitIntellifloAPI() IntellfloAPI {
+func InitIntellifloAPI() IntellifloAPI {
 	client := retryablehttp.NewClient()
 	client.Logger = nil
 	client.ErrorHandler = func(resp *http.Response, err error, numTries int) (*http.Response, error) {

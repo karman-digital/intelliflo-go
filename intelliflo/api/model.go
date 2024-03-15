@@ -16,7 +16,7 @@ type credentials struct {
 	tenantId    apptypes.TenantId
 }
 
-type IntellfloAPI interface {
+type IntellifloAPI interface {
 	RetrieveAPIKey() apptypes.APIKey
 	RetrieveAccessToken() apptypes.AccessToken
 	RetrieveExpiresAt() apptypes.ExpiresAt
