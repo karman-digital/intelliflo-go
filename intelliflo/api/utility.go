@@ -4,22 +4,22 @@ import (
 	"fmt"
 	"time"
 
-	apptypes "github.com/karman-digital/integrations/types"
+	intelliflomodels "github.com/karman-digital/intelliflo/intelliflo/api/models"
 )
 
-func (c *credentials) RetrieveAccessToken() apptypes.AccessToken {
+func (c *credentials) RetrieveAccessToken() intelliflomodels.AccessToken {
 	return c.accessToken
 }
 
-func (c *credentials) RetrieveAPIKey() apptypes.APIKey {
+func (c *credentials) RetrieveAPIKey() intelliflomodels.APIKey {
 	return c.apiKey
 }
 
-func (c *credentials) RetrieveExpiresAt() apptypes.ExpiresAt {
+func (c *credentials) RetrieveExpiresAt() intelliflomodels.ExpiresAt {
 	return c.expiresAt
 }
 
-func (c *credentials) RetrieveTenantId() apptypes.TenantId {
+func (c *credentials) RetrieveTenantId() intelliflomodels.TenantId {
 	return c.tenantId
 }
 
@@ -27,11 +27,11 @@ func (c *credentials) SetAccessToken(accessToken string) error {
 	if accessToken == "" {
 		return fmt.Errorf("access token cannot be empty")
 	}
-	c.accessToken = apptypes.AccessToken(accessToken)
+	c.accessToken = intelliflomodels.AccessToken(accessToken)
 	return nil
 }
 
-func (c *credentials) SetAPIKey(apiKey apptypes.APIKey) {
+func (c *credentials) SetAPIKey(apiKey intelliflomodels.APIKey) {
 	c.apiKey = apiKey
 }
 
@@ -39,10 +39,10 @@ func (c *credentials) SetExpiresAt(expiresAt time.Time) error {
 	if expiresAt.IsZero() {
 		return fmt.Errorf("expires at cannot be empty")
 	}
-	c.expiresAt = apptypes.ExpiresAt(expiresAt)
+	c.expiresAt = intelliflomodels.ExpiresAt(expiresAt)
 	return nil
 }
 
-func (c *credentials) SetTenantId(tenantId apptypes.TenantId) {
+func (c *credentials) SetTenantId(tenantId intelliflomodels.TenantId) {
 	c.tenantId = tenantId
 }

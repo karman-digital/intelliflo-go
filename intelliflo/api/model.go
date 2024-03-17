@@ -4,27 +4,26 @@ import (
 	"time"
 
 	"github.com/hashicorp/go-retryablehttp"
-	apptypes "github.com/karman-digital/integrations/types"
 	intelliflomodels "github.com/karman-digital/intelliflo/intelliflo/api/models"
 )
 
 type credentials struct {
 	client      *retryablehttp.Client
-	accessToken apptypes.AccessToken
-	expiresAt   apptypes.ExpiresAt
-	apiKey      apptypes.APIKey
-	tenantId    apptypes.TenantId
+	accessToken intelliflomodels.AccessToken
+	expiresAt   intelliflomodels.ExpiresAt
+	apiKey      intelliflomodels.APIKey
+	tenantId    intelliflomodels.TenantId
 }
 
 type IntellifloAPI interface {
-	RetrieveAPIKey() apptypes.APIKey
-	RetrieveAccessToken() apptypes.AccessToken
-	RetrieveExpiresAt() apptypes.ExpiresAt
-	RetrieveTenantId() apptypes.TenantId
+	RetrieveAPIKey() intelliflomodels.APIKey
+	RetrieveAccessToken() intelliflomodels.AccessToken
+	RetrieveExpiresAt() intelliflomodels.ExpiresAt
+	RetrieveTenantId() intelliflomodels.TenantId
 	SetAccessToken(accessToken string) error
-	SetAPIKey(apiKey apptypes.APIKey)
+	SetAPIKey(apiKey intelliflomodels.APIKey)
 	SetExpiresAt(expiresAt time.Time) error
-	SetTenantId(tenantId apptypes.TenantId)
+	SetTenantId(tenantId intelliflomodels.TenantId)
 	GetUserById(id int) (intelliflomodels.User, error)
 	GetUsersByEmail(email string) (intelliflomodels.Users, error)
 	GetAdvisersByUserId(userId int) (intelliflomodels.Advisers, error)
@@ -44,5 +43,5 @@ type IntellifloAPI interface {
 	GetClientMarketingPreference(clientId int) (intelliflomodels.Preferences, error)
 	PutClientMarketingPreference(clientId int, body intelliflomodels.Preferences) (intelliflomodels.Preferences, error)
 	PostClient(clientObj intelliflomodels.Client) (intelliflomodels.Client, error)
-	GenerateAccessTokenScopes(clientSecret string, clientId string, scope []string) (intelliflomodels.TokenResponse, error)
+	GenerateAccessTokenScopes(clientSecret string, clientId string, scope []string) (intelliflomodels.TenantTokenResponse, error)
 }
