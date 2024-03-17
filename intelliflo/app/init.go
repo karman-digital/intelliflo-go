@@ -5,14 +5,11 @@ import (
 	"github.com/karman-digital/intelliflo/intelliflo/api/auth"
 	"github.com/karman-digital/intelliflo/intelliflo/api/clients"
 	"github.com/karman-digital/intelliflo/intelliflo/api/credentials"
-	intelliflomodels "github.com/karman-digital/intelliflo/intelliflo/api/models"
 	"github.com/karman-digital/intelliflo/intelliflo/api/users"
 )
 
-func InitTenantAuthIntelliflo(tenantId intelliflomodels.TenantId) *TenantIntelliflo {
-	return &TenantIntelliflo{
-		TenantId: tenantId,
-	}
+func InitTenantAuthIntelliflo() *TenantIntelliflo {
+	return &TenantIntelliflo{}
 }
 
 func (i *TenantIntelliflo) InitClient(creds credentials.TenantCredentials) {
