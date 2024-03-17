@@ -60,7 +60,7 @@ func convertExpiresInToTime(expiresIn int) time.Time {
 }
 
 func (c *AuthTenantService) ValidateToken() error {
-	if c.AccessToken() == "" {
+	if c.AccessToken().String() == "" {
 		return intellifloerrors.ErrAccessTokenNotSet
 	}
 	if c.ExpiresAt().Time().After(time.Now()) {

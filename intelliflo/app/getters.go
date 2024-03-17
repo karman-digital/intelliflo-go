@@ -1,5 +1,7 @@
 package intellifloapp
 
-func (i TenantIntelliflo) GetTenantId() int {
-	return i.TenantId.Int()
+import intelliflomodels "github.com/karman-digital/intelliflo/intelliflo/api/models"
+
+func (i TenantIntelliflo) GetTenantId() intelliflomodels.TenantId {
+	return i.TenantId
 }

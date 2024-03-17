@@ -16,7 +16,7 @@ type TenantCredentials struct {
 
 type Credentials interface {
 	Client() *retryablehttp.Client
-	AccessToken() intelliflomodels.AccessToken
+	AccessToken() *intelliflomodels.AccessToken
 	ApiKey() intelliflomodels.APIKey
 	ClientSecret() intelliflomodels.ClientSecret
 	ClientId() intelliflomodels.ClientId

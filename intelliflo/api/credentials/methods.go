@@ -7,8 +7,8 @@ import (
 	intelliflomodels "github.com/karman-digital/intelliflo/intelliflo/api/models"
 )
 
-func (t TenantCredentials) AccessToken() intelliflomodels.AccessToken {
-	return t.accessToken
+func (t TenantCredentials) AccessToken() *intelliflomodels.AccessToken {
+	return &t.accessToken
 }
 
 func (t TenantCredentials) ExpiresAt() intelliflomodels.ExpiresAt {
