@@ -12,12 +12,12 @@ func InitTenantAuthIntelliflo() *TenantIntelliflo {
 	return &TenantIntelliflo{}
 }
 
-func (i *TenantIntelliflo) InitClient(creds credentials.TenantCredentials) {
+func (i *TenantIntelliflo) InitClient(creds *credentials.TenantCredentials) {
 	i.TenantCredentials = creds
 	i.ApiClient = *NewTenantApiClient(creds)
 }
 
-func NewTenantApiClient(creds credentials.TenantCredentials) *ApiClient {
+func NewTenantApiClient(creds *credentials.TenantCredentials) *ApiClient {
 	return &ApiClient{
 		Auth:     auth.NewTenantAuthService(creds),
 		Clients:  *clients.NewClientObject(creds),

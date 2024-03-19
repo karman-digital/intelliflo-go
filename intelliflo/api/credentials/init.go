@@ -1,7 +1,16 @@
 package credentials
 
-func NewTenantCredentials(apiKey string, clientId string, clientSecret string) TenantCredentials {
+import (
+	"time"
+
+	"github.com/hashicorp/go-retryablehttp"
+)
+
+func NewTenantCredentials(apiKey string, clientId string, clientSecret string, accessToken string, expiredAt time.Time) TenantCredentials {
 	var creds TenantCredentials
+	creds.SetClient(retryablehttp.NewClient())
+	creds.SetAccessToken(accessToken)
+	creds.SetExpiresAt(expiredAt)
 	creds.SetApiKey(apiKey)
 	creds.SetClientId(clientId)
 	creds.SetClientSecret(clientSecret)

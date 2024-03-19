@@ -10,7 +10,7 @@ import (
 )
 
 type TenantIntelliflo struct {
-	credentials.TenantCredentials
+	*credentials.TenantCredentials
 	ApiClient
 	intelliflomodels.TenantId
 }
