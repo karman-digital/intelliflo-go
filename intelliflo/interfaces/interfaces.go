@@ -51,4 +51,5 @@ type User interface {
 
 type Adviser interface {
 	GetAdvisersByUserId(userId int) (intelliflomodels.Advisers, error)
+	GetAdvisers(options ...intelliflomodels.GetOptions) (intelliflomodels.Advisers, error)
 }
