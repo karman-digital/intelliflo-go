@@ -94,7 +94,7 @@ type NetPrice struct {
 type WebhookSubscriptionRequest struct {
 	Topic        string `json:"topic"`
 	Callback     string `json:"callback"`
-	LeaseSeconds string `json:"leaseSeconds"`
+	LeaseSeconds string `json:"leaseSeconds,omitempty"`
 	Sectret      string `json:"secret"`
 }
 
