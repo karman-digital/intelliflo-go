@@ -6,6 +6,7 @@ import (
 	"github.com/karman-digital/intelliflo/intelliflo/api/credentials"
 	intelliflomodels "github.com/karman-digital/intelliflo/intelliflo/api/models"
 	"github.com/karman-digital/intelliflo/intelliflo/api/users"
+	"github.com/karman-digital/intelliflo/intelliflo/api/webhooks"
 	"github.com/karman-digital/intelliflo/intelliflo/interfaces"
 )
 
@@ -20,4 +21,5 @@ type ApiClient struct {
 	Clients  clients.Client
 	Advisers advisers.Adviser
 	Users    users.User
+	Webhooks webhooks.Webhook
 }

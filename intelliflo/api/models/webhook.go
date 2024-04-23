@@ -90,3 +90,24 @@ type NetPrice struct {
 	Currency string `json:"currency"`
 	Amount   string `json:"amount"`
 }
+
+type WebhookSubscriptionRequest struct {
+	Topic        string `json:"topic"`
+	Callback     string `json:"callback"`
+	LeaseSeconds string `json:"leaseSeconds"`
+	Sectret      string `json:"secret"`
+}
+
+type Webhooks struct {
+	Href  string    `json:"href"`
+	Items []Webhook `json:"items"`
+	Count int32     `json:"count"`
+}
+
+type Webhook struct {
+	ID           string `json:"id"`
+	Href         string `json:"href"`
+	Topic        string `json:"topic"`
+	Callback     string `json:"callback"`
+	LeaseSeconds string `json:"leaseSeconds"`
+}

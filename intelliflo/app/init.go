@@ -6,6 +6,7 @@ import (
 	"github.com/karman-digital/intelliflo/intelliflo/api/clients"
 	"github.com/karman-digital/intelliflo/intelliflo/api/credentials"
 	"github.com/karman-digital/intelliflo/intelliflo/api/users"
+	"github.com/karman-digital/intelliflo/intelliflo/api/webhooks"
 )
 
 func InitTenantAuthIntelliflo() *TenantIntelliflo {
@@ -23,5 +24,6 @@ func NewTenantApiClient(creds *credentials.TenantCredentials) *ApiClient {
 		Clients:  *clients.NewClientObject(creds),
 		Advisers: *advisers.NewAdviserObject(creds),
 		Users:    *users.NewUser(creds),
+		Webhooks: *webhooks.NewWebhook(creds),
 	}
 }

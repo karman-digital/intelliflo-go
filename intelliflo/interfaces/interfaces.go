@@ -53,3 +53,9 @@ type Adviser interface {
 	GetAdvisersByUserId(userId int) (intelliflomodels.Advisers, error)
 	GetAdvisers(options ...intelliflomodels.GetOptions) (intelliflomodels.Advisers, error)
 }
+
+type Webhook interface {
+	GetActiveWebhooks() (intelliflomodels.Webhooks, error)
+	GetWebhook(id int) (intelliflomodels.Webhook, error)
+	PostWebhookSubscription(postBody intelliflomodels.WebhookSubscriptionRequest) (intelliflomodels.Webhook, error)
+}
