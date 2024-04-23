@@ -95,7 +95,7 @@ type WebhookSubscriptionRequest struct {
 	Topic        string `json:"topic"`
 	Callback     string `json:"callback"`
 	LeaseSeconds string `json:"leaseSeconds,omitempty"`
-	Sectret      string `json:"secret"`
+	Secret       string `json:"secret"`
 }
 
 type Webhooks struct {
