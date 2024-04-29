@@ -109,5 +109,5 @@ type Webhook struct {
 	Href         string `json:"href"`
 	Topic        string `json:"topic"`
 	Callback     string `json:"callback"`
-	LeaseSeconds string `json:"leaseSeconds"`
+	LeaseSeconds int    `json:"leaseSeconds"`
 }
