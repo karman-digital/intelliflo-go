@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/hashicorp/go-retryablehttp"
-	intelliflomodels "github.com/karman-digital/intelliflo/intelliflo/api/models"
+	intelliflomodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models"
 )
 
 type TenantCredentials struct {
