@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	intelliflohelpers "github.com/karman-digital/intelliflo/intelliflo/helpers"
+	intelliflohelpers "github.com/karman-digital/intelliflo-go/intelliflo/helpers"
 	"github.com/stretchr/testify/assert"
 )
 

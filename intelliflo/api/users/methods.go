@@ -3,69 +3,45 @@ package users
 import (
 	"encoding/json"
 	"fmt"
-	"io"
 	"net/http"
-	"net/url"
 
-	"github.com/hashicorp/go-retryablehttp"
-	intelliflomodels "github.com/karman-digital/intelliflo/intelliflo/api/models"
+	usersmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/admin/users"
+	sharedmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/shared"
+	"github.com/karman-digital/intelliflo-go/intelliflo/shared"
 )
 
-func (c *UserService) GetUserById(id int) (intelliflomodels.User, error) {
-	var user intelliflomodels.User
-	req, err := retryablehttp.NewRequest("GET", fmt.Sprintf("https://api.gb.intelliflo.net/v2/users/%d", id), nil)
+func (c *UserService) GetUserById(id int) (usersmodels.User, error) {
+	var user usersmodels.User
+	resp, err := c.SendRequest("GET", fmt.Sprintf("users/%d", id), nil)
 	if err != nil {
-		return user, fmt.Errorf("error creating request: %v", err)
+		return user, fmt.Errorf("error sending request: %v", err)
 	}
-	req.Header.Set("Content-Type", "application/json")
-	req.Header["x-api-key"] = []string{c.ApiKey().String()}
-	req.Header["authorization"] = []string{fmt.Sprintf("Bearer %s", c.AccessToken())}
-	resp, err := c.Client().Do(req)
+	respBody, err := shared.HandleCustomResponseCode(resp, http.StatusOK)
 	if err != nil {
-		return user, fmt.Errorf("error making post request: %v", err)
-	}
-	defer resp.Body.Close()
-	if resp.StatusCode != http.StatusOK {
-		return user, fmt.Errorf("error returned by endpoint: %v", resp.StatusCode)
-	}
-	respBody, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return user, fmt.Errorf("error reading body: %v", err)
+		return user, fmt.Errorf("error handling response code: %v", err)
 	}
 	err = json.Unmarshal(respBody, &user)
 	if err != nil {
-		return user, fmt.Errorf("error parsing body: %v", err)
+		return user, fmt.Errorf("error unmarshalling response: %v", err)
 	}
 	return user, nil
 }
 
-func (c *UserService) GetUsersByEmail(email string) (intelliflomodels.Users, error) {
-	var users intelliflomodels.Users
-	req, err := retryablehttp.NewRequest("GET", "https://api.gb.intelliflo.net/v2/users", nil)
+func (c *UserService) GetUsersByEmail(email string) (usersmodels.Users, error) {
+	var users usersmodels.Users
+	resp, err := c.SendRequest("GET", "users", nil, sharedmodels.GetOptions{
+		Filter: fmt.Sprintf("email eq '%s'", email),
+	})
 	if err != nil {
-		return users, fmt.Errorf("error creating request: %v", err)
+		return users, fmt.Errorf("error sending request: %v", err)
 	}
-	req.Header.Set("Content-Type", "application/json")
-	queryParams := url.Values{}
-	queryParams.Add("filter", fmt.Sprintf("email eq '%s'", email))
-	req.URL.RawQuery = queryParams.Encode()
-	req.Header["x-api-key"] = []string{c.ApiKey().String()}
-	req.Header["authorization"] = []string{fmt.Sprintf("Bearer %s", c.AccessToken())}
-	resp, err := c.Client().Do(req)
+	respBody, err := shared.HandleCustomResponseCode(resp, http.StatusOK)
 	if err != nil {
-		return users, fmt.Errorf("error making post request: %v", err)
-	}
-	defer resp.Body.Close()
-	respBody, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return users, fmt.Errorf("error reading body: %v", err)
-	}
-	if resp.StatusCode != http.StatusOK {
-		return users, fmt.Errorf("error returned by endpoint: %v, with body: %v", resp.StatusCode, string(respBody))
+		return users, fmt.Errorf("error handling response code: %v", err)
 	}
 	err = json.Unmarshal(respBody, &users)
 	if err != nil {
-		return users, fmt.Errorf("error parsing body: %v", err)
+		return users, fmt.Errorf("error unmarshalling response: %v", err)
 	}
 	return users, nil
 }

@@ -1,7 +1,9 @@
 package intellifloapp
 
-import intelliflomodels "github.com/karman-digital/intelliflo/intelliflo/api/models"
+import (
+	sharedmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/shared"
+)
 
-func (i TenantIntelliflo) GetTenantId() intelliflomodels.TenantId {
+func (i TenantIntelliflo) GetTenantId() sharedmodels.TenantId {
 	return i.TenantId
 }

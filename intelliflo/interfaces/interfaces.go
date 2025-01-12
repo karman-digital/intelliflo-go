@@ -1,61 +1,94 @@
 package interfaces
 
-import intelliflomodels "github.com/karman-digital/intelliflo/intelliflo/api/models"
+import (
+	activitiesmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/activities"
+	usersmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/admin/users"
+	advisermodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/adviser"
+	addressmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/person/address"
+	clientmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/person/client"
+	contactdetailmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/person/contactdetails"
+	marketingpreferencemodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/person/marketingpreferences"
+	relationshipmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/person/relationships"
+	planmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/plans"
+	fundsmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/plans/funds"
+	sharedmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/shared"
+	taskmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/tasks"
+	webhookmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/webhooks"
+)
 
 type Auth interface {
-	RefreshToken(tenantId intelliflomodels.TenantId, scope []string) error
+	RefreshToken(tenantId sharedmodels.TenantId, scope []string) error
 	ValidateToken() error
 }
 
 type Client interface {
-	GetClient(clientId int) (intelliflomodels.Client, error)
-	GetClients(options ...intelliflomodels.GetOptions) (intelliflomodels.Clients, error)
-	PostClient(clientObj intelliflomodels.Client) (intelliflomodels.Client, error)
-	PutClient(clientId int, client intelliflomodels.Client) (intelliflomodels.Client, error)
+	GetClient(clientId int) (clientmodels.Client, error)
+	GetClients(options ...sharedmodels.GetOptions) (clientmodels.Clients, error)
+	PostClient(clientObj clientmodels.Client) (clientmodels.Client, error)
+	PutClient(clientId int, client clientmodels.Client) (clientmodels.Client, error)
 }
 
 type Address interface {
-	GetAddresses(int) (intelliflomodels.Addresses, error)
-	PostAddress(entityId int, address intelliflomodels.Residence) (intelliflomodels.Residence, error)
-	PutAddress(entityId int, addressId int, address intelliflomodels.Residence) (intelliflomodels.Residence, error)
+	GetAddresses(entityId int, options ...sharedmodels.GetOptions) (addressmodels.Addresses, error)
+	PostAddress(entityId int, address addressmodels.Residence) (addressmodels.Residence, error)
+	PutAddress(entityId int, addressId int, address addressmodels.Residence) (addressmodels.Residence, error)
 }
 
 type ContactDetail interface {
-	GetContactDetails(entityId int) (intelliflomodels.ContactDetails, error)
-	PostContactDetail(entityId int, contactDetail intelliflomodels.ContactDetail) (intelliflomodels.ContactDetail, error)
-	PutContactDetail(entityId int, contactDetailId int, contactDetail intelliflomodels.ContactDetail) (intelliflomodels.ContactDetail, error)
+	GetContactDetails(entityId int, options ...sharedmodels.GetOptions) (contactdetailmodels.ContactDetails, error)
+	PostContactDetail(entityId int, contactDetail contactdetailmodels.ContactDetail) (contactdetailmodels.ContactDetail, error)
+	PutContactDetail(entityId int, contactDetailId int, contactDetail contactdetailmodels.ContactDetail) (contactdetailmodels.ContactDetail, error)
 }
 
 type Plan interface {
-	GetPlans(clientId int, options ...intelliflomodels.GetOptions) (intelliflomodels.Plans, error)
+	GetPlans(clientId int, options ...sharedmodels.GetOptions) (planmodels.Plans, error)
 }
 
 type Holding interface {
-	GetHoldings(clientId int, planId int, options ...intelliflomodels.GetOptions) (intelliflomodels.Holdings, error)
+	GetHoldings(clientId int, planId int, options ...sharedmodels.GetOptions) (fundsmodels.Holdings, error)
 }
 
 type Relationship interface {
-	PostRelationship(cliendId int, postBody intelliflomodels.Relationship) (intelliflomodels.Relationship, error)
-	GetRelationships(clientId int, options ...intelliflomodels.GetOptions) (intelliflomodels.Relationships, error)
+	PostRelationship(cliendId int, postBody relationshipmodels.Relationship) (relationshipmodels.Relationship, error)
+	GetRelationships(clientId int, options ...sharedmodels.GetOptions) (relationshipmodels.Relationships, error)
 }
 
 type MarketingPreference interface {
-	GetMarketingPreference(clientId int) (intelliflomodels.Preferences, error)
-	PutMarketingPreference(clientId int, body intelliflomodels.Preferences) (intelliflomodels.Preferences, error)
+	GetMarketingPreference(clientId int) (marketingpreferencemodels.Preferences, error)
+	PutMarketingPreference(clientId int, body marketingpreferencemodels.Preferences) (marketingpreferencemodels.Preferences, error)
 }
 
 type User interface {
-	GetUserById(id int) (intelliflomodels.User, error)
-	GetUsersByEmail(email string) (intelliflomodels.Users, error)
+	GetUserById(id int) (usersmodels.User, error)
+	GetUsersByEmail(email string) (usersmodels.Users, error)
 }
 
 type Adviser interface {
-	GetAdvisersByUserId(userId int) (intelliflomodels.Advisers, error)
-	GetAdvisers(options ...intelliflomodels.GetOptions) (intelliflomodels.Advisers, error)
+	GetAdvisersByUserId(userId int) (advisermodels.Advisers, error)
+	GetAdvisers(options ...sharedmodels.GetOptions) (advisermodels.Advisers, error)
 }
 
 type Webhook interface {
-	GetActiveWebhooks() (intelliflomodels.Webhooks, error)
-	GetWebhook(id int) (intelliflomodels.Webhook, error)
-	PostWebhookSubscription(postBody intelliflomodels.WebhookSubscriptionRequest) (intelliflomodels.Webhook, error)
+	GetActiveWebhooks() (webhookmodels.Webhooks, error)
+	GetWebhook(id int) (webhookmodels.Webhook, error)
+	PostWebhookSubscription(postBody webhookmodels.WebhookSubscriptionRequest) (webhookmodels.Webhook, error)
+}
+
+type Activity interface {
+	GetCategories(opts ...sharedmodels.GetOptions) (activitiesmodels.ActivityCategoryResponse, error)
+	GetCategory(categoryId int, opts ...sharedmodels.GetOptions) (activitiesmodels.ActivityCategory, error)
+	CreateCategory(category activitiesmodels.ActivityCategory) (activitiesmodels.ActivityCategory, error)
+	UpdateCategory(categoryId int, category activitiesmodels.ActivityCategory) (activitiesmodels.ActivityCategory, error)
+	DeleteCategory(categoryId int) error
+	GetTypes(opts ...sharedmodels.GetOptions) (activitiesmodels.ActivityTypeResponse, error)
+	GetType(typeId int, opts ...sharedmodels.GetOptions) (activitiesmodels.ActivityType, error)
+	CreateType(activityType activitiesmodels.ActivityType) (activitiesmodels.ActivityType, error)
+}
+
+type Task interface {
+	GetTask(taskId int, opts ...sharedmodels.GetOptions) (taskmodels.Task, error)
+	GetTasks(opts ...sharedmodels.GetOptions) (taskmodels.TasksResponse, error)
+	CreateTask(task taskmodels.Task) (taskmodels.Task, error)
+	UpdateTask(taskId int, task taskmodels.Task) (taskmodels.Task, error)
+	DeleteTask(taskId int) error
 }

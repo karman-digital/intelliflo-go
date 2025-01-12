@@ -4,31 +4,31 @@ import (
 	"time"
 
 	"github.com/hashicorp/go-retryablehttp"
-	intelliflomodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models"
+	sharedmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/shared"
 )
 
-func (t TenantCredentials) AccessToken() *intelliflomodels.AccessToken {
+func (t TenantCredentials) AccessToken() *sharedmodels.AccessToken {
 	return &t.accessToken
 }
 
-func (t TenantCredentials) ExpiresAt() intelliflomodels.ExpiresAt {
+func (t TenantCredentials) ExpiresAt() sharedmodels.ExpiresAt {
 	return t.expiresAt
 }
 
-func (t TenantCredentials) ApiKey() intelliflomodels.APIKey {
+func (t TenantCredentials) ApiKey() sharedmodels.APIKey {
 	return t.apiKey
 }
 
 func (t *TenantCredentials) SetAccessToken(token string) {
-	t.accessToken = intelliflomodels.AccessToken(token)
+	t.accessToken = sharedmodels.AccessToken(token)
 }
 
 func (t *TenantCredentials) SetExpiresAt(expiresAt time.Time) {
-	t.expiresAt = intelliflomodels.ExpiresAt(expiresAt)
+	t.expiresAt = sharedmodels.ExpiresAt(expiresAt)
 }
 
 func (t *TenantCredentials) SetApiKey(apiKey string) {
-	t.apiKey = intelliflomodels.APIKey(apiKey)
+	t.apiKey = sharedmodels.APIKey(apiKey)
 }
 
 func (t *TenantCredentials) SetClient(client *retryablehttp.Client) {
@@ -36,21 +36,21 @@ func (t *TenantCredentials) SetClient(client *retryablehttp.Client) {
 }
 
 func (t *TenantCredentials) SetClientSecret(clientSecret string) {
-	t.clientSecret = intelliflomodels.ClientSecret(clientSecret)
+	t.clientSecret = sharedmodels.ClientSecret(clientSecret)
 }
 
 func (t *TenantCredentials) SetClientId(clientId string) {
-	t.cliendId = intelliflomodels.ClientId(clientId)
+	t.cliendId = sharedmodels.ClientId(clientId)
 }
 
 func (t TenantCredentials) Client() *retryablehttp.Client {
 	return t.client
 }
 
-func (t TenantCredentials) ClientSecret() intelliflomodels.ClientSecret {
+func (t TenantCredentials) ClientSecret() sharedmodels.ClientSecret {
 	return t.clientSecret
 }
 
-func (t TenantCredentials) ClientId() intelliflomodels.ClientId {
+func (t TenantCredentials) ClientId() sharedmodels.ClientId {
 	return t.cliendId
 }

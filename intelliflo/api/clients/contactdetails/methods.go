@@ -3,34 +3,23 @@ package contactdetails
 import (
 	"encoding/json"
 	"fmt"
-	"io"
 	"net/http"
 
-	"github.com/hashicorp/go-retryablehttp"
-	intelliflomodels "github.com/karman-digital/intelliflo/intelliflo/api/models"
+	contactdetailmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/person/contactdetails"
+	sharedmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/shared"
+	"github.com/karman-digital/intelliflo-go/intelliflo/shared"
 )
 
-func (c *ContactDetailsService) GetContactDetails(clientId int) (intelliflomodels.ContactDetails, error) {
-	var contactDetails intelliflomodels.ContactDetails
-	reqUrl := fmt.Sprintf("https://api.gb.intelliflo.net/v2/clients/%d/contactdetails", clientId)
-	req, err := retryablehttp.NewRequest("GET", reqUrl, nil)
+func (c *ContactDetailsService) GetContactDetails(clientId int, opts ...sharedmodels.GetOptions) (contactdetailmodels.ContactDetails, error) {
+	var contactDetails contactdetailmodels.ContactDetails
+	resp, err := c.SendRequest("GET", fmt.Sprintf("clients/%d/contactdetails", clientId), nil, opts...)
 	if err != nil {
-		return contactDetails, fmt.Errorf("error creating request: %v", err)
-	}
-	req.Header.Set("Content-Type", "application/json")
-	req.Header["x-api-key"] = []string{c.ApiKey().String()}
-	req.Header["authorization"] = []string{fmt.Sprintf("Bearer %s", c.AccessToken())}
-	resp, err := c.Client().Do(req)
-	if err != nil {
-		return contactDetails, fmt.Errorf("error making get request: %v", err)
+		return contactDetails, fmt.Errorf("error sending request: %v", err)
 	}
 	defer resp.Body.Close()
-	respBody, err := io.ReadAll(resp.Body)
+	respBody, err := shared.HandleCustomResponseCode(resp, http.StatusOK)
 	if err != nil {
-		return contactDetails, fmt.Errorf("error reading body: %v", err)
-	}
-	if resp.StatusCode != http.StatusOK {
-		return contactDetails, fmt.Errorf("error returned by endpoint: %v, with body: %v", resp.StatusCode, string(respBody))
+		return contactDetails, fmt.Errorf("error handling response code: %v", err)
 	}
 	err = json.Unmarshal(respBody, &contactDetails)
 	if err != nil {
@@ -39,31 +28,20 @@ func (c *ContactDetailsService) GetContactDetails(clientId int) (intelliflomodel
 	return contactDetails, nil
 }
 
-func (c *ContactDetailsService) PostContactDetail(clientId int, contactDetail intelliflomodels.ContactDetail) (intelliflomodels.ContactDetail, error) {
-	var newContactDetail intelliflomodels.ContactDetail
-	reqUrl := fmt.Sprintf("https://api.gb.intelliflo.net/v2/clients/%d/contactdetails", clientId)
+func (c *ContactDetailsService) PostContactDetail(clientId int, contactDetail contactdetailmodels.ContactDetail) (contactdetailmodels.ContactDetail, error) {
+	var newContactDetail contactdetailmodels.ContactDetail
 	reqBody, err := json.Marshal(contactDetail)
 	if err != nil {
 		return newContactDetail, fmt.Errorf("error marshalling contactDetail: %v", err)
 	}
-	req, err := retryablehttp.NewRequest("POST", reqUrl, reqBody)
+	resp, err := c.SendRequest("POST", fmt.Sprintf("clients/%d/contactdetails", clientId), reqBody)
 	if err != nil {
-		return newContactDetail, fmt.Errorf("error creating request: %v", err)
-	}
-	req.Header.Set("Content-Type", "application/json")
-	req.Header["x-api-key"] = []string{c.ApiKey().String()}
-	req.Header["authorization"] = []string{fmt.Sprintf("Bearer %s", c.AccessToken())}
-	resp, err := c.Client().Do(req)
-	if err != nil {
-		return newContactDetail, fmt.Errorf("error making post request: %v", err)
+		return newContactDetail, fmt.Errorf("error sending request: %v", err)
 	}
 	defer resp.Body.Close()
-	respBody, err := io.ReadAll(resp.Body)
+	respBody, err := shared.HandleCustomResponseCode(resp, http.StatusCreated)
 	if err != nil {
-		return newContactDetail, fmt.Errorf("error reading body: %v", err)
-	}
-	if resp.StatusCode != http.StatusCreated {
-		return newContactDetail, fmt.Errorf("error returned by endpoint: %v, with body: %v", resp.StatusCode, string(respBody))
+		return newContactDetail, fmt.Errorf("error handling response code: %v", err)
 	}
 	err = json.Unmarshal(respBody, &newContactDetail)
 	if err != nil {
@@ -72,31 +50,19 @@ func (c *ContactDetailsService) PostContactDetail(clientId int, contactDetail in
 	return newContactDetail, nil
 }
 
-func (c *ContactDetailsService) PutContactDetail(clientId int, contactDetailId int, contactDetail intelliflomodels.ContactDetail) (intelliflomodels.ContactDetail, error) {
-	var updatedContactDetail intelliflomodels.ContactDetail
-	reqUrl := fmt.Sprintf("https://api.gb.intelliflo.net/v2/clients/%d/contactdetails/%d", clientId, contactDetailId)
+func (c *ContactDetailsService) PutContactDetail(clientId int, contactDetailId int, contactDetail contactdetailmodels.ContactDetail) (contactdetailmodels.ContactDetail, error) {
+	var updatedContactDetail contactdetailmodels.ContactDetail
 	reqBody, err := json.Marshal(contactDetail)
 	if err != nil {
 		return updatedContactDetail, fmt.Errorf("error marshalling contactDetail: %v", err)
 	}
-	req, err := retryablehttp.NewRequest("PUT", reqUrl, reqBody)
+	resp, err := c.SendRequest("PUT", fmt.Sprintf("clients/%d/contactdetails/%d", clientId, contactDetailId), reqBody)
 	if err != nil {
-		return updatedContactDetail, fmt.Errorf("error creating request: %v", err)
+		return updatedContactDetail, fmt.Errorf("error sending request: %v", err)
 	}
-	req.Header.Set("Content-Type", "application/json")
-	req.Header["x-api-key"] = []string{c.ApiKey().String()}
-	req.Header["authorization"] = []string{fmt.Sprintf("Bearer %s", c.AccessToken())}
-	resp, err := c.Client().Do(req)
+	respBody, err := shared.HandleCustomResponseCode(resp, http.StatusOK)
 	if err != nil {
-		return updatedContactDetail, fmt.Errorf("error making post request: %v", err)
-	}
-	defer resp.Body.Close()
-	respBody, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return updatedContactDetail, fmt.Errorf("error reading body: %v", err)
-	}
-	if resp.StatusCode != http.StatusOK {
-		return updatedContactDetail, fmt.Errorf("error returned by endpoint: %v, with body: %v", resp.StatusCode, string(respBody))
+		return updatedContactDetail, fmt.Errorf("error handling response code: %v", err)
 	}
 	err = json.Unmarshal(respBody, &updatedContactDetail)
 	if err != nil {

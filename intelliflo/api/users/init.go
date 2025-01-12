@@ -1,6 +1,6 @@
 package users
 
-import "github.com/karman-digital/intelliflo/intelliflo/api/credentials"
+import "github.com/karman-digital/intelliflo-go/intelliflo/api/credentials"
 
 func NewUser(creds credentials.Credentials) *User {
 	return &User{

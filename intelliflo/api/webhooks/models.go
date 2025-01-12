@@ -1,8 +1,8 @@
 package webhooks
 
 import (
-	"github.com/karman-digital/intelliflo/intelliflo/api/credentials"
-	"github.com/karman-digital/intelliflo/intelliflo/interfaces"
+	"github.com/karman-digital/intelliflo-go/intelliflo/api/credentials"
+	"github.com/karman-digital/intelliflo-go/intelliflo/interfaces"
 )
 
 type Webhook struct {

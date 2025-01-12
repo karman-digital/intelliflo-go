@@ -3,7 +3,7 @@ package validate_test
 import (
 	"testing"
 
-	iovalidate "github.com/karman-digital/intelliflo/intelliflo/adapter/validate"
+	iovalidate "github.com/karman-digital/intelliflo-go/intelliflo/adapter/validate"
 	"github.com/stretchr/testify/assert"
 )
 

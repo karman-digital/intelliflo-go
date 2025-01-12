@@ -1,6 +1,6 @@
 package plans
 
-import "github.com/karman-digital/intelliflo/intelliflo/api/credentials"
+import "github.com/karman-digital/intelliflo-go/intelliflo/api/credentials"
 
 func NewPlansService(creds credentials.Credentials) *PlansService {
 	return &PlansService{

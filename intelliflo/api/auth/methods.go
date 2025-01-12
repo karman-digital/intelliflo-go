@@ -11,12 +11,13 @@ import (
 	"time"
 
 	"github.com/hashicorp/go-retryablehttp"
-	intelliflomodels "github.com/karman-digital/intelliflo/intelliflo/api/models"
-	intellifloerrors "github.com/karman-digital/intelliflo/intelliflo/app/errors"
+	authmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/auth"
+	sharedmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/shared"
+	intellifloerrors "github.com/karman-digital/intelliflo-go/intelliflo/app/errors"
 )
 
-func (c *AuthTenantService) RefreshToken(tenantId intelliflomodels.TenantId, scope []string) error {
-	var tokenBody = intelliflomodels.TenantTokenResponse{}
+func (c *AuthTenantService) RefreshToken(tenantId sharedmodels.TenantId, scope []string) error {
+	var tokenBody = authmodels.TenantTokenResponse{}
 	encoded := base64.StdEncoding.EncodeToString([]byte(fmt.Sprintf("%s:%s", c.ClientId(), c.ClientSecret())))
 	data := url.Values{
 		"grant_type": []string{"tenant_client_credentials"},
@@ -69,8 +70,8 @@ func (c *AuthTenantService) ValidateToken() error {
 	return intellifloerrors.ErrAccessTokenExpired
 }
 
-func GenerateTenantToken(clientSecret string, clientId string, tenantId int, scope []string) (intelliflomodels.TenantTokenResponse, error) {
-	var tokenBody = intelliflomodels.TenantTokenResponse{}
+func GenerateTenantToken(clientSecret string, clientId string, tenantId int, scope []string) (authmodels.TenantTokenResponse, error) {
+	var tokenBody = authmodels.TenantTokenResponse{}
 	encoded := base64.StdEncoding.EncodeToString([]byte(fmt.Sprintf("%s:%s", clientId, clientSecret)))
 	data := url.Values{
 		"grant_type": []string{"tenant_client_credentials"},

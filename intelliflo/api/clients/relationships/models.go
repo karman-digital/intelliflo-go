@@ -1,6 +1,6 @@
 package relationships
 
-import "github.com/karman-digital/intelliflo/intelliflo/api/credentials"
+import "github.com/karman-digital/intelliflo-go/intelliflo/api/credentials"
 
 type RelationshipService struct {
 	credentials.Credentials

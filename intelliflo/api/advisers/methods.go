@@ -8,11 +8,12 @@ import (
 	"net/url"
 
 	"github.com/hashicorp/go-retryablehttp"
-	intelliflomodels "github.com/karman-digital/intelliflo/intelliflo/api/models"
+	advisermodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/adviser"
+	sharedmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/shared"
 )
 
-func (c *AdviserService) GetAdvisersByUserId(userId int) (intelliflomodels.Advisers, error) {
-	var advisers intelliflomodels.Advisers
+func (c *AdviserService) GetAdvisersByUserId(userId int) (advisermodels.Advisers, error) {
+	var advisers advisermodels.Advisers
 	req, err := retryablehttp.NewRequest("GET", "https://api.gb.intelliflo.net/v2/advisers", nil)
 	if err != nil {
 		return advisers, fmt.Errorf("error creating request: %v", err)
@@ -42,8 +43,8 @@ func (c *AdviserService) GetAdvisersByUserId(userId int) (intelliflomodels.Advis
 	return advisers, nil
 }
 
-func (c *AdviserService) GetAdvisers(options ...intelliflomodels.GetOptions) (intelliflomodels.Advisers, error) {
-	var advisers intelliflomodels.Advisers
+func (c *AdviserService) GetAdvisers(options ...sharedmodels.GetOptions) (advisermodels.Advisers, error) {
+	var advisers advisermodels.Advisers
 	req, err := retryablehttp.NewRequest("GET", "https://api.gb.intelliflo.net/v2/advisers", nil)
 	if err != nil {
 		return advisers, fmt.Errorf("error creating request: %v", err)

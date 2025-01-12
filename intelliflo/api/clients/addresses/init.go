@@ -1,6 +1,6 @@
 package addresses
 
-import "github.com/karman-digital/intelliflo/intelliflo/api/credentials"
+import "github.com/karman-digital/intelliflo-go/intelliflo/api/credentials"
 
 func NewAddressService(creds credentials.Credentials) *AddressService {
 	return &AddressService{

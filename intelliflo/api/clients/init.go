@@ -1,13 +1,13 @@
 package clients
 
 import (
-	"github.com/karman-digital/intelliflo/intelliflo/api/clients/addresses"
-	"github.com/karman-digital/intelliflo/intelliflo/api/clients/contactdetails"
-	"github.com/karman-digital/intelliflo/intelliflo/api/clients/marketingpreferences"
-	"github.com/karman-digital/intelliflo/intelliflo/api/clients/plans"
-	"github.com/karman-digital/intelliflo/intelliflo/api/clients/plans/holdings"
-	"github.com/karman-digital/intelliflo/intelliflo/api/clients/relationships"
-	"github.com/karman-digital/intelliflo/intelliflo/api/credentials"
+	"github.com/karman-digital/intelliflo-go/intelliflo/api/clients/addresses"
+	"github.com/karman-digital/intelliflo-go/intelliflo/api/clients/contactdetails"
+	"github.com/karman-digital/intelliflo-go/intelliflo/api/clients/marketingpreferences"
+	"github.com/karman-digital/intelliflo-go/intelliflo/api/clients/plans"
+	"github.com/karman-digital/intelliflo-go/intelliflo/api/clients/plans/holdings"
+	"github.com/karman-digital/intelliflo-go/intelliflo/api/clients/relationships"
+	"github.com/karman-digital/intelliflo-go/intelliflo/api/credentials"
 )
 
 func NewClientObject(creds credentials.Credentials) *Client {
