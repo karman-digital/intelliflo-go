@@ -1,6 +1,8 @@
 package credentials
 
 import (
+	"net/http"
+
 	"github.com/hashicorp/go-retryablehttp"
 	intelliflomodels "github.com/karman-digital/intelliflo/intelliflo/api/models"
 )
@@ -20,4 +22,5 @@ type Credentials interface {
 	ApiKey() intelliflomodels.APIKey
 	ClientSecret() intelliflomodels.ClientSecret
 	ClientId() intelliflomodels.ClientId
+	SendRequest(method, path string, body []byte, opts ...intelliflomodels.GetOptions) (*http.Response, error)
 }
