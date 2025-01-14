@@ -12,7 +12,7 @@ import (
 
 func (c *AddressService) GetAddresses(clientId int, opts ...sharedmodels.GetOptions) (addressmodels.Addresses, error) {
 	var addresses addressmodels.Addresses
-	resp, err := c.SendRequest("GET", fmt.Sprintf("/clients/%d/addresses", clientId), nil, opts...)
+	resp, err := c.SendRequest("GET", fmt.Sprintf("clients/%d/addresses", clientId), nil, opts...)
 	if err != nil {
 		return addresses, fmt.Errorf("error making get request: %v", err)
 	}
@@ -34,7 +34,7 @@ func (c *AddressService) PostAddress(clientId int, address addressmodels.Residen
 	if err != nil {
 		return newAddress, fmt.Errorf("error marshalling address: %v", err)
 	}
-	resp, err := c.SendRequest("POST", fmt.Sprintf("/v2/clients/%d/addresses", clientId), reqBody)
+	resp, err := c.SendRequest("POST", fmt.Sprintf("clients/%d/addresses", clientId), reqBody)
 	if err != nil {
 		return newAddress, fmt.Errorf("error making post request: %v", err)
 	}
@@ -56,7 +56,7 @@ func (c *AddressService) PutAddress(clientId int, addressId int, address address
 	if err != nil {
 		return updatedAddress, fmt.Errorf("error marshalling address: %v", err)
 	}
-	resp, err := c.SendRequest("PUT", fmt.Sprintf("/v2/clients/%d/addresses/%d", clientId, addressId), reqBody)
+	resp, err := c.SendRequest("PUT", fmt.Sprintf("clients/%d/addresses/%d", clientId, addressId), reqBody)
 	if err != nil {
 		return updatedAddress, fmt.Errorf("error making put request: %v", err)
 	}
