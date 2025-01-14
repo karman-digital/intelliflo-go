@@ -9,7 +9,7 @@ import (
 )
 
 func (c *TenantCredentials) SendRequest(method, path string, body []byte, opts ...sharedmodels.GetOptions) (*http.Response, error) {
-	req, err := retryablehttp.NewRequest(method, "https://api.gb.intelliflo.net/v2"+path, body)
+	req, err := retryablehttp.NewRequest(method, "https://api.gb.intelliflo.net/v2/"+path, body)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %v", err)
 	}

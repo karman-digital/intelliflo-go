@@ -12,7 +12,7 @@ import (
 
 func (c *AddressService) GetAddresses(clientId int, opts ...sharedmodels.GetOptions) (addressmodels.Addresses, error) {
 	var addresses addressmodels.Addresses
-	resp, err := c.SendRequest("GET", fmt.Sprintf("/v2/clients/%d/addresses", clientId), nil, opts...)
+	resp, err := c.SendRequest("GET", fmt.Sprintf("/clients/%d/addresses", clientId), nil, opts...)
 	if err != nil {
 		return addresses, fmt.Errorf("error making get request: %v", err)
 	}
