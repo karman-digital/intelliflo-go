@@ -1,5 +1,7 @@
 package taskmodels
 
+import sharedmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/shared"
+
 type TasksResponse struct {
 	Href      string `json:"href"`
 	FirstHref string `json:"first_href"`
@@ -10,60 +12,48 @@ type TasksResponse struct {
 	Count     int    `json:"count"`
 }
 
+type TaskType struct {
+	ID       int                      `json:"id"`
+	Href     string                   `json:"href,omitempty"`
+	Name     string                   `json:"name,omitempty"`
+	Category sharedmodels.IOSubObject `json:"category"`
+}
+
 type Task struct {
-	ID           int    `json:"id,omitempty"`
-	Href         string `json:"href,omitempty"`
-	Subject      string `json:"subject"`
-	Description  string `json:"description,omitempty"`
-	ActivityType struct {
-		ID       int    `json:"id"`
-		Href     string `json:"href,omitempty"`
-		Name     string `json:"name,omitempty"`
-		Category struct {
-			ID   int    `json:"id"`
-			Href string `json:"href,omitempty"`
-			Name string `json:"name,omitempty"`
-		} `json:"category"`
-	} `json:"activityType"`
-	Priority struct {
-		ID   int    `json:"id"`
-		Href string `json:"href,omitempty"`
-		Name string `json:"name,omitempty"`
-	} `json:"priority"`
-	Status        string            `json:"status"`
-	ShownInDiary  bool              `json:"shownInDiary"`
-	ShownInPortal bool              `json:"shownInPortal"`
-	Reference     string            `json:"reference"`
-	Completion    TaskCompletion    `json:"completion"`
-	RelatedTo     []RelatedEntity   `json:"relatedTo"`
-	LinkedEntity  LinkedEntity      `json:"linkedEntity"`
-	AssignedBy    TaskUser          `json:"assignedBy"`
-	AssignedTo    TaskAssignment    `json:"assignedTo"`
-	StartsAt      string            `json:"startsAt"`
-	DueAt         string            `json:"dueAt"`
-	Duration      TaskDuration      `json:"duration"`
-	Billing       TaskBilling       `json:"billing"`
-	Cost          TaskCost          `json:"cost"`
-	Recurrence    TaskRecurrence    `json:"recurrence"`
-	CreatedByUser TaskUser          `json:"createdByUser"`
-	CreatedAt     string            `json:"createdAt"`
-	UpdatedByUser TaskUser          `json:"updatedByUser"`
-	UpdatedAt     string            `json:"updatedAt"`
-	Properties    map[string]string `json:"properties"`
-	Workflow      struct {
-		Name string `json:"name"`
-	} `json:"workflow"`
+	ID            int                      `json:"id,omitempty"`
+	Href          string                   `json:"href,omitempty"`
+	Subject       string                   `json:"subject"`
+	Description   string                   `json:"description,omitempty"`
+	ActivityType  TaskType                 `json:"activityType"`
+	Priority      sharedmodels.IOSubObject `json:"priority"`
+	Status        string                   `json:"status"`
+	ShownInDiary  bool                     `json:"shownInDiary"`
+	ShownInPortal bool                     `json:"shownInPortal"`
+	Reference     string                   `json:"reference"`
+	Completion    TaskCompletion           `json:"completion"`
+	RelatedTo     []RelatedEntity          `json:"relatedTo"`
+	LinkedEntity  LinkedEntity             `json:"linkedEntity"`
+	AssignedBy    TaskUser                 `json:"assignedBy"`
+	AssignedTo    TaskAssignment           `json:"assignedTo"`
+	StartsAt      string                   `json:"startsAt"`
+	DueAt         string                   `json:"dueAt"`
+	Duration      TaskDuration             `json:"duration"`
+	Billing       TaskBilling              `json:"billing"`
+	Cost          TaskCost                 `json:"cost"`
+	Recurrence    TaskRecurrence           `json:"recurrence"`
+	CreatedByUser TaskUser                 `json:"createdByUser"`
+	CreatedAt     string                   `json:"createdAt"`
+	UpdatedByUser TaskUser                 `json:"updatedByUser"`
+	UpdatedAt     string                   `json:"updatedAt"`
+	Properties    map[string]string        `json:"properties"`
+	Workflow      sharedmodels.IOSubObject `json:"workflow"`
 }
 
 type TaskCompletion struct {
-	Percentage  int      `json:"percentage"`
-	CompletedBy TaskUser `json:"completedBy"`
-	CompletedAt string   `json:"completedAt"`
-	Outcome     struct {
-		ID   int    `json:"id"`
-		Href string `json:"href,omitempty"`
-		Name string `json:"name,omitempty"`
-	} `json:"outcome"`
+	Percentage  int                      `json:"percentage"`
+	CompletedBy TaskUser                 `json:"completedBy"`
+	CompletedAt string                   `json:"completedAt"`
+	Outcome     sharedmodels.IOSubObject `json:"outcome"`
 }
 
 type RelatedEntity struct {
