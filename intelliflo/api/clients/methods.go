@@ -21,7 +21,7 @@ func (c *ClientService) PostClient(clientObj clientmodels.Client) (clientmodels.
 		return responseClient, fmt.Errorf("error sending request: %v", err)
 	}
 	defer resp.Body.Close()
-	respBody, err := shared.HandleCustomResponseCode(resp, http.StatusOK)
+	respBody, err := shared.HandleCustomResponseCode(resp, http.StatusCreated)
 	if err != nil {
 		return responseClient, fmt.Errorf("error handling response code: %v", err)
 	}
