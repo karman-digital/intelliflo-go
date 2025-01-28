@@ -30,7 +30,7 @@ func (s *TaskService) GetTask(taskId int, opts ...sharedmodels.GetOptions) (task
 
 func (s *TaskService) GetTasks(opts ...sharedmodels.GetOptions) (taskmodels.TasksResponse, error) {
 	var tasks taskmodels.TasksResponse
-	resp, err := s.SendRequest("GET", "/v2/activities/tasks", nil, opts...)
+	resp, err := s.SendRequest("GET", "activities/tasks", nil, opts...)
 	if err != nil {
 		return tasks, err
 	}
@@ -52,7 +52,7 @@ func (s *TaskService) CreateTask(task taskmodels.Task) (taskmodels.Task, error) 
 	if err != nil {
 		return newTask, fmt.Errorf("error converting to body: %v", err)
 	}
-	resp, err := s.SendRequest("POST", "/v2/activities/tasks", reqBody)
+	resp, err := s.SendRequest("POST", "activities/tasks", reqBody)
 	if err != nil {
 		return newTask, fmt.Errorf("error making post request: %v", err)
 	}
@@ -74,7 +74,7 @@ func (s *TaskService) UpdateTask(taskId int, task taskmodels.Task) (taskmodels.T
 	if err != nil {
 		return updatedTask, fmt.Errorf("error converting to body: %v", err)
 	}
-	resp, err := s.SendRequest("PUT", fmt.Sprintf("/v2/activities/tasks/%d", taskId), reqBody)
+	resp, err := s.SendRequest("PUT", fmt.Sprintf("activities/tasks/%d", taskId), reqBody)
 	if err != nil {
 		return updatedTask, fmt.Errorf("error making put request: %v", err)
 	}
@@ -91,7 +91,7 @@ func (s *TaskService) UpdateTask(taskId int, task taskmodels.Task) (taskmodels.T
 }
 
 func (s *TaskService) DeleteTask(taskId int) error {
-	resp, err := s.SendRequest("DELETE", fmt.Sprintf("/v2/activities/tasks/%d", taskId), nil)
+	resp, err := s.SendRequest("DELETE", fmt.Sprintf("activities/tasks/%d", taskId), nil)
 	if err != nil {
 		return fmt.Errorf("error making delete request: %v", err)
 	}
@@ -101,7 +101,7 @@ func (s *TaskService) DeleteTask(taskId int) error {
 
 func (s *TaskService) GetTaskNotes(taskId int, opts ...sharedmodels.GetOptions) (taskmodels.TaskNotesResponse, error) {
 	var notes taskmodels.TaskNotesResponse
-	resp, err := s.SendRequest("GET", fmt.Sprintf("/v2/activities/tasks/%d/notes", taskId), nil, opts...)
+	resp, err := s.SendRequest("GET", fmt.Sprintf("activities/tasks/%d/notes", taskId), nil, opts...)
 	if err != nil {
 		return notes, fmt.Errorf("error making get request: %v", err)
 	}
@@ -123,7 +123,7 @@ func (s *TaskService) CreateTaskNote(taskId int, note taskmodels.TaskNote) (task
 	if err != nil {
 		return newNote, fmt.Errorf("error converting to body: %v", err)
 	}
-	resp, err := s.SendRequest("POST", fmt.Sprintf("/v2/activities/tasks/%d/notes", taskId), reqBody)
+	resp, err := s.SendRequest("POST", fmt.Sprintf("activities/tasks/%d/notes", taskId), reqBody)
 	if err != nil {
 		return newNote, fmt.Errorf("error making post request: %v", err)
 	}
