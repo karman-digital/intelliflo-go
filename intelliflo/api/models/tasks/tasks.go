@@ -50,7 +50,7 @@ type Task struct {
 }
 
 type TaskCompletion struct {
-	Percentage  int                      `json:"percentage"`
+	Percentage  float32                  `json:"percentage"`
 	CompletedBy TaskUser                 `json:"completedBy"`
 	CompletedAt string                   `json:"completedAt"`
 	Outcome     sharedmodels.IOSubObject `json:"outcome"`
@@ -87,8 +87,8 @@ type TaskDuration struct {
 }
 
 type TimeSpan struct {
-	Hours   int `json:"hours"`
-	Minutes int `json:"minutes"`
+	Hours   float32 `json:"hours"`
+	Minutes float32 `json:"minutes"`
 }
 
 type TaskBilling struct {
