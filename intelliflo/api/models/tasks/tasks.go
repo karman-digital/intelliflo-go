@@ -76,12 +76,8 @@ type TaskUser struct {
 }
 
 type TaskAssignment struct {
-	User TaskUser `json:"user"`
-	Role struct {
-		ID   int    `json:"id"`
-		Href string `json:"href,omitempty"`
-		Name string `json:"name,omitempty"`
-	} `json:"role"`
+	User TaskUser                  `json:"user"`
+	Role *sharedmodels.IOSubObject `json:"role,omitempty"`
 }
 
 type TaskDuration struct {
