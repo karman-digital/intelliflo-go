@@ -91,4 +91,6 @@ type Task interface {
 	CreateTask(task taskmodels.Task) (taskmodels.Task, error)
 	UpdateTask(taskId int, task taskmodels.Task) (taskmodels.Task, error)
 	DeleteTask(taskId int) error
+	GetTaskNotes(taskId int, opts ...sharedmodels.GetOptions) (taskmodels.TaskNotesResponse, error)
+	CreateTaskNote(taskId int, note taskmodels.TaskNote) (taskmodels.TaskNote, error)
 }
