@@ -66,6 +66,7 @@ type User interface {
 type Adviser interface {
 	GetAdvisersByUserId(userId int) (advisermodels.Advisers, error)
 	GetAdvisers(options ...sharedmodels.GetOptions) (advisermodels.Advisers, error)
+	GetAdviser(adviserId int) (advisermodels.Adviser, error)
 }
 
 type Webhook interface {

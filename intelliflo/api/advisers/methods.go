@@ -10,7 +10,26 @@ import (
 	"github.com/hashicorp/go-retryablehttp"
 	advisermodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/adviser"
 	sharedmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/shared"
+	"github.com/karman-digital/intelliflo-go/intelliflo/shared"
 )
+
+func (c *AdviserService) GetAdviser(adviserId int) (advisermodels.Adviser, error) {
+	var adviser advisermodels.Adviser
+	resp, err := c.SendRequest("GET", fmt.Sprintf("advisers/%d", adviserId), nil)
+	if err != nil {
+		return adviser, fmt.Errorf("error making get request: %v", err)
+	}
+	defer resp.Body.Close()
+	respBody, err := shared.HandleCustomResponseCode(resp, http.StatusOK)
+	if err != nil {
+		return adviser, fmt.Errorf("error returned by endpoint, status code: %d, body: %s", resp.StatusCode, respBody)
+	}
+	err = json.Unmarshal(respBody, &adviser)
+	if err != nil {
+		return adviser, fmt.Errorf("error parsing body: %v", err)
+	}
+	return adviser, nil
+}
 
 func (c *AdviserService) GetAdvisersByUserId(userId int) (advisermodels.Advisers, error) {
 	var advisers advisermodels.Advisers
