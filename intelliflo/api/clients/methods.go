@@ -23,7 +23,7 @@ func (c *ClientService) PostClient(clientObj clientmodels.Client) (clientmodels.
 	defer resp.Body.Close()
 	respBody, err := shared.HandleCustomResponseCode(resp, http.StatusCreated)
 	if err != nil {
-		return responseClient, fmt.Errorf("error handling response code: %v", err)
+		return responseClient, fmt.Errorf("error handling response code: %v, with body: %s", err, string(respBody))
 	}
 	err = json.Unmarshal(respBody, &responseClient)
 	if err != nil {
