@@ -35,31 +35,27 @@ type AppUninstallWebhookBody struct {
 	Payload        AppInstallPayload `json:"payload"`
 }
 
+type WebhookBody struct {
+	ID        string `json:"id"`
+	Event     string `json:"event"`
+	TimeStamp string `json:"timeStamp"`
+	TenantId  string `json:"tenantId"`
+	UserId    string `json:"userId"`
+}
+
 type ClientChangedWebhookBody struct {
-	ID        string              `json:"id"`
-	Event     string              `json:"event"`
-	TimeStamp string              `json:"timeStamp"`
-	TenantId  string              `json:"tenantId"`
-	UserId    string              `json:"userId"`
-	Payload   clientmodels.Client `json:"payload"`
+	WebhookBody
+	Payload clientmodels.Client `json:"payload"`
 }
 
 type ContactDetailWebhookBody struct {
-	ID        string                            `json:"id"`
-	Event     string                            `json:"event"`
-	TimeStamp string                            `json:"timeStamp"`
-	TenantId  string                            `json:"tenantId"`
-	UserId    string                            `json:"userId"`
-	Payload   contactdetailmodels.ContactDetail `json:"payload"`
+	WebhookBody
+	Payload contactdetailmodels.ContactDetail `json:"payload"`
 }
 
 type AddressWebhookBody struct {
-	ID        string                  `json:"id"`
-	Event     string                  `json:"event"`
-	TimeStamp string                  `json:"timeStamp"`
-	TenantId  string                  `json:"tenantId"`
-	UserId    string                  `json:"userId"`
-	Payload   addressmodels.Residence `json:"payload"`
+	WebhookBody
+	Payload addressmodels.Residence `json:"payload"`
 }
 
 type InstalledFor struct {
