@@ -74,6 +74,7 @@ func (c *ClientService) PutClient(clientId int, client clientmodels.Client) (cli
 	if err != nil {
 		return updatedClient, fmt.Errorf("error converting to body: %v", err)
 	}
+	fmt.Println("reqBody", string(reqBody))
 	resp, err := c.SendRequest("PUT", fmt.Sprintf("/clients/%d", clientId), reqBody)
 	if err != nil {
 		return updatedClient, fmt.Errorf("error sending request: %v", err)
@@ -81,11 +82,11 @@ func (c *ClientService) PutClient(clientId int, client clientmodels.Client) (cli
 	defer resp.Body.Close()
 	respBody, err := shared.HandleCustomResponseCode(resp, http.StatusOK)
 	if err != nil {
-		return updatedClient, fmt.Errorf("error handling response code: %v", err)
+		return updatedClient, fmt.Errorf("error handling response code: %v, with body: %s", err, string(respBody))
 	}
 	err = json.Unmarshal(respBody, &updatedClient)
 	if err != nil {
-		return updatedClient, fmt.Errorf("error unmarshalling response: %v", err)
+		return updatedClient, fmt.Errorf("error unmarshalling response: %v, with body: %s", err, string(respBody))
 	}
 	return updatedClient, nil
 }
