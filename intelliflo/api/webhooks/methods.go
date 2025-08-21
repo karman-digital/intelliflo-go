@@ -12,7 +12,7 @@ import (
 
 func (w *WebhookService) GetWebhook(id int) (webhookmodels.Webhook, error) {
 	var webhook webhookmodels.Webhook
-	resp, err := w.SendRequest("GET", fmt.Sprintf("https://api.gb.intelliflo.net/v2/hub/webhooks/%d", id), nil)
+	resp, err := w.SendRequest("GET", fmt.Sprintf("hub/webhooks/%d", id), nil)
 	if err != nil {
 		return webhook, fmt.Errorf("error sending request: %v", err)
 	}
@@ -34,7 +34,8 @@ func (w *WebhookService) PostWebhookSubscription(postBody webhookmodels.WebhookS
 	if err != nil {
 		return responseWebhook, fmt.Errorf("error converting to body: %v", err)
 	}
-	resp, err := w.SendRequest("POST", "https://api.gb.intelliflo.net/v2/hub/webhooks", reqBody)
+	fmt.Println(string(reqBody))
+	resp, err := w.SendRequest("POST", "hub/webhooks", reqBody)
 	if err != nil {
 		return responseWebhook, fmt.Errorf("error sending request: %v", err)
 	}
@@ -53,7 +54,7 @@ func (w *WebhookService) PostWebhookSubscription(postBody webhookmodels.WebhookS
 
 func (w *WebhookService) GetActiveWebhooks() (webhookmodels.Webhooks, error) {
 	var webhooks webhookmodels.Webhooks
-	resp, err := w.SendRequest("GET", "https://api.gb.intelliflo.net/v2/hub/webhooks", nil)
+	resp, err := w.SendRequest("GET", "hub/webhooks", nil)
 	if err != nil {
 		return webhooks, fmt.Errorf("error sending request: %v", err)
 	}
