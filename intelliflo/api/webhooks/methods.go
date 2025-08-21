@@ -3,6 +3,7 @@ package webhooks
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"net/http"
 
 	webhookmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/webhooks"
@@ -40,7 +41,8 @@ func (w *WebhookService) PostWebhookSubscription(postBody webhookmodels.WebhookS
 	defer resp.Body.Close()
 	respBody, err := shared.HandleCustomResponseCode(resp, http.StatusAccepted)
 	if err != nil {
-		return responseWebhook, fmt.Errorf("error handling response code: %v", err)
+		body, _ := io.ReadAll(resp.Body)
+		return responseWebhook, fmt.Errorf("error handling response code: %v, body: %s", err, string(body))
 	}
 	err = json.Unmarshal(respBody, &responseWebhook)
 	if err != nil {
