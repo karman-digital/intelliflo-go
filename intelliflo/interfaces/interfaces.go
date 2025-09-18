@@ -4,6 +4,7 @@ import (
 	activitiesmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/activities"
 	usersmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/admin/users"
 	advisermodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/adviser"
+	opportunitiesmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/opportunities"
 	addressmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/person/address"
 	clientmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/person/client"
 	contactdetailmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/person/contactdetails"
@@ -94,4 +95,12 @@ type Task interface {
 	DeleteTask(taskId int) error
 	GetTaskNotes(taskId int, opts ...sharedmodels.GetOptions) (taskmodels.TaskNotesResponse, error)
 	CreateTaskNote(taskId int, note taskmodels.TaskNote) (taskmodels.TaskNote, error)
+}
+
+type Opportunity interface {
+	CreateClientOpportunity(clientId int, opportunity opportunitiesmodels.OpportunityCreateRequest) (opportunitiesmodels.Opportunity, error)
+	GetCampaigns(opts ...sharedmodels.GetOptions) (opportunitiesmodels.OpportunityCampaignOptionsResponse, error)
+	GetCampaignTypes(opts ...sharedmodels.GetOptions) (opportunitiesmodels.OpportunityCampaignTypeOptionsResponse, error)
+	GetStatuses(opts ...sharedmodels.GetOptions) (opportunitiesmodels.OpportunityStatusOptionsResponse, error)
+	GetTypes(opts ...sharedmodels.GetOptions) (opportunitiesmodels.OpportunityTypeOptionsResponse, error)
 }
