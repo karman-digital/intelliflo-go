@@ -1,12 +1,10 @@
 package planmodels
 
-import "time"
-
 type PlanStatusChangePayload struct {
 	ID          int                  `json:"id"`
 	Status      string               `json:"status"`
-	EffectiveOn time.Time            `json:"effectiveOn"`
-	CreatedAt   time.Time            `json:"createdAt"`
+	EffectiveOn string               `json:"effectiveOn"`
+	CreatedAt   string               `json:"createdAt"`
 	Plan        PlanStatusChangePlan `json:"plan"`
 }
 
