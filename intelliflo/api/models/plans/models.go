@@ -1,6 +1,8 @@
 package planmodels
 
-import "time"
+import (
+	sharedmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/shared"
+)
 
 type ExchangeRate struct {
 	Currency string  `json:"currency"`
@@ -37,8 +39,8 @@ type LatestValuation struct {
 	ID                     int                  `json:"id"`
 	Href                   string               `json:"href"`
 	Value                  LatestValuationValue `json:"value"`
-	ValuedOn               time.Time            `json:"valuedOn"`
-	CreatedAt              time.Time            `json:"createdAt"`
+	ValuedOn               sharedmodels.IntellifloDateTime            `json:"valuedOn"`
+	CreatedAt              sharedmodels.IntellifloDateTime            `json:"createdAt"`
 	SurrenderTransferValue LatestValuationValue `json:"surrenderTransferValue"`
 	Type                   string               `json:"type"`
 	Plan                   LatestValuationPlan  `json:"plan"`
@@ -80,7 +82,7 @@ type ForwardIncomeTo struct {
 
 type AdviceStatus struct {
 	Value     string    `json:"value"`
-	UpdatedOn time.Time `json:"updatedOn"`
+	UpdatedOn sharedmodels.IntellifloDateTime `json:"updatedOn"`
 }
 
 type DocumentDelivery struct {
@@ -101,8 +103,8 @@ type Plan struct {
 	Discriminator     string              `json:"discriminator"`
 	PlanType          PlanType            `json:"planType"`
 	PolicyNumber      string              `json:"policyNumber"`
-	StartsOn          time.Time           `json:"startsOn"`
-	EndsOn            time.Time           `json:"endsOn"`
+	StartsOn          sharedmodels.IntellifloDateTime           `json:"startsOn"`
+	EndsOn            sharedmodels.IntellifloDateTime           `json:"endsOn"`
 	ProductName       string              `json:"productName"`
 	ProductProvider   IOSubObjectWithName `json:"productProvider"`
 	SellingAdviser    PlanSubObject       `json:"sellingAdviser"`
@@ -144,10 +146,10 @@ type Plan struct {
 	CreatedBy                       PlanSubObject       `json:"createdBy"`
 	DocumentDelivery                DocumentDelivery    `json:"documentDelivery"`
 	IsProviderManaged               bool                `json:"isProviderManaged"`
-	PerformanceStartsOn             time.Time           `json:"performanceStartsOn"`
-	PerformanceEndsOn               time.Time           `json:"performanceEndsOn"`
+	PerformanceStartsOn             sharedmodels.IntellifloDateTime           `json:"performanceStartsOn"`
+	PerformanceEndsOn               sharedmodels.IntellifloDateTime           `json:"performanceEndsOn"`
 	ProviderCodes                   ProviderCodes       `json:"providerCodes"`
-	CreatedAt                       time.Time           `json:"createdAt"`
+	CreatedAt                       sharedmodels.IntellifloDateTime           `json:"createdAt"`
 	Program                         IOSubObjectWithName `json:"program"`
 	RiskProfile                     PlanSubObject       `json:"riskProfile"`
 }
