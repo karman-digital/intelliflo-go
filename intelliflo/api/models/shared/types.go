@@ -1,11 +1,16 @@
 package sharedmodels
 
 import (
+	"encoding/json"
 	"fmt"
 	"time"
 )
 
 type IntellifloDateTime time.Time
+
+func (x IntellifloDateTime) MarshalJSON() ([]byte, error) {
+	return json.Marshal(time.Time(x).Format("2006-01-02T15:04:05"))
+}
 
 func (x *IntellifloDateTime) UnmarshalJSON(b []byte) error {
 	if string(b) == "null" {
