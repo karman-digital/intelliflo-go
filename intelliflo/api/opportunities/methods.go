@@ -32,6 +32,28 @@ func (s *OpportunityService) CreateClientOpportunity(clientId int, opportunity o
 	return created, nil
 }
 
+func (s *OpportunityService) UpdateClientOpportunity(clientId int, opportunityId int, opportunity opportunitiesmodels.OpportunityCreateRequest) (opportunitiesmodels.Opportunity, error) {
+	var updated opportunitiesmodels.Opportunity
+	reqBody, err := json.Marshal(opportunity)
+	if err != nil {
+		return updated, fmt.Errorf("error converting to body: %v", err)
+	}
+	resp, err := s.SendRequest("PUT", fmt.Sprintf("clients/%d/opportunities/%d", clientId, opportunityId), reqBody)
+	if err != nil {
+		return updated, fmt.Errorf("error making put request: %v", err)
+	}
+	defer resp.Body.Close()
+	respBody, err := shared.HandleCustomResponseCode(resp, http.StatusOK)
+	if err != nil {
+		return updated, fmt.Errorf("error returned by endpoint, status code: %d, body: %s", resp.StatusCode, respBody)
+	}
+	err = json.Unmarshal(respBody, &updated)
+	if err != nil {
+		return updated, fmt.Errorf("error parsing body: %v", err)
+	}
+	return updated, nil
+}
+
 func (s *OpportunityService) GetCampaigns(opts ...sharedmodels.GetOptions) (opportunitiesmodels.OpportunityCampaignOptionsResponse, error) {
 	var campaigns opportunitiesmodels.OpportunityCampaignOptionsResponse
 	resp, err := s.SendRequest("GET", "opportunities/campaigns", nil, opts...)

@@ -99,6 +99,7 @@ type Task interface {
 
 type Opportunity interface {
 	CreateClientOpportunity(clientId int, opportunity opportunitiesmodels.OpportunityCreateRequest) (opportunitiesmodels.Opportunity, error)
+	UpdateClientOpportunity(clientId int, opportunityId int, opportunity opportunitiesmodels.OpportunityCreateRequest) (opportunitiesmodels.Opportunity, error)
 	GetCampaigns(opts ...sharedmodels.GetOptions) (opportunitiesmodels.OpportunityCampaignOptionsResponse, error)
 	GetCampaignTypes(opts ...sharedmodels.GetOptions) (opportunitiesmodels.OpportunityCampaignTypeOptionsResponse, error)
 	GetPropositions(opts ...sharedmodels.GetOptions) (opportunitiesmodels.OpportunityPropositionOptionsResponse, error)
