@@ -101,6 +101,7 @@ type Opportunity interface {
 	CreateClientOpportunity(clientId int, opportunity opportunitiesmodels.OpportunityCreateRequest) (opportunitiesmodels.Opportunity, error)
 	GetCampaigns(opts ...sharedmodels.GetOptions) (opportunitiesmodels.OpportunityCampaignOptionsResponse, error)
 	GetCampaignTypes(opts ...sharedmodels.GetOptions) (opportunitiesmodels.OpportunityCampaignTypeOptionsResponse, error)
+	GetPropositions(opts ...sharedmodels.GetOptions) (opportunitiesmodels.OpportunityPropositionOptionsResponse, error)
 	GetStatuses(opts ...sharedmodels.GetOptions) (opportunitiesmodels.OpportunityStatusOptionsResponse, error)
 	GetTypes(opts ...sharedmodels.GetOptions) (opportunitiesmodels.OpportunityTypeOptionsResponse, error)
 }

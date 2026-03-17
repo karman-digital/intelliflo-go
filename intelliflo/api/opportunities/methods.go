@@ -103,3 +103,21 @@ func (s *OpportunityService) GetTypes(opts ...sharedmodels.GetOptions) (opportun
 	}
 	return types, nil
 }
+
+func (s *OpportunityService) GetPropositions(opts ...sharedmodels.GetOptions) (opportunitiesmodels.OpportunityPropositionOptionsResponse, error) {
+	var propositions opportunitiesmodels.OpportunityPropositionOptionsResponse
+	resp, err := s.SendRequest("GET", "opportunities/propositions", nil, opts...)
+	if err != nil {
+		return propositions, fmt.Errorf("error making get request: %v", err)
+	}
+	defer resp.Body.Close()
+	respBody, err := shared.HandleCustomResponseCode(resp, http.StatusOK)
+	if err != nil {
+		return propositions, fmt.Errorf("error returned by endpoint, status code: %d, body: %s", resp.StatusCode, respBody)
+	}
+	err = json.Unmarshal(respBody, &propositions)
+	if err != nil {
+		return propositions, fmt.Errorf("error parsing body: %v", err)
+	}
+	return propositions, nil
+}

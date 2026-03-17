@@ -176,3 +176,19 @@ type OpportunityTypeOptionProperties struct {
 	ObjectiveType       string `json:"objectiveType"`
 	InUse               bool   `json:"inUse"`
 }
+
+type OpportunityPropositionOptionsResponse struct {
+	Items []OpportunityPropositionOption `json:"items"`
+	Count int                            `json:"count"`
+}
+
+type OpportunityPropositionOption struct {
+	ID         int                                   `json:"id"`
+	Name       string                                `json:"name"`
+	Tenant     sharedmodels.IOSubObject               `json:"tenant"`
+	Properties OpportunityPropositionOptionProperties `json:"properties"`
+}
+
+type OpportunityPropositionOptionProperties struct {
+	IsArchived bool `json:"isArchived"`
+}
