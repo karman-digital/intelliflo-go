@@ -51,6 +51,7 @@ type OpportunityProspectRequest struct {
 }
 
 type OpportunityCampaignRequest struct {
+	ID      int                                `json:"id,omitempty"`
 	Type    string                             `json:"type,omitempty"`
 	Name    string                             `json:"name,omitempty"`
 	Channel *OpportunityCampaignChannelRequest `json:"channel,omitempty"`
