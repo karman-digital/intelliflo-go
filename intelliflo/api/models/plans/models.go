@@ -1,8 +1,6 @@
 package planmodels
 
 import (
-	"time"
-
 	sharedmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/shared"
 )
 
@@ -38,15 +36,15 @@ type Owner struct {
 }
 
 type LatestValuation struct {
-	ID                     int                  `json:"id"`
-	Href                   string               `json:"href"`
-	Value                  LatestValuationValue `json:"value"`
-	ValuedOn               time.Time            `json:"valuedOn"`
-	CreatedAt              time.Time            `json:"createdAt"`
-	SurrenderTransferValue LatestValuationValue `json:"surrenderTransferValue"`
-	Type                   string               `json:"type"`
-	Plan                   LatestValuationPlan  `json:"plan"`
-	UpdatedBy              PlanSubObject        `json:"updatedBy"`
+	ID                     int                             `json:"id"`
+	Href                   string                          `json:"href"`
+	Value                  LatestValuationValue            `json:"value"`
+	ValuedOn               sharedmodels.IntellifloDateTime `json:"valuedOn"`
+	CreatedAt              sharedmodels.IntellifloDateTime `json:"createdAt"`
+	SurrenderTransferValue LatestValuationValue            `json:"surrenderTransferValue"`
+	Type                   string                          `json:"type"`
+	Plan                   LatestValuationPlan             `json:"plan"`
+	UpdatedBy              PlanSubObject                   `json:"updatedBy"`
 }
 
 type LatestValuationPlan struct {
@@ -83,8 +81,8 @@ type ForwardIncomeTo struct {
 }
 
 type AdviceStatus struct {
-	Value     string    `json:"value"`
-	UpdatedOn time.Time `json:"updatedOn"`
+	Value     string                          `json:"value"`
+	UpdatedOn sharedmodels.IntellifloDateTime `json:"updatedOn"`
 }
 
 type DocumentDelivery struct {

@@ -1,6 +1,8 @@
 package marketingpreferencemodels
 
-import sharedmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/shared"
+import (
+	sharedmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/shared"
+)
 
 type PrefClient struct {
 	ID   int32  `json:"id,omitempty"`

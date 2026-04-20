@@ -4,6 +4,7 @@ import (
 	addressmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/person/address"
 	clientmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/person/client"
 	contactdetailmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/person/contactdetails"
+	planmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/plans"
 )
 
 type WebhookPayload struct {
@@ -56,6 +57,11 @@ type ContactDetailWebhookBody struct {
 type AddressWebhookBody struct {
 	WebhookBody
 	Payload addressmodels.Residence `json:"payload"`
+}
+
+type PlanStatusChangeWebhookBody struct {
+	WebhookBody
+	Payload planmodels.PlanStatusChangePayload `json:"payload"`
 }
 
 type InstalledFor struct {
