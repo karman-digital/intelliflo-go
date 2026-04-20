@@ -60,6 +60,7 @@ type MarketingPreference interface {
 
 type User interface {
 	GetUserById(id int) (usersmodels.User, error)
+	GetAllUsers() (usersmodels.Users, error)
 	GetUsersByEmail(email string) (usersmodels.Users, error)
 }
 
