@@ -1,6 +1,10 @@
 package planmodels
 
-import "time"
+import (
+	"time"
+
+	sharedmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/shared"
+)
 
 type ExchangeRate struct {
 	Currency string  `json:"currency"`
@@ -94,62 +98,62 @@ type ProviderCodes struct {
 }
 
 type Plan struct {
-	ID                int                 `json:"id"`
-	Href              string              `json:"href"`
-	Currency          string              `json:"currency"`
-	ExchangeRate      ExchangeRate        `json:"exchangeRate"`
-	Discriminator     string              `json:"discriminator"`
-	PlanType          PlanType            `json:"planType"`
-	PolicyNumber      string              `json:"policyNumber"`
-	StartsOn          time.Time           `json:"startsOn"`
-	EndsOn            time.Time           `json:"endsOn"`
-	ProductName       string              `json:"productName"`
-	ProductProvider   IOSubObjectWithName `json:"productProvider"`
-	SellingAdviser    PlanSubObject       `json:"sellingAdviser"`
-	Owners            []Owner             `json:"owners"`
-	IsVisibleToClient bool                `json:"isVisibleToClient"`
-	CurrentStatus     string              `json:"currentStatus"`
-	SystemStatus      string              `json:"systemStatus"`
-	IsPreExisting     bool                `json:"isPreExisting"`
-	Reference         string              `json:"reference"`
-	LatestValuation   LatestValuation     `json:"latestValuation"`
-	PlanTypesHref     string              `json:"planTypes_href"`
-	ValuationsHref    string              `json:"valuations_href"`
-	ContributionsHref string              `json:"contributions_href"`
-	TopupsHref        string              `json:"topups_href"`
-	PlanHoldingsHref  string              `json:"planHoldings_href"`
-	Lifecycle         IOSubObjectWithName `json:"lifecycle"`
-	IsTopup           bool                `json:"isTopup"`
+	ID                int                             `json:"id"`
+	Href              string                          `json:"href"`
+	Currency          string                          `json:"currency"`
+	ExchangeRate      ExchangeRate                    `json:"exchangeRate"`
+	Discriminator     string                          `json:"discriminator"`
+	PlanType          PlanType                        `json:"planType"`
+	PolicyNumber      string                          `json:"policyNumber"`
+	StartsOn          sharedmodels.IntellifloDateTime `json:"startsOn"`
+	EndsOn            sharedmodels.IntellifloDateTime `json:"endsOn"`
+	ProductName       string                          `json:"productName"`
+	ProductProvider   IOSubObjectWithName             `json:"productProvider"`
+	SellingAdviser    PlanSubObject                   `json:"sellingAdviser"`
+	Owners            []Owner                         `json:"owners"`
+	IsVisibleToClient bool                            `json:"isVisibleToClient"`
+	CurrentStatus     string                          `json:"currentStatus"`
+	SystemStatus      string                          `json:"systemStatus"`
+	IsPreExisting     bool                            `json:"isPreExisting"`
+	Reference         string                          `json:"reference"`
+	LatestValuation   LatestValuation                 `json:"latestValuation"`
+	PlanTypesHref     string                          `json:"planTypes_href"`
+	ValuationsHref    string                          `json:"valuations_href"`
+	ContributionsHref string                          `json:"contributions_href"`
+	TopupsHref        string                          `json:"topups_href"`
+	PlanHoldingsHref  string                          `json:"planHoldings_href"`
+	Lifecycle         IOSubObjectWithName             `json:"lifecycle"`
+	IsTopup           bool                            `json:"isTopup"`
 	Parent            struct {
 		ID   int    `json:"id"`
 		Href string `json:"href"`
 	} `json:"parent"`
-	IsSubPlan                       bool                `json:"isSubPlan"`
-	IsAdviceOffPanel                bool                `json:"isAdviceOffPanel"`
-	OtherReferences                 OtherReferences     `json:"otherReferences"`
-	ClientCategory                  string              `json:"clientCategory"`
-	AvailablePlanPurposesHref       string              `json:"available_plan_purposes_href"`
-	PlanPurposesHref                string              `json:"plan_purposes_href"`
-	WithdrawalsHref                 string              `json:"withdrawals_href"`
-	SubPlansHref                    string              `json:"subPlans_href"`
-	IsClientSuitableForTargetMarket bool                `json:"isClientSuitableForTargetMarket"`
-	QuoteResult                     QuoteResult         `json:"quoteResult"`
-	Banding                         PlanSubObject       `json:"banding"`
-	ForwardIncomeTo                 ForwardIncomeTo     `json:"forwardIncomeTo"`
-	Administrator                   PlanSubObject       `json:"administrator"`
-	Paraplanner                     PlanSubObject       `json:"paraplanner"`
-	AdviceStatus                    AdviceStatus        `json:"adviceStatus"`
-	Tags                            []string            `json:"tags"`
-	Group                           PlanSubObject       `json:"group"`
-	CreatedBy                       PlanSubObject       `json:"createdBy"`
-	DocumentDelivery                DocumentDelivery    `json:"documentDelivery"`
-	IsProviderManaged               bool                `json:"isProviderManaged"`
-	PerformanceStartsOn             time.Time           `json:"performanceStartsOn"`
-	PerformanceEndsOn               time.Time           `json:"performanceEndsOn"`
-	ProviderCodes                   ProviderCodes       `json:"providerCodes"`
-	CreatedAt                       time.Time           `json:"createdAt"`
-	Program                         IOSubObjectWithName `json:"program"`
-	RiskProfile                     PlanSubObject       `json:"riskProfile"`
+	IsSubPlan                       bool                            `json:"isSubPlan"`
+	IsAdviceOffPanel                bool                            `json:"isAdviceOffPanel"`
+	OtherReferences                 OtherReferences                 `json:"otherReferences"`
+	ClientCategory                  string                          `json:"clientCategory"`
+	AvailablePlanPurposesHref       string                          `json:"available_plan_purposes_href"`
+	PlanPurposesHref                string                          `json:"plan_purposes_href"`
+	WithdrawalsHref                 string                          `json:"withdrawals_href"`
+	SubPlansHref                    string                          `json:"subPlans_href"`
+	IsClientSuitableForTargetMarket bool                            `json:"isClientSuitableForTargetMarket"`
+	QuoteResult                     QuoteResult                     `json:"quoteResult"`
+	Banding                         PlanSubObject                   `json:"banding"`
+	ForwardIncomeTo                 ForwardIncomeTo                 `json:"forwardIncomeTo"`
+	Administrator                   PlanSubObject                   `json:"administrator"`
+	Paraplanner                     PlanSubObject                   `json:"paraplanner"`
+	AdviceStatus                    AdviceStatus                    `json:"adviceStatus"`
+	Tags                            []string                        `json:"tags"`
+	Group                           PlanSubObject                   `json:"group"`
+	CreatedBy                       PlanSubObject                   `json:"createdBy"`
+	DocumentDelivery                DocumentDelivery                `json:"documentDelivery"`
+	IsProviderManaged               bool                            `json:"isProviderManaged"`
+	PerformanceStartsOn             sharedmodels.IntellifloDateTime `json:"performanceStartsOn"`
+	PerformanceEndsOn               sharedmodels.IntellifloDateTime `json:"performanceEndsOn"`
+	ProviderCodes                   ProviderCodes                   `json:"providerCodes"`
+	CreatedAt                       sharedmodels.IntellifloDateTime `json:"createdAt"`
+	Program                         IOSubObjectWithName             `json:"program"`
+	RiskProfile                     PlanSubObject                   `json:"riskProfile"`
 }
 
 type Plans struct {

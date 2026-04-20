@@ -27,6 +27,14 @@ func (x *IntellifloDateTime) UnmarshalJSON(b []byte) error {
 	return nil
 }
 
+func (x IntellifloDateTime) IsZero() bool {
+	return time.Time(x).IsZero()
+}
+
+func (x *IntellifloDateTime) Time() time.Time {
+	return time.Time(*x)
+}
+
 type AccessToken string
 
 func (a AccessToken) String() string {
