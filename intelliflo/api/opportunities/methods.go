@@ -47,6 +47,7 @@ func (s *OpportunityService) UpdateClientOpportunity(clientId int, opportunityId
 	respBody, err := shared.HandleCustomResponseCode(resp, http.StatusOK)
 	fmt.Printf("IO UpdateClientOpportunity response status: %d, body: %s\n", resp.StatusCode, string(respBody))
 	if err != nil {
+		fmt.Println("Error to update the opportunity: ", err.Error())
 		return updated, fmt.Errorf("error returned by endpoint, status code: %d, body: %s", resp.StatusCode, respBody)
 	}
 	err = json.Unmarshal(respBody, &updated)
