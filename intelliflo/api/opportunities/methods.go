@@ -38,12 +38,14 @@ func (s *OpportunityService) UpdateClientOpportunity(clientId int, opportunityId
 	if err != nil {
 		return updated, fmt.Errorf("error converting to body: %v", err)
 	}
+	fmt.Printf("IO UpdateClientOpportunity PUT clients/%d/opportunities/%d request: %s\n", clientId, opportunityId, string(reqBody))
 	resp, err := s.SendRequest("PUT", fmt.Sprintf("clients/%d/opportunities/%d", clientId, opportunityId), reqBody)
 	if err != nil {
 		return updated, fmt.Errorf("error making put request: %v", err)
 	}
 	defer resp.Body.Close()
 	respBody, err := shared.HandleCustomResponseCode(resp, http.StatusOK)
+	fmt.Printf("IO UpdateClientOpportunity response status: %d, body: %s\n", resp.StatusCode, string(respBody))
 	if err != nil {
 		return updated, fmt.Errorf("error returned by endpoint, status code: %d, body: %s", resp.StatusCode, respBody)
 	}
