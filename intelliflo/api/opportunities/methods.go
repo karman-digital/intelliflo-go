@@ -57,6 +57,25 @@ func (s *OpportunityService) UpdateClientOpportunity(clientId int, opportunityId
 	return updated, nil
 }
 
+func (s *OpportunityService) GetClientOpportunity(clientId int, opportunityId int) (opportunitiesmodels.Opportunity, error) {
+	var opportunity opportunitiesmodels.Opportunity
+	resp, err := s.SendRequest("GET", fmt.Sprintf("clients/%d/opportunities/%d", clientId, opportunityId), nil)
+	if err != nil {
+		return opportunity, fmt.Errorf("error making get request: %v", err)
+	}
+	defer resp.Body.Close()
+	respBody, err := shared.HandleCustomResponseCode(resp, http.StatusOK)
+	fmt.Printf("IO GetClientOpportunity response status: %d, body: %s\n", resp.StatusCode, string(respBody))
+	if err != nil {
+		return opportunity, fmt.Errorf("error returned by endpoint, status code: %d, body: %s", resp.StatusCode, respBody)
+	}
+	err = json.Unmarshal(respBody, &opportunity)
+	if err != nil {
+		return opportunity, fmt.Errorf("error parsing body: %v", err)
+	}
+	return opportunity, nil
+}
+
 func (s *OpportunityService) GetCampaigns(opts ...sharedmodels.GetOptions) (opportunitiesmodels.OpportunityCampaignOptionsResponse, error) {
 	var campaigns opportunitiesmodels.OpportunityCampaignOptionsResponse
 	resp, err := s.SendRequest("GET", "opportunities/campaigns", nil, opts...)
