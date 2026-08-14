@@ -4,6 +4,7 @@ import (
 	activitiesmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/activities"
 	usersmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/admin/users"
 	advisermodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/adviser"
+	feesmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/fees"
 	opportunitiesmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/opportunities"
 	addressmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/person/address"
 	clientmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/person/client"
@@ -39,6 +40,10 @@ type ContactDetail interface {
 	GetContactDetails(entityId int, options ...sharedmodels.GetOptions) (contactdetailmodels.ContactDetails, error)
 	PostContactDetail(entityId int, contactDetail contactdetailmodels.ContactDetail) (contactdetailmodels.ContactDetail, error)
 	PutContactDetail(entityId int, contactDetailId int, contactDetail contactdetailmodels.ContactDetail) (contactdetailmodels.ContactDetail, error)
+}
+
+type Fee interface {
+	GetFee(clientID, feeID int) (feesmodels.Fee, error)
 }
 
 type Plan interface {
