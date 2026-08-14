@@ -44,6 +44,7 @@ type ContactDetail interface {
 
 type Fee interface {
 	GetFee(clientID, feeID int) (feesmodels.Fee, error)
+	GetFees(clientID int) (feesmodels.Fees, error)
 }
 
 type Plan interface {

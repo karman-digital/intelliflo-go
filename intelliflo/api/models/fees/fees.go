@@ -37,6 +37,16 @@ type Fee struct {
 	FeeCode          string                           `json:"feeCode"`
 }
 
+type Fees struct {
+	Href      string `json:"href"`
+	FirstHref string `json:"first_href"`
+	LastHref  string `json:"last_href"`
+	NextHref  string `json:"next_href"`
+	PrevHref  string `json:"prev_href"`
+	Items     []Fee  `json:"items"`
+	Count     int    `json:"count"`
+}
+
 type FeeType struct {
 	Name     string `json:"name"`
 	Category string `json:"category"`
