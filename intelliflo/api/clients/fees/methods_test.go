@@ -52,6 +52,19 @@ func TestGetFeesGetsEveryPage(t *testing.T) {
 	assert.Equal(t, 1, creds.options[1].Skip)
 }
 
+func TestGetFeesAcceptsNumericPaidBy(t *testing.T) {
+	creds := &feeCredentials{responses: []string{
+		`{"items":[{"id":14625740,"paymentType":{"paidBy":0}}],"count":1}`,
+	}}
+	service := NewFeeService(creds)
+
+	fees, err := service.GetFees(38015539)
+
+	require.NoError(t, err)
+	require.Len(t, fees.Items, 1)
+	assert.Equal(t, "0", string(fees.Items[0].PaymentType.PaidBy))
+}
+
 func (c *feeCredentials) Client() *retryablehttp.Client {
 	return nil
 }
