@@ -12,6 +12,7 @@ import (
 	relationshipmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/person/relationships"
 	planmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/plans"
 	fundsmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/plans/funds"
+	servicecasemodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/servicecases"
 	sharedmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/shared"
 	taskmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/tasks"
 	webhookmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/webhooks"
@@ -43,6 +44,10 @@ type ContactDetail interface {
 
 type Plan interface {
 	GetPlans(clientId int, options ...sharedmodels.GetOptions) (planmodels.Plans, error)
+}
+
+type ServiceCase interface {
+	GetServiceCases(clientID int, options ...sharedmodels.GetOptions) (servicecasemodels.ServiceCases, error)
 }
 
 type Holding interface {

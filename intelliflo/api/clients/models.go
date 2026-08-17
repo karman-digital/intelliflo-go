@@ -13,6 +13,7 @@ type Client struct {
 	Holdings             interfaces.Holding
 	Relationships        interfaces.Relationship
 	MarketingPreferences interfaces.MarketingPreference
+	ServiceCases         interfaces.ServiceCase
 }
 
 type ClientService struct {
