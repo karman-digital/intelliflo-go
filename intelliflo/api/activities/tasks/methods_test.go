@@ -20,36 +20,6 @@ func (f roundTripperFunc) RoundTrip(req *http.Request) (*http.Response, error) {
 	return f(req)
 }
 
-func TestGetTasksByReferenceScansEveryPageForExactMatches(t *testing.T) {
-	var calls int
-	client := testClient(func(req *http.Request) *http.Response {
-		calls++
-		if req.Method != http.MethodGet || req.URL.Path != "/v2/activities/tasks" {
-			t.Fatalf("request = %s %s", req.Method, req.URL.Path)
-		}
-		if calls == 1 {
-			if got := req.URL.Query().Get("top"); got != "500" {
-				t.Fatalf("top = %q", got)
-			}
-			return taskJSONResponse(http.StatusOK, `{"items":[{"id":1,"subject":"unrelated"}],"count":501,"next_href":"https://api.gb.intelliflo.net/v2/activities/tasks?skip=500&top=500"}`)
-		}
-		if got := req.URL.Query().Get("skip"); got != "500" {
-			t.Fatalf("skip = %q", got)
-		}
-		return taskJSONResponse(http.StatusOK, `{"items":[{"id":42,"reference":"IOT42","subject":"proof [hatch-task-proof:abc]"}],"count":501}`)
-	})
-	got, err := taskServiceWithClient(client).GetTasksByReference("hatch-task-proof:abc")
-	if err != nil || len(got.Items) != 1 || got.Items[0].ID != 42 {
-		t.Fatalf("result = %#v, error = %v", got, err)
-	}
-}
-
-func TestGetTasksByReferenceRejectsUnsafeReference(t *testing.T) {
-	if _, err := taskServiceWithClient(testClient(nil)).GetTasksByReference("bad'reference"); err == nil {
-		t.Fatal("expected invalid reference error")
-	}
-}
-
 func TestCreateTaskUsesWriteOnlyRequestAndDecodesResponse(t *testing.T) {
 	request := taskmodels.TaskCreateRequest{
 		Subject:       "Client review",
@@ -140,6 +110,20 @@ func TestGetTaskUsesActivitiesTasksPath(t *testing.T) {
 	service := taskServiceWithClient(client)
 	if _, err := service.GetTask(42); err != nil {
 		t.Fatalf("GetTask() error = %v", err)
+	}
+}
+
+func TestGetTaskNoteUsesExactPath(t *testing.T) {
+	client := testClient(func(req *http.Request) *http.Response {
+		if req.Method != http.MethodGet || req.URL.Path != "/v2/activities/tasks/42/notes/84" {
+			t.Fatalf("request = %s %s", req.Method, req.URL.Path)
+		}
+		return taskJSONResponse(http.StatusOK, `{"id":84,"notes":"Proof note","showOnClientPortal":false}`)
+	})
+
+	note, err := taskServiceWithClient(client).GetTaskNote(42, 84)
+	if err != nil || note.ID != 84 {
+		t.Fatalf("note = %#v, error = %v", note, err)
 	}
 }
 

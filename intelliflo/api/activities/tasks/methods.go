@@ -4,8 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"strings"
-	"sync"
 
 	sharedmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/shared"
 	taskmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/tasks"
@@ -28,76 +26,6 @@ func (s *TaskService) GetTask(taskId int, opts ...sharedmodels.GetOptions) (task
 		return task, fmt.Errorf("error parsing body: %v", err)
 	}
 	return task, nil
-}
-
-func (s *TaskService) GetTasksByReference(reference string) (taskmodels.TasksResponse, error) {
-	if strings.TrimSpace(reference) == "" || strings.Contains(reference, "'") {
-		return taskmodels.TasksResponse{}, fmt.Errorf("invalid task reference")
-	}
-	all, err := s.GetAllTasks()
-	if err != nil {
-		return taskmodels.TasksResponse{}, err
-	}
-	matches := make([]taskmodels.Task, 0, 1)
-	for _, task := range all.Items {
-		if strings.HasSuffix(strings.TrimSpace(task.Subject), "["+reference+"]") {
-			matches = append(matches, task)
-		}
-	}
-	all.Items = matches
-	all.Count = len(matches)
-	all.NextHref = ""
-	return all, nil
-}
-
-func (s *TaskService) GetAllTasks() (taskmodels.TasksResponse, error) {
-	const pageSize = 500
-	first, err := s.GetTasks(sharedmodels.GetOptions{Top: pageSize})
-	if err != nil {
-		return taskmodels.TasksResponse{}, err
-	}
-	pageCount := (first.Count + pageSize - 1) / pageSize
-	if pageCount <= 1 {
-		first.NextHref = ""
-		return first, nil
-	}
-
-	pages := make([]taskmodels.TasksResponse, pageCount-1)
-	jobs := make(chan int)
-	errCh := make(chan error, pageCount-1)
-	var workers sync.WaitGroup
-	workerCount := 6
-	if workerCount > len(pages) {
-		workerCount = len(pages)
-	}
-	for worker := 0; worker < workerCount; worker++ {
-		workers.Add(1)
-		go func() {
-			defer workers.Done()
-			for pageIndex := range jobs {
-				page, pageErr := s.GetTasks(sharedmodels.GetOptions{Top: pageSize, Skip: (pageIndex + 1) * pageSize})
-				if pageErr != nil {
-					errCh <- pageErr
-					continue
-				}
-				pages[pageIndex] = page
-			}
-		}()
-	}
-	for pageIndex := range pages {
-		jobs <- pageIndex
-	}
-	close(jobs)
-	workers.Wait()
-	close(errCh)
-	if err := <-errCh; err != nil {
-		return taskmodels.TasksResponse{}, err
-	}
-	for _, page := range pages {
-		first.Items = append(first.Items, page.Items...)
-	}
-	first.NextHref = ""
-	return first, nil
 }
 
 func (s *TaskService) GetTasks(opts ...sharedmodels.GetOptions) (taskmodels.TasksResponse, error) {
@@ -190,6 +118,23 @@ func (s *TaskService) GetTaskNotes(taskId int, opts ...sharedmodels.GetOptions) 
 		return notes, fmt.Errorf("error parsing body: %v", err)
 	}
 	return notes, nil
+}
+
+func (s *TaskService) GetTaskNote(taskId, noteId int) (taskmodels.TaskNote, error) {
+	var note taskmodels.TaskNote
+	resp, err := s.SendRequest("GET", fmt.Sprintf("activities/tasks/%d/notes/%d", taskId, noteId), nil)
+	if err != nil {
+		return note, err
+	}
+	defer resp.Body.Close()
+	respBody, err := shared.HandleCustomResponseCode(resp, http.StatusOK)
+	if err != nil {
+		return note, fmt.Errorf("get task note returned status %d: %w", resp.StatusCode, err)
+	}
+	if err := json.Unmarshal(respBody, &note); err != nil {
+		return note, fmt.Errorf("error parsing body: %v", err)
+	}
+	return note, nil
 }
 
 func (s *TaskService) CreateTaskNote(taskId int, note taskmodels.TaskNoteCreateRequest) (taskmodels.TaskNote, error) {
