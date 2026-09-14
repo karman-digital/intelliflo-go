@@ -20,15 +20,23 @@ func (f roundTripperFunc) RoundTrip(req *http.Request) (*http.Response, error) {
 	return f(req)
 }
 
-func TestGetTasksByReferenceUsesExactFilter(t *testing.T) {
+func TestGetTasksByReferenceScansEveryPageForExactMatches(t *testing.T) {
+	var calls int
 	client := testClient(func(req *http.Request) *http.Response {
+		calls++
 		if req.Method != http.MethodGet || req.URL.Path != "/v2/activities/tasks" {
 			t.Fatalf("request = %s %s", req.Method, req.URL.Path)
 		}
-		if got := req.URL.Query().Get("filter"); got != "reference eq 'hatch-task-proof:abc'" {
-			t.Fatalf("filter = %q", got)
+		if calls == 1 {
+			if got := req.URL.Query().Get("top"); got != "500" {
+				t.Fatalf("top = %q", got)
+			}
+			return taskJSONResponse(http.StatusOK, `{"items":[{"id":1,"reference":"unrelated"}],"count":2,"next_href":"https://api.gb.intelliflo.net/v2/activities/tasks?skip=500&top=500"}`)
 		}
-		return taskJSONResponse(http.StatusOK, `{"items":[{"id":42,"reference":"hatch-task-proof:abc"}],"count":1}`)
+		if got := req.URL.Query().Get("skip"); got != "500" {
+			t.Fatalf("skip = %q", got)
+		}
+		return taskJSONResponse(http.StatusOK, `{"items":[{"id":42,"reference":"hatch-task-proof:abc"}],"count":2}`)
 	})
 	got, err := taskServiceWithClient(client).GetTasksByReference("hatch-task-proof:abc")
 	if err != nil || len(got.Items) != 1 || got.Items[0].ID != 42 {

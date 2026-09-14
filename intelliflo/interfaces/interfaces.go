@@ -108,6 +108,7 @@ type Activity interface {
 type Task interface {
 	GetTask(taskId int, opts ...sharedmodels.GetOptions) (taskmodels.Task, error)
 	GetTasks(opts ...sharedmodels.GetOptions) (taskmodels.TasksResponse, error)
+	GetAllTasks() (taskmodels.TasksResponse, error)
 	GetTasksByReference(reference string) (taskmodels.TasksResponse, error)
 	CreateTask(task taskmodels.TaskCreateRequest) (taskmodels.Task, error)
 	UpdateTask(taskId int, task taskmodels.Task) (taskmodels.Task, error)
