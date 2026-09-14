@@ -90,11 +90,17 @@ type Webhook interface {
 
 type Activity interface {
 	GetCategories(opts ...sharedmodels.GetOptions) (activitiesmodels.ActivityCategoryResponse, error)
+	GetAllCategories() (activitiesmodels.ActivityCategoryResponse, error)
 	GetCategory(categoryId int, opts ...sharedmodels.GetOptions) (activitiesmodels.ActivityCategory, error)
 	CreateCategory(category activitiesmodels.ActivityCategory) (activitiesmodels.ActivityCategory, error)
 	UpdateCategory(categoryId int, category activitiesmodels.ActivityCategory) (activitiesmodels.ActivityCategory, error)
 	DeleteCategory(categoryId int) error
 	GetTypes(opts ...sharedmodels.GetOptions) (activitiesmodels.ActivityTypeResponse, error)
+	GetAllTypes() (activitiesmodels.ActivityTypeResponse, error)
+	GetPriorities(opts ...sharedmodels.GetOptions) (activitiesmodels.ActivityPriorityResponse, error)
+	GetAllPriorities() (activitiesmodels.ActivityPriorityResponse, error)
+	GetOutcomes(opts ...sharedmodels.GetOptions) (activitiesmodels.ActivityOutcomeResponse, error)
+	GetAllOutcomes() (activitiesmodels.ActivityOutcomeResponse, error)
 	GetType(typeId int, opts ...sharedmodels.GetOptions) (activitiesmodels.ActivityType, error)
 	CreateType(activityType activitiesmodels.ActivityType) (activitiesmodels.ActivityType, error)
 }

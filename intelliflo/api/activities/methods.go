@@ -12,7 +12,7 @@ import (
 
 func (s *ActivityService) GetCategories(opts ...sharedmodels.GetOptions) (activitiesmodels.ActivityCategoryResponse, error) {
 	var categories activitiesmodels.ActivityCategoryResponse
-	resp, err := s.SendRequest("GET", "/v2/activities/categories", nil, opts...)
+	resp, err := s.SendRequest("GET", "activities/categories", nil, opts...)
 	if err != nil {
 		return categories, fmt.Errorf("error making get request: %v", err)
 	}
@@ -26,6 +26,17 @@ func (s *ActivityService) GetCategories(opts ...sharedmodels.GetOptions) (activi
 		return categories, fmt.Errorf("error parsing body: %v", err)
 	}
 	return categories, nil
+}
+
+func (s *ActivityService) GetAllCategories() (activitiesmodels.ActivityCategoryResponse, error) {
+	all, err := getAllActivityCollection[activitiesmodels.ActivityCategory](s, "activities/categories")
+	if err != nil {
+		return activitiesmodels.ActivityCategoryResponse{}, err
+	}
+	return activitiesmodels.ActivityCategoryResponse{
+		Href: all.Href, FirstHref: all.FirstHref, LastHref: all.LastHref,
+		NextHref: all.NextHref, PrevHref: all.PrevHref, Items: all.Items, Count: all.Count,
+	}, nil
 }
 
 func (s *ActivityService) GetCategory(categoryId int, opts ...sharedmodels.GetOptions) (activitiesmodels.ActivityCategory, error) {
@@ -105,7 +116,7 @@ func (s *ActivityService) DeleteCategory(categoryId int) error {
 
 func (s *ActivityService) GetTypes(opts ...sharedmodels.GetOptions) (activitiesmodels.ActivityTypeResponse, error) {
 	var types activitiesmodels.ActivityTypeResponse
-	resp, err := s.SendRequest("GET", "/v2/activities/types", nil, opts...)
+	resp, err := s.SendRequest("GET", "activities/types", nil, opts...)
 	if err != nil {
 		return types, fmt.Errorf("error making get request: %v", err)
 	}
@@ -119,6 +130,69 @@ func (s *ActivityService) GetTypes(opts ...sharedmodels.GetOptions) (activitiesm
 		return types, fmt.Errorf("error parsing body: %v", err)
 	}
 	return types, nil
+}
+
+func (s *ActivityService) GetAllTypes() (activitiesmodels.ActivityTypeResponse, error) {
+	all, err := getAllActivityCollection[activitiesmodels.ActivityType](s, "activities/types")
+	if err != nil {
+		return activitiesmodels.ActivityTypeResponse{}, err
+	}
+	return activitiesmodels.ActivityTypeResponse{
+		Href: all.Href, FirstHref: all.FirstHref, LastHref: all.LastHref,
+		NextHref: all.NextHref, PrevHref: all.PrevHref, Items: all.Items, Count: all.Count,
+	}, nil
+}
+
+func (s *ActivityService) GetPriorities(opts ...sharedmodels.GetOptions) (activitiesmodels.ActivityPriorityResponse, error) {
+	options := sharedmodels.GetOptions{}
+	if len(opts) > 0 {
+		options = opts[0]
+	}
+	page, err := getActivityCollectionPage[activitiesmodels.ActivityPriority](s, "activities/priorities", options)
+	if err != nil {
+		return activitiesmodels.ActivityPriorityResponse{}, err
+	}
+	return activitiesmodels.ActivityPriorityResponse{
+		Href: page.Href, FirstHref: page.FirstHref, LastHref: page.LastHref,
+		NextHref: page.NextHref, PrevHref: page.PrevHref, Items: page.Items, Count: page.Count,
+	}, nil
+}
+
+func (s *ActivityService) GetAllPriorities() (activitiesmodels.ActivityPriorityResponse, error) {
+	all, err := getAllActivityCollection[activitiesmodels.ActivityPriority](s, "activities/priorities")
+	if err != nil {
+		return activitiesmodels.ActivityPriorityResponse{}, err
+	}
+	return activitiesmodels.ActivityPriorityResponse{
+		Href: all.Href, FirstHref: all.FirstHref, LastHref: all.LastHref,
+		NextHref: all.NextHref, PrevHref: all.PrevHref, Items: all.Items, Count: all.Count,
+	}, nil
+}
+
+func (s *ActivityService) GetOutcomes(opts ...sharedmodels.GetOptions) (activitiesmodels.ActivityOutcomeResponse, error) {
+	options := sharedmodels.GetOptions{}
+	if len(opts) > 0 {
+		options = opts[0]
+	}
+	page, err := getActivityCollectionPage[activitiesmodels.ActivityOutcome](s, "activities/outcomes", options)
+	if err != nil {
+		return activitiesmodels.ActivityOutcomeResponse{}, err
+	}
+	return activitiesmodels.ActivityOutcomeResponse{
+		Href: page.Href, FirstHref: page.FirstHref, LastHref: page.LastHref,
+		NextHref: page.NextHref, PrevHref: page.PrevHref, Items: page.Items, Count: page.Count,
+	}, nil
+}
+
+func (s *ActivityService) GetAllOutcomes() (activitiesmodels.ActivityOutcomeResponse, error) {
+	all, err := getAllActivityCollection[activitiesmodels.ActivityOutcome](s, "activities/outcomes")
+	if err != nil {
+		return activitiesmodels.ActivityOutcomeResponse{}, err
+	}
+	return activitiesmodels.ActivityOutcomeResponse{
+		Href: all.Href, FirstHref: all.FirstHref, LastHref: all.LastHref,
+		NextHref: all.NextHref, PrevHref: all.PrevHref, Items: all.Items, Count: all.Count,
+	}, nil
 }
 
 func (s *ActivityService) GetType(typeId int, opts ...sharedmodels.GetOptions) (activitiesmodels.ActivityType, error) {

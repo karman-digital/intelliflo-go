@@ -50,6 +50,8 @@ func (c *UserService) GetUsersByEmail(email string) (usersmodels.Users, error) {
 func (c *UserService) GetAllUsers() (usersmodels.Users, error) {
 	var allUsers usersmodels.Users
 	options := sharedmodels.GetOptions{Top: 500}
+	seenCursors := map[string]struct{}{}
+	seenSkips := map[int]struct{}{0: {}}
 
 	for {
 		resp, err := c.SendRequest("GET", "users", nil, options)
@@ -57,6 +59,7 @@ func (c *UserService) GetAllUsers() (usersmodels.Users, error) {
 			return usersmodels.Users{}, fmt.Errorf("error sending request: %v", err)
 		}
 		respBody, err := shared.HandleCustomResponseCode(resp, http.StatusOK)
+		resp.Body.Close()
 		if err != nil {
 			return usersmodels.Users{}, fmt.Errorf("error handling response code: %v", err)
 		}
@@ -80,11 +83,19 @@ func (c *UserService) GetAllUsers() (usersmodels.Users, error) {
 		if page.NextHref == "" {
 			break
 		}
+		if _, exists := seenCursors[page.NextHref]; exists {
+			return usersmodels.Users{}, fmt.Errorf("repeated next cursor: %s", page.NextHref)
+		}
+		seenCursors[page.NextHref] = struct{}{}
 
 		skip, err := intelliflohelpers.ExtractSkipValueFromIntellifloResponse(page.NextHref)
 		if err != nil {
 			return usersmodels.Users{}, fmt.Errorf("error extracting skip value: %v", err)
 		}
+		if _, exists := seenSkips[skip]; exists {
+			return usersmodels.Users{}, fmt.Errorf("repeated next cursor skip: %d", skip)
+		}
+		seenSkips[skip] = struct{}{}
 		options.Skip = skip
 	}
 
