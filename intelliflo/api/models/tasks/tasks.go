@@ -29,7 +29,7 @@ type Task struct {
 	Status        string                    `json:"status"`
 	ShownInDiary  bool                      `json:"shownInDiary"`
 	ShownInPortal bool                      `json:"shownInPortal"`
-	Reference     string                    `json:"reference"`
+	Reference     string                    `json:"reference,omitempty"`
 	Completion    *TaskCompletion           `json:"completion,omitempty"`
 	RelatedTo     []RelatedEntity           `json:"relatedTo,omitempty"`
 	LinkedEntity  *LinkedEntity             `json:"linkedEntity,omitempty"`

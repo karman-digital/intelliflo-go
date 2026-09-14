@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"net/http"
 	"strings"
+	"sync"
 
 	sharedmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/shared"
 	taskmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/tasks"
-	intelliflohelpers "github.com/karman-digital/intelliflo-go/intelliflo/helpers"
 	"github.com/karman-digital/intelliflo-go/intelliflo/shared"
 )
 
@@ -40,7 +40,7 @@ func (s *TaskService) GetTasksByReference(reference string) (taskmodels.TasksRes
 	}
 	matches := make([]taskmodels.Task, 0, 1)
 	for _, task := range all.Items {
-		if task.Reference == reference {
+		if strings.HasSuffix(strings.TrimSpace(task.Description), "["+reference+"]") {
 			matches = append(matches, task)
 		}
 	}
@@ -51,37 +51,53 @@ func (s *TaskService) GetTasksByReference(reference string) (taskmodels.TasksRes
 }
 
 func (s *TaskService) GetAllTasks() (taskmodels.TasksResponse, error) {
-	var all taskmodels.TasksResponse
-	options := sharedmodels.GetOptions{Top: 500}
-	seenCursors := map[string]struct{}{}
-	seenSkips := map[int]struct{}{0: {}}
-	for {
-		page, err := s.GetTasks(options)
-		if err != nil {
-			return taskmodels.TasksResponse{}, err
-		}
-		if all.Href == "" {
-			all.Href, all.FirstHref, all.LastHref, all.PrevHref, all.Count = page.Href, page.FirstHref, page.LastHref, page.PrevHref, page.Count
-		}
-		all.NextHref = page.NextHref
-		all.Items = append(all.Items, page.Items...)
-		if page.NextHref == "" {
-			return all, nil
-		}
-		if _, exists := seenCursors[page.NextHref]; exists {
-			return taskmodels.TasksResponse{}, fmt.Errorf("repeated next cursor: %s", page.NextHref)
-		}
-		seenCursors[page.NextHref] = struct{}{}
-		skip, err := intelliflohelpers.ExtractSkipValueFromIntellifloResponse(page.NextHref)
-		if err != nil {
-			return taskmodels.TasksResponse{}, fmt.Errorf("invalid next cursor: %w", err)
-		}
-		if _, exists := seenSkips[skip]; exists {
-			return taskmodels.TasksResponse{}, fmt.Errorf("repeated next cursor skip: %d", skip)
-		}
-		seenSkips[skip] = struct{}{}
-		options.Skip = skip
+	const pageSize = 500
+	first, err := s.GetTasks(sharedmodels.GetOptions{Top: pageSize})
+	if err != nil {
+		return taskmodels.TasksResponse{}, err
 	}
+	pageCount := (first.Count + pageSize - 1) / pageSize
+	if pageCount <= 1 {
+		first.NextHref = ""
+		return first, nil
+	}
+
+	pages := make([]taskmodels.TasksResponse, pageCount-1)
+	jobs := make(chan int)
+	errCh := make(chan error, pageCount-1)
+	var workers sync.WaitGroup
+	workerCount := 6
+	if workerCount > len(pages) {
+		workerCount = len(pages)
+	}
+	for worker := 0; worker < workerCount; worker++ {
+		workers.Add(1)
+		go func() {
+			defer workers.Done()
+			for pageIndex := range jobs {
+				page, pageErr := s.GetTasks(sharedmodels.GetOptions{Top: pageSize, Skip: (pageIndex + 1) * pageSize})
+				if pageErr != nil {
+					errCh <- pageErr
+					continue
+				}
+				pages[pageIndex] = page
+			}
+		}()
+	}
+	for pageIndex := range pages {
+		jobs <- pageIndex
+	}
+	close(jobs)
+	workers.Wait()
+	close(errCh)
+	if err := <-errCh; err != nil {
+		return taskmodels.TasksResponse{}, err
+	}
+	for _, page := range pages {
+		first.Items = append(first.Items, page.Items...)
+	}
+	first.NextHref = ""
+	return first, nil
 }
 
 func (s *TaskService) GetTasks(opts ...sharedmodels.GetOptions) (taskmodels.TasksResponse, error) {
