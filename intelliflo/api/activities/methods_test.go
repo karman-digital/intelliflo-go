@@ -115,6 +115,24 @@ func TestGetAllTypesPaginates(t *testing.T) {
 	}
 }
 
+func TestGetAllTypesDecodesDecimalTaskBillingRate(t *testing.T) {
+	client := retryablehttp.NewClient()
+	client.RetryMax = 0
+	client.Logger = nil
+	client.HTTPClient = &http.Client{Transport: roundTripperFunc(func(*http.Request) (*http.Response, error) {
+		return activityJSONResponse(http.StatusOK, `{"items":[{"id":10,"name":"Call","taskBillingRate":12.5}],"count":1}`), nil
+	})}
+
+	service := activityServiceWithClient(client)
+	got, err := service.GetAllTypes()
+	if err != nil {
+		t.Fatalf("GetAllTypes() error = %v", err)
+	}
+	if !reflect.DeepEqual(got.Items[0].TaskBillingRate, float64(12.5)) {
+		t.Fatalf("task billing rate = %v, want 12.5", got.Items[0].TaskBillingRate)
+	}
+}
+
 func TestGetPrioritiesUsesActivitiesPrioritiesPath(t *testing.T) {
 	client := retryablehttp.NewClient()
 	client.RetryMax = 0

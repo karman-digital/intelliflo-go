@@ -30,7 +30,7 @@ type ActivityType struct {
 	Group                ActivityGroup    `json:"group"`
 	IncludeSubgroups     bool             `json:"includeSubgroups"`
 	Priority             ActivityPriority `json:"priority"`
-	TaskBillingRate      int              `json:"taskBillingRate"`
+	TaskBillingRate      float64          `json:"taskBillingRate"`
 	EstimatedTime        EstimatedTime    `json:"estimatedTime"`
 	ActivityTypeEvents   []ActivityEvent  `json:"activityTypeEvents"`
 }
