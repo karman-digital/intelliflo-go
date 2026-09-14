@@ -20,3 +20,8 @@ type TaskNote struct {
 	UpdatedByUser      TaskUser `json:"updatedByUser"`
 	UpdatedAt          string   `json:"updatedAt"`
 }
+
+type TaskNoteCreateRequest struct {
+	Notes              string `json:"notes"`
+	ShowOnClientPortal bool   `json:"showOnClientPortal"`
+}

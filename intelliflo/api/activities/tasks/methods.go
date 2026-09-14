@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strings"
 
 	sharedmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/shared"
 	taskmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/tasks"
@@ -12,20 +13,27 @@ import (
 
 func (s *TaskService) GetTask(taskId int, opts ...sharedmodels.GetOptions) (taskmodels.Task, error) {
 	var task taskmodels.Task
-	resp, err := s.SendRequest("GET", fmt.Sprintf("/v2/activities/tasks/%d", taskId), nil, opts...)
+	resp, err := s.SendRequest("GET", fmt.Sprintf("activities/tasks/%d", taskId), nil, opts...)
 	if err != nil {
 		return task, err
 	}
 	defer resp.Body.Close()
 	respBody, err := shared.HandleCustomResponseCode(resp, http.StatusOK)
 	if err != nil {
-		return task, fmt.Errorf("error returned by endpoint, status code: %d, body: %s", resp.StatusCode, respBody)
+		return task, fmt.Errorf("get task returned status %d: %w", resp.StatusCode, err)
 	}
 	err = json.Unmarshal(respBody, &task)
 	if err != nil {
 		return task, fmt.Errorf("error parsing body: %v", err)
 	}
 	return task, nil
+}
+
+func (s *TaskService) GetTasksByReference(reference string) (taskmodels.TasksResponse, error) {
+	if strings.TrimSpace(reference) == "" || strings.Contains(reference, "'") {
+		return taskmodels.TasksResponse{}, fmt.Errorf("invalid task reference")
+	}
+	return s.GetTasks(sharedmodels.GetOptions{Filter: fmt.Sprintf("reference eq '%s'", reference), Top: 500})
 }
 
 func (s *TaskService) GetTasks(opts ...sharedmodels.GetOptions) (taskmodels.TasksResponse, error) {
@@ -46,7 +54,7 @@ func (s *TaskService) GetTasks(opts ...sharedmodels.GetOptions) (taskmodels.Task
 	return tasks, nil
 }
 
-func (s *TaskService) CreateTask(task taskmodels.Task) (taskmodels.Task, error) {
+func (s *TaskService) CreateTask(task taskmodels.TaskCreateRequest) (taskmodels.Task, error) {
 	var newTask taskmodels.Task
 	reqBody, err := json.Marshal(task)
 	if err != nil {
@@ -59,7 +67,7 @@ func (s *TaskService) CreateTask(task taskmodels.Task) (taskmodels.Task, error) 
 	defer resp.Body.Close()
 	respBody, err := shared.HandleCustomResponseCode(resp, http.StatusCreated)
 	if err != nil {
-		return newTask, fmt.Errorf("error returned by endpoint, status code: %d, body: %s", resp.StatusCode, respBody)
+		return newTask, fmt.Errorf("create task returned status %d: %w", resp.StatusCode, err)
 	}
 	err = json.Unmarshal(respBody, &newTask)
 	if err != nil {
@@ -96,6 +104,9 @@ func (s *TaskService) DeleteTask(taskId int) error {
 		return fmt.Errorf("error making delete request: %v", err)
 	}
 	defer resp.Body.Close()
+	if _, err := shared.HandleCustomResponseCode(resp, http.StatusNoContent); err != nil {
+		return fmt.Errorf("delete task returned status %d: %w", resp.StatusCode, err)
+	}
 	return nil
 }
 
@@ -117,7 +128,7 @@ func (s *TaskService) GetTaskNotes(taskId int, opts ...sharedmodels.GetOptions) 
 	return notes, nil
 }
 
-func (s *TaskService) CreateTaskNote(taskId int, note taskmodels.TaskNote) (taskmodels.TaskNote, error) {
+func (s *TaskService) CreateTaskNote(taskId int, note taskmodels.TaskNoteCreateRequest) (taskmodels.TaskNote, error) {
 	var newNote taskmodels.TaskNote
 	reqBody, err := json.Marshal(note)
 	if err != nil {
@@ -130,7 +141,7 @@ func (s *TaskService) CreateTaskNote(taskId int, note taskmodels.TaskNote) (task
 	defer resp.Body.Close()
 	respBody, err := shared.HandleCustomResponseCode(resp, http.StatusCreated)
 	if err != nil {
-		return newNote, fmt.Errorf("error returned by endpoint, status code: %d, body: %s", resp.StatusCode, respBody)
+		return newNote, fmt.Errorf("create task note returned status %d: %w", resp.StatusCode, err)
 	}
 	err = json.Unmarshal(respBody, &newNote)
 	if err != nil {

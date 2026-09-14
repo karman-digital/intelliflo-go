@@ -49,6 +49,20 @@ type Task struct {
 	Workflow      *sharedmodels.IOSubObject `json:"workflow,omitempty"`
 }
 
+type TaskCreateRequest struct {
+	Subject       string                    `json:"subject"`
+	Description   string                    `json:"description,omitempty"`
+	ActivityType  TaskType                  `json:"activityType"`
+	Priority      *sharedmodels.IOSubObject `json:"priority,omitempty"`
+	ShownInDiary  bool                      `json:"shownInDiary"`
+	ShownInPortal bool                      `json:"shownInPortal"`
+	Reference     string                    `json:"reference"`
+	RelatedTo     []RelatedEntity           `json:"relatedTo,omitempty"`
+	AssignedTo    TaskAssignment            `json:"assignedTo"`
+	DueAt         string                    `json:"dueAt"`
+	CreatedByUser TaskUser                  `json:"createdByUser"`
+}
+
 type TaskCompletion struct {
 	Percentage  float32                  `json:"percentage"`
 	CompletedBy TaskUser                 `json:"completedBy"`

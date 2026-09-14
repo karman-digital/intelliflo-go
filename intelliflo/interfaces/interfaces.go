@@ -108,11 +108,12 @@ type Activity interface {
 type Task interface {
 	GetTask(taskId int, opts ...sharedmodels.GetOptions) (taskmodels.Task, error)
 	GetTasks(opts ...sharedmodels.GetOptions) (taskmodels.TasksResponse, error)
-	CreateTask(task taskmodels.Task) (taskmodels.Task, error)
+	GetTasksByReference(reference string) (taskmodels.TasksResponse, error)
+	CreateTask(task taskmodels.TaskCreateRequest) (taskmodels.Task, error)
 	UpdateTask(taskId int, task taskmodels.Task) (taskmodels.Task, error)
 	DeleteTask(taskId int) error
 	GetTaskNotes(taskId int, opts ...sharedmodels.GetOptions) (taskmodels.TaskNotesResponse, error)
-	CreateTaskNote(taskId int, note taskmodels.TaskNote) (taskmodels.TaskNote, error)
+	CreateTaskNote(taskId int, note taskmodels.TaskNoteCreateRequest) (taskmodels.TaskNote, error)
 }
 
 type Opportunity interface {
