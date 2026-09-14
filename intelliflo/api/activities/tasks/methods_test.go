@@ -26,7 +26,6 @@ func TestCreateTaskUsesWriteOnlyRequestAndDecodesResponse(t *testing.T) {
 		Description:   "Staging proof",
 		ActivityType:  taskmodels.TaskType{ID: 293522, Category: sharedmodels.IOSubObject{ID: 28380}},
 		Priority:      &sharedmodels.IOSubObject{ID: 10070},
-		Reference:     "hatch-task-proof:abc",
 		RelatedTo:     []taskmodels.RelatedEntity{{ID: 41589479, Type: "Client"}},
 		AssignedTo:    taskmodels.TaskAssignment{User: taskmodels.TaskUser{ID: 678652}},
 		DueAt:         "2026-09-15T12:00:00Z",
@@ -36,14 +35,25 @@ func TestCreateTaskUsesWriteOnlyRequestAndDecodesResponse(t *testing.T) {
 		if req.Method != http.MethodPost || req.URL.Path != "/v2/activities/tasks" {
 			t.Fatalf("request = %s %s", req.Method, req.URL.Path)
 		}
+		body, err := io.ReadAll(req.Body)
+		if err != nil {
+			t.Fatal(err)
+		}
 		var got taskmodels.TaskCreateRequest
-		if err := json.NewDecoder(req.Body).Decode(&got); err != nil {
+		if err := json.Unmarshal(body, &got); err != nil {
 			t.Fatal(err)
 		}
 		if !reflect.DeepEqual(got, request) {
 			t.Fatalf("body = %#v, want %#v", got, request)
 		}
-		return taskJSONResponse(http.StatusCreated, `{"id":77,"subject":"Client review","reference":"hatch-task-proof:abc"}`)
+		var fields map[string]any
+		if err := json.Unmarshal(body, &fields); err != nil {
+			t.Fatal(err)
+		}
+		if _, present := fields["reference"]; present {
+			t.Fatal("reference must not be sent on task creation")
+		}
+		return taskJSONResponse(http.StatusCreated, `{"id":77,"subject":"Client review","reference":"IOT77"}`)
 	})
 	got, err := taskServiceWithClient(client).CreateTask(request)
 	if err != nil || got.ID != 77 {

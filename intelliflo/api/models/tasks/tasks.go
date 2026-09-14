@@ -56,7 +56,6 @@ type TaskCreateRequest struct {
 	Priority      *sharedmodels.IOSubObject `json:"priority,omitempty"`
 	ShownInDiary  bool                      `json:"shownInDiary"`
 	ShownInPortal bool                      `json:"shownInPortal"`
-	Reference     string                    `json:"reference"`
 	RelatedTo     []RelatedEntity           `json:"relatedTo,omitempty"`
 	AssignedTo    TaskAssignment            `json:"assignedTo"`
 	DueAt         string                    `json:"dueAt"`
