@@ -40,7 +40,7 @@ func (s *TaskService) GetTasksByReference(reference string) (taskmodels.TasksRes
 	}
 	matches := make([]taskmodels.Task, 0, 1)
 	for _, task := range all.Items {
-		if strings.HasSuffix(strings.TrimSpace(task.Description), "["+reference+"]") {
+		if strings.HasSuffix(strings.TrimSpace(task.Subject), "["+reference+"]") {
 			matches = append(matches, task)
 		}
 	}

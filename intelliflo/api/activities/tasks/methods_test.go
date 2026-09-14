@@ -31,12 +31,12 @@ func TestGetTasksByReferenceScansEveryPageForExactMatches(t *testing.T) {
 			if got := req.URL.Query().Get("top"); got != "500" {
 				t.Fatalf("top = %q", got)
 			}
-			return taskJSONResponse(http.StatusOK, `{"items":[{"id":1,"description":"unrelated"}],"count":501,"next_href":"https://api.gb.intelliflo.net/v2/activities/tasks?skip=500&top=500"}`)
+			return taskJSONResponse(http.StatusOK, `{"items":[{"id":1,"subject":"unrelated"}],"count":501,"next_href":"https://api.gb.intelliflo.net/v2/activities/tasks?skip=500&top=500"}`)
 		}
 		if got := req.URL.Query().Get("skip"); got != "500" {
 			t.Fatalf("skip = %q", got)
 		}
-		return taskJSONResponse(http.StatusOK, `{"items":[{"id":42,"reference":"IOT42","description":"proof\n\n[hatch-task-proof:abc]"}],"count":501}`)
+		return taskJSONResponse(http.StatusOK, `{"items":[{"id":42,"reference":"IOT42","subject":"proof [hatch-task-proof:abc]"}],"count":501}`)
 	})
 	got, err := taskServiceWithClient(client).GetTasksByReference("hatch-task-proof:abc")
 	if err != nil || len(got.Items) != 1 || got.Items[0].ID != 42 {
@@ -82,7 +82,7 @@ func TestCreateTaskUsesWriteOnlyRequestAndDecodesResponse(t *testing.T) {
 }
 
 func TestCreateTaskNoteUsesWriteOnlyRequestAndDecodesResponse(t *testing.T) {
-	request := taskmodels.TaskNoteCreateRequest{Notes: "proof marker", ShowOnClientPortal: false}
+	request := taskmodels.TaskNoteCreateRequest{Notes: "proof marker", ShowOnClientPortal: false, CreatedByUser: taskmodels.TaskUser{ID: 678652}}
 	client := testClient(func(req *http.Request) *http.Response {
 		if req.Method != http.MethodPost || req.URL.Path != "/v2/activities/tasks/77/notes" {
 			t.Fatalf("request = %s %s", req.Method, req.URL.Path)

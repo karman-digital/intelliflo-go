@@ -22,6 +22,7 @@ type TaskNote struct {
 }
 
 type TaskNoteCreateRequest struct {
-	Notes              string `json:"notes"`
-	ShowOnClientPortal bool   `json:"showOnClientPortal"`
+	Notes              string   `json:"notes"`
+	ShowOnClientPortal bool     `json:"showOnClientPortal"`
+	CreatedByUser      TaskUser `json:"createdByUser"`
 }
