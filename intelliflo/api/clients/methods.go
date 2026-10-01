@@ -59,7 +59,7 @@ func (c *ClientService) GetClient(clientId int) (clientmodels.Client, error) {
 	defer resp.Body.Close()
 	respBody, err := shared.HandleCustomResponseCode(resp, http.StatusOK)
 	if err != nil {
-		return client, fmt.Errorf("error handling response code: %v", err)
+		return client, fmt.Errorf("error handling response code: %w", err)
 	}
 	err = json.Unmarshal(respBody, &client)
 	if err != nil {
