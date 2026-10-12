@@ -23,7 +23,7 @@ func (s *OpportunityService) CreateClientOpportunity(clientId int, opportunity o
 	defer resp.Body.Close()
 	respBody, err := shared.HandleCustomResponseCode(resp, http.StatusCreated)
 	if err != nil {
-		return created, fmt.Errorf("error returned by endpoint, status code: %d, body: %s", resp.StatusCode, respBody)
+		return created, fmt.Errorf("error returned by endpoint, status code: %d, body: %s: %w", resp.StatusCode, respBody, err)
 	}
 	err = json.Unmarshal(respBody, &created)
 	if err != nil {
