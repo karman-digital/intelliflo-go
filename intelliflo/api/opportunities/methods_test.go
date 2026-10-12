@@ -39,3 +39,21 @@ func TestCreateClientOpportunityPreservesResourceNotFound(t *testing.T) {
 		t.Fatalf("error = %v, want ErrResourceNotFound", err)
 	}
 }
+
+func TestGetClientOpportunityPreservesResourceNotFound(t *testing.T) {
+	service := NewOpportunityService(&opportunityCredentials{})
+
+	_, err := service.GetClientOpportunity(41589479, 999999999)
+	if !errors.Is(err, shared.ErrResourceNotFound) {
+		t.Fatalf("error = %v, want ErrResourceNotFound", err)
+	}
+}
+
+func TestUpdateClientOpportunityPreservesResourceNotFound(t *testing.T) {
+	service := NewOpportunityService(&opportunityCredentials{})
+
+	_, err := service.UpdateClientOpportunity(41589479, 999999999, opportunitiesmodels.OpportunityCreateRequest{})
+	if !errors.Is(err, shared.ErrResourceNotFound) {
+		t.Fatalf("error = %v, want ErrResourceNotFound", err)
+	}
+}

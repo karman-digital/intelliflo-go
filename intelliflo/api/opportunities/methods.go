@@ -48,7 +48,7 @@ func (s *OpportunityService) UpdateClientOpportunity(clientId int, opportunityId
 	fmt.Printf("IO UpdateClientOpportunity response status: %d, body: %s\n", resp.StatusCode, string(respBody))
 	if err != nil {
 		fmt.Println("Error to update the opportunity: ", err.Error())
-		return updated, fmt.Errorf("error returned by endpoint, status code: %d, body: %s", resp.StatusCode, respBody)
+		return updated, fmt.Errorf("error returned by endpoint, status code: %d, body: %s: %w", resp.StatusCode, respBody, err)
 	}
 	err = json.Unmarshal(respBody, &updated)
 	if err != nil {
@@ -67,7 +67,7 @@ func (s *OpportunityService) GetClientOpportunity(clientId int, opportunityId in
 	respBody, err := shared.HandleCustomResponseCode(resp, http.StatusOK)
 	fmt.Printf("IO GetClientOpportunity response status: %d, body: %s\n", resp.StatusCode, string(respBody))
 	if err != nil {
-		return opportunity, fmt.Errorf("error returned by endpoint, status code: %d, body: %s", resp.StatusCode, respBody)
+		return opportunity, fmt.Errorf("error returned by endpoint, status code: %d, body: %s: %w", resp.StatusCode, respBody, err)
 	}
 	err = json.Unmarshal(respBody, &opportunity)
 	if err != nil {
