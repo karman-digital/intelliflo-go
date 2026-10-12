@@ -4,6 +4,7 @@ import (
 	activitiesmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/activities"
 	usersmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/admin/users"
 	advisermodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/adviser"
+	feesmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/fees"
 	opportunitiesmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/opportunities"
 	addressmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/person/address"
 	clientmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/person/client"
@@ -12,6 +13,7 @@ import (
 	relationshipmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/person/relationships"
 	planmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/plans"
 	fundsmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/plans/funds"
+	servicecasemodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/servicecases"
 	sharedmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/shared"
 	taskmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/tasks"
 	webhookmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/webhooks"
@@ -41,8 +43,17 @@ type ContactDetail interface {
 	PutContactDetail(entityId int, contactDetailId int, contactDetail contactdetailmodels.ContactDetail) (contactdetailmodels.ContactDetail, error)
 }
 
+type Fee interface {
+	GetFee(clientID, feeID int) (feesmodels.Fee, error)
+	GetFees(clientID int) (feesmodels.Fees, error)
+}
+
 type Plan interface {
 	GetPlans(clientId int, options ...sharedmodels.GetOptions) (planmodels.Plans, error)
+}
+
+type ServiceCase interface {
+	GetServiceCases(clientID int, options ...sharedmodels.GetOptions) (servicecasemodels.ServiceCases, error)
 }
 
 type Holding interface {
@@ -79,11 +90,17 @@ type Webhook interface {
 
 type Activity interface {
 	GetCategories(opts ...sharedmodels.GetOptions) (activitiesmodels.ActivityCategoryResponse, error)
+	GetAllCategories() (activitiesmodels.ActivityCategoryResponse, error)
 	GetCategory(categoryId int, opts ...sharedmodels.GetOptions) (activitiesmodels.ActivityCategory, error)
 	CreateCategory(category activitiesmodels.ActivityCategory) (activitiesmodels.ActivityCategory, error)
 	UpdateCategory(categoryId int, category activitiesmodels.ActivityCategory) (activitiesmodels.ActivityCategory, error)
 	DeleteCategory(categoryId int) error
 	GetTypes(opts ...sharedmodels.GetOptions) (activitiesmodels.ActivityTypeResponse, error)
+	GetAllTypes() (activitiesmodels.ActivityTypeResponse, error)
+	GetPriorities(opts ...sharedmodels.GetOptions) (activitiesmodels.ActivityPriorityResponse, error)
+	GetAllPriorities() (activitiesmodels.ActivityPriorityResponse, error)
+	GetOutcomes(opts ...sharedmodels.GetOptions) (activitiesmodels.ActivityOutcomeResponse, error)
+	GetAllOutcomes() (activitiesmodels.ActivityOutcomeResponse, error)
 	GetType(typeId int, opts ...sharedmodels.GetOptions) (activitiesmodels.ActivityType, error)
 	CreateType(activityType activitiesmodels.ActivityType) (activitiesmodels.ActivityType, error)
 }
@@ -91,11 +108,12 @@ type Activity interface {
 type Task interface {
 	GetTask(taskId int, opts ...sharedmodels.GetOptions) (taskmodels.Task, error)
 	GetTasks(opts ...sharedmodels.GetOptions) (taskmodels.TasksResponse, error)
-	CreateTask(task taskmodels.Task) (taskmodels.Task, error)
+	CreateTask(task taskmodels.TaskCreateRequest) (taskmodels.Task, error)
 	UpdateTask(taskId int, task taskmodels.Task) (taskmodels.Task, error)
 	DeleteTask(taskId int) error
 	GetTaskNotes(taskId int, opts ...sharedmodels.GetOptions) (taskmodels.TaskNotesResponse, error)
-	CreateTaskNote(taskId int, note taskmodels.TaskNote) (taskmodels.TaskNote, error)
+	GetTaskNote(taskId, noteId int) (taskmodels.TaskNote, error)
+	CreateTaskNote(taskId int, note taskmodels.TaskNoteCreateRequest) (taskmodels.TaskNote, error)
 }
 
 type Opportunity interface {

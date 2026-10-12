@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"io"
 	"net/http"
+	"strings"
 	"testing"
 
 	"github.com/hashicorp/go-retryablehttp"
@@ -56,6 +57,31 @@ func TestGetAllUsers(t *testing.T) {
 	}
 	if len(queries) != 2 {
 		t.Fatalf("len(queries) = %d, want 2", len(queries))
+	}
+}
+
+func TestGetAllUsersRejectsRepeatedCursor(t *testing.T) {
+	var calls int
+	client := retryablehttp.NewClient()
+	client.RetryMax = 0
+	client.Logger = nil
+	client.HTTPClient = &http.Client{Transport: roundTripperFunc(func(*http.Request) (*http.Response, error) {
+		calls++
+		if calls > 2 {
+			t.Fatalf("GetAllUsers followed a repeated cursor")
+		}
+		return jsonResponse(`{"items":[],"next_href":"https://api.gb.intelliflo.net/v2/users?skip=500"}`), nil
+	})}
+
+	var creds credentials.TenantCredentials
+	creds.SetClient(client)
+	creds.SetAccessToken("token")
+	creds.SetApiKey("api-key")
+	service := UserService{Credentials: &creds}
+
+	_, err := service.GetAllUsers()
+	if err == nil || !strings.Contains(err.Error(), "repeated next cursor") {
+		t.Fatalf("error = %v, want repeated next cursor", err)
 	}
 }
 

@@ -9,10 +9,12 @@ type Client struct {
 	ClientEndpoint       interfaces.Client
 	Addresses            interfaces.Address
 	ContactDetails       interfaces.ContactDetail
+	Fees                 interfaces.Fee
 	Plans                interfaces.Plan
 	Holdings             interfaces.Holding
 	Relationships        interfaces.Relationship
 	MarketingPreferences interfaces.MarketingPreference
+	ServiceCases         interfaces.ServiceCase
 }
 
 type ClientService struct {

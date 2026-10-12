@@ -29,7 +29,7 @@ type Task struct {
 	Status        string                    `json:"status"`
 	ShownInDiary  bool                      `json:"shownInDiary"`
 	ShownInPortal bool                      `json:"shownInPortal"`
-	Reference     string                    `json:"reference"`
+	Reference     string                    `json:"reference,omitempty"`
 	Completion    *TaskCompletion           `json:"completion,omitempty"`
 	RelatedTo     []RelatedEntity           `json:"relatedTo,omitempty"`
 	LinkedEntity  *LinkedEntity             `json:"linkedEntity,omitempty"`
@@ -47,6 +47,19 @@ type Task struct {
 	UpdatedAt     string                    `json:"updatedAt,omitempty"`
 	Properties    map[string]string         `json:"properties,omitempty"`
 	Workflow      *sharedmodels.IOSubObject `json:"workflow,omitempty"`
+}
+
+type TaskCreateRequest struct {
+	Subject       string                    `json:"subject"`
+	Description   string                    `json:"description,omitempty"`
+	ActivityType  TaskType                  `json:"activityType"`
+	Priority      *sharedmodels.IOSubObject `json:"priority,omitempty"`
+	ShownInDiary  bool                      `json:"shownInDiary"`
+	ShownInPortal bool                      `json:"shownInPortal"`
+	RelatedTo     []RelatedEntity           `json:"relatedTo,omitempty"`
+	AssignedTo    TaskAssignment            `json:"assignedTo"`
+	DueAt         string                    `json:"dueAt"`
+	CreatedByUser TaskUser                  `json:"createdByUser"`
 }
 
 type TaskCompletion struct {

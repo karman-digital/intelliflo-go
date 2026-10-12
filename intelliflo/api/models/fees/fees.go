@@ -1,6 +1,9 @@
 package feesmodels
 
 import (
+	"encoding/json"
+	"fmt"
+
 	sharedmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/shared"
 )
 
@@ -37,6 +40,16 @@ type Fee struct {
 	FeeCode          string                           `json:"feeCode"`
 }
 
+type Fees struct {
+	Href      string `json:"href"`
+	FirstHref string `json:"first_href"`
+	LastHref  string `json:"last_href"`
+	NextHref  string `json:"next_href"`
+	PrevHref  string `json:"prev_href"`
+	Items     []Fee  `json:"items"`
+	Count     int    `json:"count"`
+}
+
 type FeeType struct {
 	Name     string `json:"name"`
 	Category string `json:"category"`
@@ -44,7 +57,25 @@ type FeeType struct {
 
 type PaymentType struct {
 	Name   string `json:"name"`
-	PaidBy string `json:"paidBy"`
+	PaidBy PaidBy `json:"paidBy"`
+}
+
+type PaidBy string
+
+func (p *PaidBy) UnmarshalJSON(data []byte) error {
+	var stringValue string
+	if err := json.Unmarshal(data, &stringValue); err == nil {
+		*p = PaidBy(stringValue)
+		return nil
+	}
+
+	var numberValue json.Number
+	if err := json.Unmarshal(data, &numberValue); err == nil {
+		*p = PaidBy(numberValue.String())
+		return nil
+	}
+
+	return fmt.Errorf("paidBy must be a string or number")
 }
 
 type FeeChargingType struct {
