@@ -74,7 +74,6 @@ func (c *ClientService) PutClient(clientId int, client clientmodels.Client) (cli
 	if err != nil {
 		return updatedClient, fmt.Errorf("error converting to body: %v", err)
 	}
-	fmt.Println("reqBody", string(reqBody))
 	resp, err := c.SendRequest("PUT", fmt.Sprintf("/clients/%d", clientId), reqBody)
 	if err != nil {
 		return updatedClient, fmt.Errorf("error sending request: %v", err)
