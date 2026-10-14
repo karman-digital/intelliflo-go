@@ -5,6 +5,7 @@ import (
 	"errors"
 	"io"
 	"net/http"
+	"strings"
 	"testing"
 
 	"github.com/hashicorp/go-retryablehttp"
@@ -47,6 +48,9 @@ func TestPostContactDetailPreservesRequestRejected(t *testing.T) {
 	_, err := service.PostContactDetail(123, contactdetailmodels.ContactDetail{})
 	if !errors.Is(err, shared.ErrRequestRejected) {
 		t.Fatalf("error = %v, want ErrRequestRejected", err)
+	}
+	if !strings.Contains(err.Error(), "request failed") {
+		t.Fatalf("error = %v, want provider response body", err)
 	}
 }
 

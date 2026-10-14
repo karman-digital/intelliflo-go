@@ -17,9 +17,9 @@ func (c *ContactDetailsService) GetContactDetails(clientId int, opts ...sharedmo
 		return contactDetails, fmt.Errorf("error sending request: %v", err)
 	}
 	defer resp.Body.Close()
-	respBody, err := shared.HandleCustomResponseCode(resp, http.StatusOK)
+	respBody, err := handleContactDetailResponseCode(resp, http.StatusOK)
 	if err != nil {
-		return contactDetails, fmt.Errorf("error handling response code: %w", err)
+		return contactDetails, err
 	}
 	err = json.Unmarshal(respBody, &contactDetails)
 	if err != nil {
@@ -39,9 +39,9 @@ func (c *ContactDetailsService) PostContactDetail(clientId int, contactDetail co
 		return newContactDetail, fmt.Errorf("error sending request: %v", err)
 	}
 	defer resp.Body.Close()
-	respBody, err := shared.HandleCustomResponseCode(resp, http.StatusCreated)
+	respBody, err := handleContactDetailResponseCode(resp, http.StatusCreated)
 	if err != nil {
-		return newContactDetail, fmt.Errorf("error handling response code: %w", err)
+		return newContactDetail, err
 	}
 	err = json.Unmarshal(respBody, &newContactDetail)
 	if err != nil {
@@ -61,13 +61,21 @@ func (c *ContactDetailsService) PutContactDetail(clientId int, contactDetailId i
 		return updatedContactDetail, fmt.Errorf("error sending request: %v", err)
 	}
 	defer resp.Body.Close()
-	respBody, err := shared.HandleCustomResponseCode(resp, http.StatusOK)
+	respBody, err := handleContactDetailResponseCode(resp, http.StatusOK)
 	if err != nil {
-		return updatedContactDetail, fmt.Errorf("error handling response code: %w", err)
+		return updatedContactDetail, err
 	}
 	err = json.Unmarshal(respBody, &updatedContactDetail)
 	if err != nil {
 		return updatedContactDetail, fmt.Errorf("error parsing body: %v", err)
 	}
 	return updatedContactDetail, nil
+}
+
+func handleContactDetailResponseCode(resp *http.Response, expectedStatus int) ([]byte, error) {
+	respBody, err := shared.HandleCustomResponseCode(resp, expectedStatus)
+	if err != nil {
+		return respBody, fmt.Errorf("error returned by endpoint, status code: %d, body: %s: %w", resp.StatusCode, respBody, err)
+	}
+	return respBody, nil
 }
