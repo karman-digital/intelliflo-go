@@ -17,9 +17,9 @@ func (c *AddressService) GetAddresses(clientId int, opts ...sharedmodels.GetOpti
 		return addresses, fmt.Errorf("error making get request: %v", err)
 	}
 	defer resp.Body.Close()
-	respBody, err := shared.HandleCustomResponseCode(resp, http.StatusOK)
+	respBody, err := handleAddressResponseCode(resp, http.StatusOK)
 	if err != nil {
-		return addresses, fmt.Errorf("error returned by endpoint, status code: %d, body: %s", resp.StatusCode, respBody)
+		return addresses, err
 	}
 	err = json.Unmarshal(respBody, &addresses)
 	if err != nil {
@@ -39,9 +39,9 @@ func (c *AddressService) PostAddress(clientId int, address addressmodels.Residen
 		return newAddress, fmt.Errorf("error making post request: %v", err)
 	}
 	defer resp.Body.Close()
-	respBody, err := shared.HandleCustomResponseCode(resp, http.StatusCreated)
+	respBody, err := handleAddressResponseCode(resp, http.StatusCreated)
 	if err != nil {
-		return newAddress, fmt.Errorf("error returned by endpoint, status code: %d, body: %s", resp.StatusCode, respBody)
+		return newAddress, err
 	}
 	err = json.Unmarshal(respBody, &newAddress)
 	if err != nil {
@@ -61,13 +61,21 @@ func (c *AddressService) PutAddress(clientId int, addressId int, address address
 		return updatedAddress, fmt.Errorf("error making put request: %v", err)
 	}
 	defer resp.Body.Close()
-	respBody, err := shared.HandleCustomResponseCode(resp, http.StatusOK)
+	respBody, err := handleAddressResponseCode(resp, http.StatusOK)
 	if err != nil {
-		return updatedAddress, fmt.Errorf("error returned by endpoint, status code: %d, body: %s", resp.StatusCode, respBody)
+		return updatedAddress, err
 	}
 	err = json.Unmarshal(respBody, &updatedAddress)
 	if err != nil {
 		return updatedAddress, fmt.Errorf("error parsing body: %v", err)
 	}
 	return updatedAddress, nil
+}
+
+func handleAddressResponseCode(resp *http.Response, expectedStatus int) ([]byte, error) {
+	respBody, err := shared.HandleCustomResponseCode(resp, expectedStatus)
+	if err != nil {
+		return respBody, fmt.Errorf("error returned by endpoint, status code: %d, body: %s: %w", resp.StatusCode, respBody, err)
+	}
+	return respBody, nil
 }
