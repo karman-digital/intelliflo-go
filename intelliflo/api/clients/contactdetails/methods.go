@@ -19,7 +19,7 @@ func (c *ContactDetailsService) GetContactDetails(clientId int, opts ...sharedmo
 	defer resp.Body.Close()
 	respBody, err := shared.HandleCustomResponseCode(resp, http.StatusOK)
 	if err != nil {
-		return contactDetails, fmt.Errorf("error handling response code: %v", err)
+		return contactDetails, fmt.Errorf("error handling response code: %w", err)
 	}
 	err = json.Unmarshal(respBody, &contactDetails)
 	if err != nil {
@@ -41,7 +41,7 @@ func (c *ContactDetailsService) PostContactDetail(clientId int, contactDetail co
 	defer resp.Body.Close()
 	respBody, err := shared.HandleCustomResponseCode(resp, http.StatusCreated)
 	if err != nil {
-		return newContactDetail, fmt.Errorf("error handling response code: %v", err)
+		return newContactDetail, fmt.Errorf("error handling response code: %w", err)
 	}
 	err = json.Unmarshal(respBody, &newContactDetail)
 	if err != nil {
@@ -60,9 +60,10 @@ func (c *ContactDetailsService) PutContactDetail(clientId int, contactDetailId i
 	if err != nil {
 		return updatedContactDetail, fmt.Errorf("error sending request: %v", err)
 	}
+	defer resp.Body.Close()
 	respBody, err := shared.HandleCustomResponseCode(resp, http.StatusOK)
 	if err != nil {
-		return updatedContactDetail, fmt.Errorf("error handling response code: %v", err)
+		return updatedContactDetail, fmt.Errorf("error handling response code: %w", err)
 	}
 	err = json.Unmarshal(respBody, &updatedContactDetail)
 	if err != nil {
