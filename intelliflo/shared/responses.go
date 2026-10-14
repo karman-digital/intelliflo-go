@@ -15,6 +15,9 @@ func HandleCustomResponseCode(resp *http.Response, code int) (rawBody []byte, er
 		if resp.StatusCode == 404 {
 			return rawBody, ErrResourceNotFound
 		}
+		if resp.StatusCode == 400 {
+			return rawBody, ErrRequestRejected
+		}
 		return rawBody, fmt.Errorf("error returned by endpoint: %+v", resp.StatusCode)
 	}
 	return rawBody, nil
