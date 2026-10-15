@@ -18,7 +18,7 @@ func (c *MarketingPreferencesService) GetMarketingPreference(clientId int) (mark
 	defer resp.Body.Close()
 	respBody, err := shared.HandleCustomResponseCode(resp, http.StatusOK)
 	if err != nil {
-		return prefs, fmt.Errorf("error handling response code: %v", err)
+		return prefs, fmt.Errorf("error returned by endpoint, status code: %d, body: %s: %w", resp.StatusCode, respBody, err)
 	}
 	err = json.Unmarshal(respBody, &prefs)
 	if err != nil {
@@ -40,7 +40,7 @@ func (c *MarketingPreferencesService) PutMarketingPreference(clientId int, body 
 	defer resp.Body.Close()
 	respBody, err := shared.HandleCustomResponseCode(resp, http.StatusOK)
 	if err != nil {
-		return prefs, fmt.Errorf("error handling response code: %v, with body: %s", err, string(respBody))
+		return prefs, fmt.Errorf("error returned by endpoint, status code: %d, body: %s: %w", resp.StatusCode, respBody, err)
 	}
 	err = json.Unmarshal(respBody, &prefs)
 	if err != nil {

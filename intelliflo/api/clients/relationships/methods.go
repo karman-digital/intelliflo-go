@@ -23,7 +23,7 @@ func (c *RelationshipService) PostRelationship(cliendId int, postBody relationsh
 	defer resp.Body.Close()
 	respBody, err := shared.HandleCustomResponseCode(resp, http.StatusOK)
 	if err != nil {
-		return relationship, fmt.Errorf("error handling response code: %v", err)
+		return relationship, fmt.Errorf("error returned by endpoint, status code: %d, body: %s: %w", resp.StatusCode, respBody, err)
 	}
 	err = json.Unmarshal(respBody, &relationship)
 	if err != nil {
