@@ -18,12 +18,17 @@ import (
 type relationshipCredentials struct {
 	credentials.Credentials
 	statusCode int
+	body       string
 }
 
 func (c *relationshipCredentials) SendRequest(string, string, []byte, ...sharedmodels.GetOptions) (*http.Response, error) {
+	body := c.body
+	if body == "" {
+		body = `{"message":"request failed"}`
+	}
 	return &http.Response{
 		StatusCode: c.statusCode,
-		Body:       io.NopCloser(bytes.NewBufferString(`{"message":"request failed"}`)),
+		Body:       io.NopCloser(bytes.NewBufferString(body)),
 	}, nil
 }
 
@@ -32,6 +37,21 @@ func (c *relationshipCredentials) AccessToken() *sharedmodels.AccessToken  { ret
 func (c *relationshipCredentials) ApiKey() sharedmodels.APIKey             { return "" }
 func (c *relationshipCredentials) ClientSecret() sharedmodels.ClientSecret { return "" }
 func (c *relationshipCredentials) ClientId() sharedmodels.ClientId         { return "" }
+
+func TestPostRelationshipAcceptsCreatedResponse(t *testing.T) {
+	service := NewRelationshipService(&relationshipCredentials{
+		statusCode: http.StatusCreated,
+		body:       `{"id":22559522,"relationshipType":{"name":"Other"},"subject":{"id":41589479,"type":"Client","partyType":"Person"},"relation":{"id":41615046,"type":"Client","partyType":"Person"}}`,
+	})
+
+	got, err := service.PostRelationship(41589479, relationshipsmodels.Relationship{})
+	if err != nil {
+		t.Fatalf("PostRelationship returned error: %v", err)
+	}
+	if got.ID != 22559522 {
+		t.Fatalf("relationship ID = %d, want 22559522", got.ID)
+	}
+}
 
 func TestPostRelationshipPreservesResourceNotFound(t *testing.T) {
 	service := NewRelationshipService(&relationshipCredentials{statusCode: http.StatusNotFound})

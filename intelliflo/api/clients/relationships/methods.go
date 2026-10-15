@@ -21,7 +21,7 @@ func (c *RelationshipService) PostRelationship(cliendId int, postBody relationsh
 		return relationship, fmt.Errorf("error sending request: %v", err)
 	}
 	defer resp.Body.Close()
-	respBody, err := shared.HandleCustomResponseCode(resp, http.StatusOK)
+	respBody, err := shared.HandleCustomResponseCode(resp, http.StatusCreated)
 	if err != nil {
 		return relationship, fmt.Errorf("error returned by endpoint, status code: %d, body: %s: %w", resp.StatusCode, respBody, err)
 	}
