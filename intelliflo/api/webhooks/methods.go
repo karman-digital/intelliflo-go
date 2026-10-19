@@ -34,7 +34,6 @@ func (w *WebhookService) PostWebhookSubscription(postBody webhookmodels.WebhookS
 	if err != nil {
 		return responseWebhook, fmt.Errorf("error converting to body: %v", err)
 	}
-	fmt.Println(string(reqBody))
 	resp, err := w.SendRequest("POST", "hub/webhooks", reqBody)
 	if err != nil {
 		return responseWebhook, fmt.Errorf("error sending request: %v", err)
