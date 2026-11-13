@@ -27,6 +27,7 @@ type Auth interface {
 type Client interface {
 	GetClient(clientId int) (clientmodels.Client, error)
 	GetClients(options ...sharedmodels.GetOptions) (clientmodels.Clients, error)
+	GetCurrentVulnerabilities(tenantID int, options sharedmodels.GetOptions) (clientmodels.Vulnerabilities, error)
 	PostClient(clientObj clientmodels.Client) (clientmodels.Client, error)
 	PutClient(clientId int, client clientmodels.Client) (clientmodels.Client, error)
 }

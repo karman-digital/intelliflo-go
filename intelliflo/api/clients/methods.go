@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"strings"
 
 	clientmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/person/client"
 	sharedmodels "github.com/karman-digital/intelliflo-go/intelliflo/api/models/shared"
@@ -48,6 +49,32 @@ func (c *ClientService) GetClients(options ...sharedmodels.GetOptions) (clientmo
 		return clients, fmt.Errorf("error unmarshalling response: %v", err)
 	}
 	return clients, nil
+}
+
+func (c *ClientService) GetCurrentVulnerabilities(tenantID int, options sharedmodels.GetOptions) (clientmodels.Vulnerabilities, error) {
+	var vulnerabilities clientmodels.Vulnerabilities
+	if tenantID <= 0 {
+		return vulnerabilities, fmt.Errorf("vulnerability lookup requires a positive tenant ID")
+	}
+	if strings.TrimSpace(options.Filter) == "" {
+		return vulnerabilities, fmt.Errorf("vulnerability lookup requires a client filter")
+	}
+	resp, err := c.SendRequest("GET", fmt.Sprintf("clients/vulnerabilities/current?tenantId=%d", tenantID), nil, options)
+	if err != nil {
+		return vulnerabilities, fmt.Errorf("send current vulnerabilities request: %w", err)
+	}
+	defer resp.Body.Close()
+	respBody, err := shared.HandleCustomResponseCode(resp, http.StatusOK)
+	if err != nil {
+		return vulnerabilities, fmt.Errorf("handle current vulnerabilities response: %w", err)
+	}
+	if err := json.Unmarshal(respBody, &vulnerabilities); err != nil {
+		return vulnerabilities, fmt.Errorf("decode current vulnerabilities response: %w", err)
+	}
+	if vulnerabilities.Items == nil {
+		return vulnerabilities, fmt.Errorf("current vulnerabilities response is missing items")
+	}
+	return vulnerabilities, nil
 }
 
 func (c *ClientService) GetClient(clientId int) (clientmodels.Client, error) {
